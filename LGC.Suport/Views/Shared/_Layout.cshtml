@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="~/css/Icon-font-7-stroke/pe-icon-7-stroke/css/helper.css">
 </head>
 <body>
-    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header fixed-footer">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
                 <div class="logo-src"></div>
@@ -84,7 +84,12 @@
                                 Settings
                             </a>
                         </li>
-                        <partial name="_LoginPartial" />
+                        <li class="dropdown nav-item">
+                            <a asp-controller="Account" asp-action="Logout" class="nav-link">
+                                <i class="nav-link-icon fa fa-unlock"></i>
+                                Logout
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="app-header-right">
