@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using LGC.Suport.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace LGC.Support.Models
 {
@@ -13,5 +15,12 @@ namespace LGC.Support.Models
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        //public DbSet<UserData> Users { get; set; }
+
+        public DbSet<ProductData> Products { get; set; }
+        public DbSet<CustomerData> Customers { get; set; }
+        public DbSet<JobData> Jobs { get; set; }
+        public DbSet<ServiceData> Services { get; set; }
     }
 }

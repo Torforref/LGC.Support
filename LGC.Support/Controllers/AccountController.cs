@@ -2,12 +2,14 @@
 using LGC.Support.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 
 namespace LGC.Support.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserService _user;
@@ -19,8 +21,8 @@ namespace LGC.Support.Controllers
         {
             var model = new UserData()
             {
-                username = "xxx",
-                password = "1234"
+                username = "",
+                password = ""
             };
             return View(model);
         }

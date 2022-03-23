@@ -23,6 +23,7 @@
     <link href="/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/Icon-font-7-stroke/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
     <link rel="stylesheet" href="~/css/Icon-font-7-stroke/pe-icon-7-stroke/css/helper.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header fixed-footer">
@@ -417,123 +418,40 @@
                             </span>
                         </button>
                     </span>
-                </div>    <div class="scrollbar-sidebar">
-
-                    @*                    <div class="app-sidebar__inner">
-                        <ul class="vertical-nav-menu">
-                        <li class="app-sidebar__heading">Dashboards</li>
-                        <li>
-                        <a asp-controller="Home" asp-action="Index" class="mm-active">
-                        <i class="metismenu-icon pe-7s-rocket"></i>
-                        Dashboard
-                        </a>
-                        </li>
-
-                        <li class="app-sidebar__heading">Job Service</li>
-                        <li>
-                        <a href="#">
-                        <i class="metismenu-icon pe-7s-diamond"></i>
-                        Job Service
-                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                        </a>
-                        <ul>
-                        <li>
-                        <a asp-controller="Job" asp-action="Index">
-                        <i class="metismenu-icon pe-7s-eyedropper">
-                        </i>Job Service List
-                        </a>
-                        </li>
-                        <li>
-                        <a asp-controller="Job" asp-action="Create">
-                        <i class="metismenu-icon pe-7s-mouse">
-                        </i>Create Job Service
-                        </a>
-                        </li>
-                        </ul>
-                        </li>
-
-                        <li class="app-sidebar__heading">Customer</li>
-                        <li>
-                        <a href="#">
-                        <i class="metismenu-icon pe-7s-diamond"></i>
-                        Customer
-                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                        </a>
-                        <ul>
-                        <li>
-                        <a asp-controller="Customer" asp-action="Index">
-                        <i class="metismenu-icon pe-7s-eyedropper">
-                        </i>Customer List
-                        </a>
-                        </li>
-                        <li>
-                        <a asp-controller="Customer" asp-action="Create">
-                        <i class="metismenu-icon pe-7s-mouse">
-                        </i>Create Customer
-                        </a>
-                        </li>
-                        </ul>
-                        </li>
-
-                        <li class="app-sidebar__heading">Product</li>
-                        <li>
-                        <a href="#">
-                        <i class="metismenu-icon pe-7s-diamond"></i>
-                        Product
-                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                        </a>
-                        <ul>
-                        <li>
-                        <a asp-controller="Product" asp-action="Index">
-                        <i class="metismenu-icon pe-7s-eyedropper">
-                        </i>Product List
-                        </a>
-                        </li>
-                        <li>
-                        <a asp-controller="Product" asp-action="Create">
-                        <i class="metismenu-icon pe-7s-mouse">
-                        </i>Create Product
-                        </a>
-                        </li>
-                        </ul>
-                        </li>
-
-                        </ul>
-                        </div*@
+                </div>
+                <div class="scrollbar-sidebar">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu metismenu">
                             <li class="app-sidebar__heading">Dashboards</li>
                             <li>
-                                <a href="index.html" class="mm-active">
+                                <a asp-controller="Home" asp-action="Index" class="mm-active">
                                     <i class="metismenu-icon pe-7s-rocket"></i>
-                                    Dashboard Example 1
+                                    Dashboard
                                 </a>
                             </li>
-
-
                             <li class="app-sidebar__heading">Job Service</li>
                             <li>
                                 <a asp-controller="Job" asp-action="Index">
-                                    <i class="metismenu-icon pe-7s-mouse">
+                                    <i class="metismenu-icon pe-7s-network">
                                     </i>Job Service List
                                 </a>
                             </li>
                             <li>
                                 <a asp-controller="Job" asp-action="Create">
-                                    <i class="metismenu-icon pe-7s-mouse">
+                                    <i class="metismenu-icon pe-7s-pen">
                                     </i>Create Job Service
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">Customer</li>
                             <li>
                                 <a asp-controller="Customer" asp-action="Index">
-                                    <i class="metismenu-icon pe-7s-mouse">
+                                    <i class="metismenu-icon pe-7s-network">
                                     </i>Customer List
                                 </a>
                             </li>
                             <li>
                                 <a asp-controller="Customer" asp-action="Create">
-                                    <i class="metismenu-icon pe-7s-mouse">
+                                    <i class="metismenu-icon pe-7s-pen">
                                     </i>Create Customer
                                 </a>
                             </li>
@@ -541,16 +459,25 @@
                             <li class="app-sidebar__heading">Product</li>
                             <li>
                                 <a asp-controller="Product" asp-action="Index">
-                                    <i class="metismenu-icon pe-7s-mouse">
+                                    <i class="metismenu-icon pe-7s-network">
                                     </i>Product List
                                 </a>
                             </li>
                             <li>
                                 <a asp-controller="Product" asp-action="Create">
-                                    <i class="metismenu-icon pe-7s-mouse">
-                                    </i>Product Job Service
+                                    <i class="metismenu-icon pe-7s-pen">
+                                    </i>Create Product
                                 </a>
                             </li>
+
+                            <li class="app-sidebar__heading">Calendar</li>
+                            <li>
+                                <a asp-controller="Calendar" asp-action="Index">
+                                    <i class="metismenu-icon pe-7s-network">
+                                    </i>Calendar
+                                </a>
+                            </li>
+
                         </ul>
                     </div>
 

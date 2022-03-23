@@ -5,13 +5,9 @@ namespace LGC.Support.Controllers
 {
     [Authorize]
 
-    public class JobController : Controller
+    public class CalendarController : Controller
     {
         public IActionResult Index()
-        {
-            return View();
-        }
-        public IActionResult Create()
         {
             return View();
         }
