@@ -13,10 +13,12 @@ namespace LGC.Support.Controllers
     public class AccountController : Controller
     {
         private readonly UserService _user;
+
         public AccountController(UserService user)
         {
             _user = user;
         }
+
         public IActionResult Login()
         {
             var model = new UserData()
@@ -26,6 +28,7 @@ namespace LGC.Support.Controllers
             };
             return View(model);
         }
+
         [HttpPost]
         public IActionResult Login(UserData model)
         {
@@ -54,7 +57,42 @@ namespace LGC.Support.Controllers
 
         }
 
-        public IActionResult Logout()
+        public IActionResult Register()
+        {
+            var model = new UserData()
+            {
+                username = "",
+                password = ""
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Register(UserData model)
+        {
+            if (model.password == model.confirm_password)
+            {
+                var _pass = EncDecHelper.EncryptData(model.password);
+                var result = _user.RegisterService(model.username, _pass).Result;
+                if (result != null)
+                {
+                    model.error_mess = "Can't create new user account. Username already exists.";
+                    return View(model);
+                }
+                else
+                {
+                    TempData["success"] = "Registered successfully.";
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                model.error_mess = "Password doesn't match. Please try again.";
+                return View(model);
+            }
+        }
+
+            public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 

@@ -18,7 +18,7 @@ namespace LGC.Support.Controllers
         {
             _db = _database;
         }
-        public IActionResult Index(ProductData model)
+        public IActionResult Index()
         {
             IEnumerable<ProductData> products = _db.Products;
             return View(products);
