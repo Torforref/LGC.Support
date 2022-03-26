@@ -16,7 +16,7 @@ namespace LGC.Support.Models
             base.OnModelCreating(modelBuilder);
         }
 
-        //public DbSet<UserData> Users { get; set; }
+        public DbSet<UserData> Users { get; set; }
 
         public DbSet<ProductData> Products { get; set; }
         public DbSet<CustomerData> Customers { get; set; }

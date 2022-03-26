@@ -24,7 +24,7 @@ namespace LGC.Suport.Controllers
         {
             return View();
         }
-        public IActionResult Privacy()
+        public IActionResult Calendar()
         {
             return View();
         }

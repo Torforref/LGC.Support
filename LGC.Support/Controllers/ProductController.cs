@@ -1,5 +1,6 @@
 ﻿using LGC.Suport.Models;
 using LGC.Support.Models;
+using LGC.Support.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,16 +13,16 @@ namespace LGC.Support.Controllers
 
     public class ProductController : Controller
     {
-        ApplicationContext _db;
+        private readonly ProductService _product;
 
-        public ProductController(ApplicationContext _database)
+        public ProductController(ProductService product)
         {
-            _db = _database;
+            _product = product;
         }
         public IActionResult Index()
         {
-            IEnumerable<ProductData> products = _db.Products;
-            return View(products);
+            var data = _product.GetAll().Result;
+            return View(data);
         }
 
         public IActionResult Create()
@@ -32,63 +33,73 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Create(ProductData model)
         {
-            if (String.IsNullOrEmpty(model.product_name))
+            if (String.IsNullOrEmpty(model.name) || model.category != "NULL" || model.brand != "NULL")
             {
-                ModelState.AddModelError("product_name", "Product name cannot be empty.");
+                ModelState.AddModelError("name", "Name cannot be empty.");
+                ModelState.AddModelError("category", "Category cannot be empty.");
+                ModelState.AddModelError("brand", "Brand cannot be empty.");
+                return View(model);
             }
 
-            var result = _db.Products.Where(w => w.product_name == model.product_name).FirstOrDefault();
+            var result = _product.Create(model).Result;
             if (result != null)
             {
-                ModelState.AddModelError("product_name", "Product already exit.");
-                TempData["error"] = "Product already exit.";
+                ModelState.AddModelError("name", "Product already exit.");
                 return View();
             }
             else
             {
-                var newProduct = new ProductData();
-                newProduct.product_name = model.product_name;
-                newProduct.description = model.description;
-                newProduct.product_category = model.product_category;
-                newProduct.created_by = "Titharat";
-                newProduct.updated_by = "Titharat";
-                _db.Products.Add(newProduct);
-                _db.SaveChanges();
-                TempData["success"] = "Product created successfully.";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Product");
             }
         }
+
         public IActionResult Edit(int? id)
         {
-            if (id == null)
+            var result = _product.Get(id).Result;
+
+            if (result == null)
             {
                 return NotFound();
             }
-
-            var product = _db.Products.Where(w => w.id == id).FirstOrDefault();
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
+            return View(result);
         }
 
         [HttpPost]
         public IActionResult Edit(ProductData model)
         {
-            if (String.IsNullOrEmpty(model.product_name))
+            if (model.category != "NULL" || model.brand != "NULL")
             {
-                ModelState.AddModelError("product_name", "Product name cannot be empty.");
+                var result = _product.Update(model).Result;
+                if (result != null)
+                {
+                    return RedirectToAction("Index", "Product");
+                }
             }
+            else
+            {
+                ModelState.AddModelError("category", "Category cannot be empty.");
+                ModelState.AddModelError("brand", "Brand cannot be empty.");
+                return View(model);
+            }
+            return View();
+        }
 
-            model.created_by = "Titharat";
-            model.updated_by = "Titharat";
+        public IActionResult Delete(int? id)
+        {
+            var result = _product.Get(id).Result;
 
-            _db.Products.Update(model);
-            _db.SaveChanges();
-            TempData["success"] = "Product updated successfully.";
-            return RedirectToAction("Index");
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(ProductData model)
+        {
+            var result = _product.Delete(model).Result;
+            return RedirectToAction("Index", "Product");
         }
     }
 

@@ -1,48 +1,137 @@
-﻿@model IEnumerable<CustomerData>
-<div class="row">
-    <div class="col-md-12">
-        <div class="main-card mb-3 card">
-            <div class="card-header">
-                Customer List
+﻿<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Users <small>Some examples to get you started</small></h3>
+        </div>
+
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                </div>
             </div>
-            <div class="table-responsive">
-                <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Customer Number</th>
-                            <th class="text-center">Customer Name</th>
-                            <th class="text-center">Address</th>
-                            <th class="text-center">Contact</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Phone Number</th>
-                            <th class="text-center">Created At</th>
-                            <th class="text-center">Created By</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var customer in Model)
-                        {
-                            <tr>
-                                <td class="text-center text-muted">@customer.id</td>
-                                <td class="text-center text-muted"><a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id">@customer.customer_name</a></td>
-                                <td class="text-muted">@customer.address</td>
-                                <td class="text-center text-muted">@customer.contact</td>
-                                <td class="text-center text-muted">@customer.email</td>
-                                <td class="text-center">@customer.phone_number</td>
-                                <td class="text-center">
-                                    <div class="badge badge-warning">@customer.created_at</div>
-                                </td>
-                                <td class="text-center">
-                                    <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">@customer.created_by</button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="d-block text-center card-footer">
-                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger"><i class="pe-7s-trash btn-icon-wrapper"></i></button>
-                <button class="btn-wide btn btn-success">Save</button>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Button Example <small>Users</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+                                <div id="datatable-buttons_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap no-footer">
+                                    <div class="row">
+                                        <div class="dt-buttons btn-group col-sm-2">
+                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Copy</span></a>
+                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>CSV</span></a>
+                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Excel</span></a>
+                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>PDF</span></a>
+                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Print</span></a>
+                                        </div>
+                                        <div class="dt-buttons btn-group col-sm-10">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_length" id="datatable_length">
+                                                <label>
+                                                    Show
+                                                    <select name="datatable_length" aria-controls="datatable" class="form-control input-sm">
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                    </select> entries
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="datatable_filter" class="dataTables_filter" style="float: right">
+                                                <label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="datatable"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="datatable-buttons" class="table table-striped jambo_table table-bordered dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
+                                        <thead>
+                                            <tr role="row" style="text-align: center">
+                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Name</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Address</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Contact</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Email</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Phone Number</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Created At</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Created By</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var customer in Model)
+                                            {
+                                                <tr role="row" class="odd">
+                                                    <td class="text-center text-muted"><a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id">@customer.name</a></td>
+                                                    <td class="text-muted">@customer.address</td>
+                                                    <td class="text-center text-muted">@customer.contact</td>
+                                                    <td class="text-center text-muted">@customer.email</td>
+                                                    <td class="text-center">@customer.phone_number</td>
+                                                    <td class="text-center">
+                                                        <div class="badge badge-warning">@customer.created_at</div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="badge badge-primary">@customer.created_by</div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id"><i class="fa fa-edit"></i></a>
+                                                        <a class="btn btn-sm btn-danger" asp-controller="Customer" asp-action="Delete" asp-route-id="@customer.id"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div class="dataTables_info" id="datatable-buttons_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+                                    <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button previous disabled" id="datatable-buttons_previous">
+                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="0" tabindex="0">Previous</a>
+                                            </li>
+                                            <li class="paginate_button active">
+                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="1" tabindex="0">1</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="2" tabindex="0">2</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="3" tabindex="0">3</a>
+                                            </li>
+                                            <li class="paginate_button next" id="datatable-buttons_next">
+                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="7" tabindex="0">Next</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

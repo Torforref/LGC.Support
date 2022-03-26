@@ -1,177 +1,59 @@
 ﻿@model CustomerData
-<div class="app-main__inner">
-    <div class="app-page-title">
-        <div class="page-title-wrapper">
-            <div class="page-title-heading">
-                <div class="page-title-icon">
-                    <i class="pe-7s-graph text-success">
-                    </i>
-                </div>
-                <div>
-                    Form Layouts
-                    <div class="page-title-subheading">
-                        Build whatever layout you need with our Architect framework.
+<div class="col-md-8">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Create Customer</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <br>
+
+            <form class="form-horizontal form-label-left" asp-controller="Product" asp-action="Form">
+                <div class="form-group row">
+                    <label asp-for="phone_number" class="control-label col-md-3 col-sm-3">Date</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="phone_number" type="text" class="form-control" readonly="readonly" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")">
                     </div>
                 </div>
-            </div>
-            <div class="page-title-actions">
-                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
-                    <i class="fa fa-star"></i>
-                </button>
-                <div class="d-inline-block dropdown">
-                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
-                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                            <i class="fa fa-business-time fa-w-20"></i>
-                        </span>
-                        Buttons
-                    </button>
-                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-inbox"></i>
-                                    <span>
-                                        Inbox
-                                    </span>
-                                    <div class="ml-auto badge badge-pill badge-secondary">86</div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-book"></i>
-                                    <span>
-                                        Book
-                                    </span>
-                                    <div class="ml-auto badge badge-pill badge-danger">5</div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-picture"></i>
-                                    <span>
-                                        Picture
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a disabled="" href="javascript:void(0);" class="nav-link disabled">
-                                    <i class="nav-link-icon lnr-file-empty"></i>
-                                    <span>
-                                        File Disabled
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                <div class="form-group row ">
+                    <label asp-for="name" class="control-label col-md-3 col-sm-3">Product Name</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="name" type="text" class="form-control" maxlength=20>
+                    </div>
+                    <span asp-validation-for="name" class="text-danger"></span>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="address" class="control-label col-md-3 col-sm-3">Address</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="address" type="text" class="form-control" placeholder="">
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="tab-content">
-        <div class="tab-pane tabs-animation fade active show" id="tab-content-0" role="tabpanel">
-            <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Create Customer</h5>
-                    <br />
-                    <form asp-controller="Customer" asp-action="Create">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label asp-for="customer_name" class="">Customer Name</label>
-                                    <input asp-for="customer_name" id="customer_name" type="text" class="form-control">
-                                    <span asp-validation-for="customer_name" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label asp-for="contact" class="">Contact</label>
-                                    <input asp-for="contact" id="contact" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label asp-for="email" class="">Email</label>
-                                    <input asp-for="email" id="email" type="email" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label asp-for="phone_number" class="">Phone number</label>
-                                    <input asp-for="phone_number" id="phone_number" type="text" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="position-relative form-group">
-                            <label asp-for="address" class="">Address</label>
-                            <input asp-for="address" id="address" type="text" class="form-control">
-                        </div>
-
-                        <button class="mt-2 btn btn-primary" type="submit">Submit</button>
-                        <button class="mt-2 btn btn-danger" asp-controller="Customer" asp-action="Index">Cancel</button>
-                    </form>
+                <div class="form-group row">
+                    <label asp-for="contact" class="control-label col-md-3 col-sm-3">Contact</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="contact" type="text" class="form-control" placeholder="">
+                    </div>
                 </div>
-            </div>
-
-        </div>
-        <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
-            <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <h5 class="card-title">Grid</h5>
-                    <form class="">
-                        <div class="position-relative row form-group">
-                            <label for="exampleEmail" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10"><input name="email" id="exampleEmail" type="email" class="form-control"></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="examplePassword" class="col-sm-2 col-form-label">Password</label>
-                            <div class="col-sm-10"><input name="password" id="examplePassword" type="password" class="form-control"></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="exampleSelect" class="col-sm-2 col-form-label">Select</label>
-                            <div class="col-sm-10"><select name="select" id="exampleSelect" class="form-control"></select></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="exampleSelectMulti" class="col-sm-2 col-form-label">Select Multiple</label>
-                            <div class="col-sm-10"><select multiple="" name="selectMulti" id="exampleSelectMulti" class="form-control"></select></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="exampleText" class="col-sm-2 col-form-label">Text Area</label>
-                            <div class="col-sm-10"><textarea name="text" id="exampleText" class="form-control"></textarea></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="exampleFile" class="col-sm-2 col-form-label">File</label>
-                            <div class="col-sm-10">
-                                <input name="file" id="exampleFile" type="file" class="form-control-file">
-                                <small class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-                            </div>
-                        </div>
-                        <fieldset class="position-relative row form-group">
-                            <legend class="col-form-label col-sm-2">Radio Buttons</legend>
-                            <div class="col-sm-10">
-                                <div class="position-relative form-check"><label class="form-check-label"><input name="radio2" type="radio" class="form-check-input"> Option one is this and that—be sure to include why it's great</label></div>
-                                <div class="position-relative form-check">
-                                    <label class="form-check-label">
-                                        <input name="radio2" type="radio" class="form-check-input"> Option two can be something else and selecting it will deselect option
-                                        one
-                                    </label>
-                                </div>
-                                <div class="position-relative form-check disabled"><label class="form-check-label"><input name="radio2" disabled="" type="radio" class="form-check-input"> Option three is disabled</label></div>
-                            </div>
-                        </fieldset>
-                        <div class="position-relative row form-group">
-                            <label for="checkbox2" class="col-sm-2 col-form-label">Checkbox</label>
-                            <div class="col-sm-10">
-                                <div class="position-relative form-check"><label class="form-check-label"><input id="checkbox2" type="checkbox" class="form-check-input"> Check me out</label></div>
-                            </div>
-                        </div>
-                        <div class="position-relative row form-check">
-                            <div class="col-sm-10 offset-sm-2">
-                                <button class="btn btn-secondary">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="form-group row">
+                    <label asp-for="email" class="control-label col-md-3 col-sm-3">Email</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="email" type="email" class="form-control" placeholder="">
+                    </div>
                 </div>
-            </div>
+                <div class="form-group row">
+                    <label asp-for="phone_number" class="control-label col-md-3 col-sm-3">Phone Number</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="phone_number" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9 offset-md-3">
+                        <button asp-controller="Customer" asp-action="Create" type="submit" class="btn btn-primary">Submit</button>
+                        <button asp-controller="Customer" asp-action="Index" type="submit" class="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

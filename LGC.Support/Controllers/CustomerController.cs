@@ -1,27 +1,28 @@
 ﻿using LGC.Suport.Models;
-using LGC.Support.Models;
+using LGC.Support.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace LGC.Support.Controllers
 {
     [Authorize]
+
     public class CustomerController : Controller
     {
-        ApplicationContext _db;
+        private readonly CustomerService _customer;
 
-        public CustomerController(ApplicationContext _database)
+        public CustomerController(CustomerService customer)
         {
-            _db = _database;
+            _customer = customer;
         }
-        public IActionResult Index(CustomerData model)
+        public IActionResult Index()
         {
-            IEnumerable<CustomerData> customers = _db.Customers;
-            return View(customers);
+            var data = _customer.GetAll().Result;
+            return View(data);
         }
+
         public IActionResult Create()
         {
             return View();
@@ -30,65 +31,65 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Create(CustomerData model)
         {
-            if (String.IsNullOrEmpty(model.customer_name))
+            if (String.IsNullOrEmpty(model.name))
             {
-                ModelState.AddModelError("customer_name", "Customer name cannot be empty.");
+                ModelState.AddModelError("name", "Name cannot be empty.");
+                return View(model);
             }
 
-            var result = _db.Customers.Where(w => w.customer_name == model.customer_name).FirstOrDefault();
+            var result = _customer.Create(model).Result;
             if (result != null)
             {
-                ModelState.AddModelError("customer_name", "Customer already exit.");
-                TempData["error"] = "Customer already exit.";
+                ModelState.AddModelError("name", "Customer already exit.");
                 return View();
             }
             else
             {
-                var newCustomer = new CustomerData();
-                newCustomer.customer_name = model.customer_name;
-                newCustomer.address = model.address;
-                newCustomer.contact = model.contact;
-                newCustomer.email = model.email;
-                newCustomer.phone_number = model.phone_number;
-                newCustomer.created_by = "Titharat";
-                newCustomer.updated_by = "Titharat";
-                _db.Customers.Add(newCustomer);
-                _db.SaveChanges();
-                TempData["success"] = "Customer created successfully.";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Customer");
             }
         }
+
         public IActionResult Edit(int? id)
         {
-            if (id == null)
+            var result = _customer.Get(id).Result;
+
+            if (result == null)
             {
                 return NotFound();
             }
-
-            var customer = _db.Customers.Where(w => w.id == id).FirstOrDefault();
-
-            if (customer == null)
-            {
-                return NotFound();
-            }
-            return View(customer);
+            return View(result);
         }
 
         [HttpPost]
         public IActionResult Edit(CustomerData model)
         {
-            if (String.IsNullOrEmpty(model.customer_name))
+            var result = _customer.Update(model).Result;
+            if (result != null)
             {
-                ModelState.AddModelError("customer_name", "Customer name cannot be empty.");
+                return RedirectToAction("Index", "Customer");
             }
+            else
+            {
+                return View();
+            }
+        }
 
-            model.created_by = "Titharat";
-            model.updated_by = "Titharat";
+        public IActionResult Delete(int? id)
+        {
+            var result = _customer.Get(id).Result;
 
-            _db.Customers.Update(model);
-            _db.SaveChanges();
-            TempData["success"] = "Customer updated successfully.";
-            return RedirectToAction("Index");
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(CustomerData model)
+        {
+            var result = _customer.Delete(model).Result;
+            return RedirectToAction("Index", "Customer");
         }
     }
 }

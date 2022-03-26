@@ -3,46 +3,42 @@
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_LoginAndRegisterForm.cshtml";
 }
-
-<partial name="_Notification"/>
-<section class="gradient-custom">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                    <div class="card-body p-5 text-center">
-
-                        <div class="mb-md-5 mt-md-4 pb-5">
-                            <form id="account" method="post">
-                                <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
-                                <p class="text-white-50 mb-5">Please enter your username and password!</p>
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="form-outline form-white mb-4">
-                                    <input asp-for="username" class="form-control" autocomplete="username" aria-required="true" type="email"/>
-                                    <label asp-for="username">Email</label>
-                                    <span asp-validation-for="username" class="text-danger"></span>
-                                </div>
-                                <div class="form-outline form-white mb-4">
-                                    <input asp-for="password" class="form-control" autocomplete="username" aria-required="true" type="password"/>
-                                    <label asp-for="password">Password</label>
-                                    <span asp-validation-for="password" class="text-danger"></span>
-                                </div>
-                                <div class="form-outline form-white mb-4">
-                                    <input asp-for="confirm_password" class="form-control" autocomplete="username" aria-required="true" type="password"/>
-                                    <label asp-for="confirm_password">Confirm Password</label>
-                                    <span asp-validation-for="confirm_password" class="text-danger"></span>
-                                </div>
-                                <span class="text-danger">@Model.error_mess</span>
-                                <br />
-                                <button id="login-submit" type="submit" class="btn btn-outline-light btn-lg px-5">Regiser</button>
-                            </form>
-
-                        </div>
-                        <div>
-                            <p class="mb-0">Already have an account <a asp-controller="Account" asp-action="Login">Login</a></p>
-                        </div>
+<!-- Sign up form -->
+<section class="signup">
+    <div class="container">
+        <div class="signup-content">
+            <div class="signup-form">
+                <h2 class="form-title">Sign up</h2>
+                <form method="POST" class="register-form" id="register-form" asp-controller="Account" asp-action="Register">
+                    <div class="form-group">
+                        <label asp-for="username"><i class="zmdi zmdi-email"></i></label>
+                        <input asp-for="username" type="email" placeholder="Your Email" />
+                        <span asp-validation-for="username" class="text-danger"></span>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label asp-for="first_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                        <input asp-for="first_name" type="text" placeholder="First Name" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="last_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                        <input asp-for="last_name" type="text" placeholder="Last Name" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="password"><i class="zmdi zmdi-lock"></i></label>
+                        <input asp-for="password" type="password" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="confirm_password"><i class="zmdi zmdi-lock-outline"></i></label>
+                        <input asp-for="confirm_password" type="password" placeholder="Repeat your password" />
+                    </div>
+                    <div class="form-group form-button">
+                        <input type="submit" class="form-submit" asp-controller="Account" asp-action="Register" />
+                    </div>
+                </form>
+            </div>
+            <div class="signup-image">
+                <figure><img src="~/LoginAndRegister/images/signup-image.jpg" alt="sing up image"></figure>
+                <a asp-controller="Account" asp-action="Login" class="signup-image-link">I am already member</a>
             </div>
         </div>
     </div>

@@ -12,9 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LGC.Suport
 {
@@ -62,6 +59,8 @@ namespace LGC.Suport
                 return new SqlConnectionFactory(Configuration.GetConnectionString("SupportConnection"));
             });
             services.AddScoped(typeof(UserService));
+            services.AddScoped(typeof(ProductService));
+            services.AddScoped(typeof(CustomerService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

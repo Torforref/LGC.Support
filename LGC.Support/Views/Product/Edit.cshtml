@@ -1,114 +1,63 @@
 ﻿@model ProductData
-
-<partial name="_Notification" />
-<div class="app-main__inner">
-    <div class="app-page-title">
-        <div class="page-title-wrapper">
-            <div class="page-title-heading">
-                <div class="page-title-icon">
-                    <i class="pe-7s-graph text-success">
-                    </i>
+<div class="col-md-8">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Update Product</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <br>
+            <form class="form-horizontal form-label-left" asp-controller="Product" asp-action="Edit">
+                <div class="form-group row ">
+                    <label asp-for="name" class="control-label col-md-3 col-sm-3">Product Name</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="name" type="text" class="form-control" maxlength=20 readonly="readonly">
+                    </div>
+                    <span asp-validation-for="name" class="text-danger"></span>
                 </div>
-                <div>
-                    Form Layouts
-                    <div class="page-title-subheading">
-                        Build whatever layout you need with our Architect framework.
+                <div class="form-group row">
+                    <label asp-for="description" class="control-label col-md-3 col-sm-3">Description</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="description" type="text" class="form-control" placeholder="">
                     </div>
                 </div>
-            </div>
-            <div class="page-title-actions">
-                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
-                    <i class="fa fa-star"></i>
-                </button>
-                <div class="d-inline-block dropdown">
-                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
-                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                            <i class="fa fa-business-time fa-w-20"></i>
-                        </span>
-                        Buttons
-                    </button>
-                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-inbox"></i>
-                                    <span>
-                                        Inbox
-                                    </span>
-                                    <div class="ml-auto badge badge-pill badge-secondary">86</div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-book"></i>
-                                    <span>
-                                        Book
-                                    </span>
-                                    <div class="ml-auto badge badge-pill badge-danger">5</div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-picture"></i>
-                                    <span>
-                                        Picture
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a disabled="" href="javascript:void(0);" class="nav-link disabled">
-                                    <i class="nav-link-icon lnr-file-empty"></i>
-                                    <span>
-                                        File Disabled
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                <div class="form-group row">
+                    <label for="created_at" class="control-label col-md-3 col-sm-3">Date</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input for="created_at" type="text" class="form-control" readonly="readonly" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")">
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="tab-content">
-        <div class="tab-pane tabs-animation fade active show" id="tab-content-0" role="tabpanel">
-            <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Create Product</h5>
-                    <br />
-                    <form class="" asp-controller="Product" asp-action="Edit">
-                        <div class="form-row">
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label asp-for="product_name" class="">Product Name</label>
-                                    <input asp-for="product_name" id="product_name" type="text" class="form-control">
-                                    <span asp-validation-for="product_name" class="text-danger"></span>
-
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="position-relative form-group">
-                                    <label asp-for="description" class="">Description</label>
-                                    <input asp-for="description" id="description" type="text" class="form-control">
-                                    <span asp-validation-for="description" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="position-relative form-group">
-                            <label asp-for="product_category" class="">Product Category</label>
-                            <select asp-for="product_category" id="product_category" class="form-control">
-                                <option value="Printer">Printer</option>
-                                <option value="Scanner">Scanner</option>
-                            </select>
-                        </div>
-
-                        <button class="mt-2 btn btn-primary" type="submit">Update</button>
-                        <button class="mt-2 btn btn-danger" asp-controller="Product" asp-action="Index">Cancel</button>
-                    </form>
+                <div class="form-group row">
+                    <label class="control-label col-md-3 col-sm-3 ">Select Category</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <select asp-for="category" class="form-control">
+                            <option value="NULL">----------</option>
+                            <option value="PRINTER">PRINTER</option>
+                        </select>
+                        <span asp-validation-for="category" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
+                <div class="form-group row">
+                    <label class="control-label col-md-3 col-sm-3 ">Select Brand</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <select asp-for="brand" class="form-control">
+                            <option value="NULL">----------</option>
+                            <option value="TSC">TSC</option>
+                            <option value="HONEYWELL">HONEYWELL</option>
+                            <option value="VENUS">VENUS</option>
+                        </select>
+                        <span asp-validation-for="brand" class="text-danger"></span>
+                    </div>
+                </div>
 
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9 offset-md-3">
+                        <button asp-controller="Product" asp-action="Edit" type="submit" class="btn btn-primary">Submit</button>
+                        <button asp-controller="Product" asp-action="Index" type="submit" class="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </div>
     </div>
 </div>

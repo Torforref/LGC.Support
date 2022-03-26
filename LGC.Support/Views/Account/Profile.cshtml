@@ -1,0 +1,48 @@
+﻿@using LGC.Support.Models
+@model UserData
+
+<div class="col-md-8">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Profile</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <br>
+            <form class="form-horizontal form-label-left" asp-controller="Product" asp-action="Edit">
+                <div class="form-group row ">
+                    <label asp-for="username" class="control-label col-md-3 col-sm-3">Username</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="username" type="text" class="form-control" maxlength=20 readonly="readonly">
+                    </div>
+                    <span asp-validation-for="username" class="text-danger"></span>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="first_name" class="control-label col-md-3 col-sm-3">First Name</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="first_name" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="last_name" class="control-label col-md-3 col-sm-3">Last Name</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="last_name" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="user_is" class="control-label col-md-3 col-sm-3">Position</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input asp-for="user_is" type="text" class="form-control" placeholder="" readonly="readonly">
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9 offset-md-3">
+                        <button asp-controller="Home" asp-action="Index" type="submit" class="btn btn-primary">Submit</button>
+                        <button asp-controller="Home" asp-action="Index" type="submit" class="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

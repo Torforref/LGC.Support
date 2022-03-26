@@ -13,28 +13,43 @@ namespace LGC.Support.Services
         {
             _db = _database;
         }
-        public async Task<UserData> LoginService(string username, string password)
+        public async Task<UserData> LoginService(UserData model)
         {
             using var conn = await _db.CreateConnectionAsync();
-            string _pwd = "qvh/3K34ENe9gmoIAnm1vw==";
-            var datas = conn.Query<UserData>(@"SELECT * FROM Users WHERE (username = @user) AND password = @pass", new { user = username, pass = _pwd }).FirstOrDefault();
+            model.password = EncDecHelper.EncryptData(model.password);
+            var datas = conn.Query<UserData>(@"SELECT * FROM Users WHERE (username = @user) AND password = @pass", new { user = model.username, pass = model.password }).FirstOrDefault();
             return datas;
         }
-        public async Task<UserData> RegisterService(string username, string password)
+        public async Task<UserData> RegisterService(UserData model)
         {
             using var conn = await _db.CreateConnectionAsync();
-            var newUser = new UserData();
-            var datas = conn.Query<UserData>(@"SELECT * FROM Users WHERE (username = @user)", new { user = username }).FirstOrDefault();
+            model.password = EncDecHelper.EncryptData(model.password);
+            var datas = conn.Query<UserData>(@"SELECT * FROM Users WHERE (username = @user)", new { user = model.username }).FirstOrDefault();
             if (datas != null)
             {
                 return datas;
             }
             else
             {
-                var sqlStatement = $@"INSERT INTO Users (username, password, email, create_at) VALUES (@username, @password, @username, @create_at)";
-                await conn.ExecuteAsync(sqlStatement, new { username, password , create_at = DateTime.Now });
+                if (model.username == "admin@logicode.co.th")
+                {
+                    model.user_is = "Admin";
+                }
+                else
+                {
+                    model.user_is = "Staff";
+                }
+                var sqlStatement = $@"INSERT INTO Users (username, password, first_name, last_name, user_is, create_at) VALUES (@username, @password, @first_name, @last_name, @user_is, @create_at)";
+                await conn.ExecuteAsync(sqlStatement, new { model.username, model.password, model.first_name, model.last_name, model.user_is, create_at = DateTime.Now });
                 return datas;
             }
+        }
+
+        public async Task<UserData> Get(int? id)
+        {
+            using var conn = await _db.CreateConnectionAsync();
+            var datas = conn.Query<UserData>(@"SELECT * FROM Products WHERE (id = @id)", new { id }).FirstOrDefault();
+            return datas;
         }
     }
 }
