@@ -1,58 +1,72 @@
 ﻿@model CustomerData
-<div class="col-md-8">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Delete Customer</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-            <br>
-            <form class="form-horizontal form-label-left" asp-controller="Product" asp-action="Form">
-                <div class="form-group row">
-                    <label for="created_at" class="control-label col-md-3 col-sm-3">Date</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input for="created_at" type="text" class="form-control" readonly="readonly" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")">
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Delete Customer</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br>
+                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Customer" asp-action="Delete">
+                    <div class="item form-group">
+                        <label asp-for="created_at" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="created_at" class="date-picker form-control" type="text" required="required" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")" readonly="readonly">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row ">
-                    <label asp-for="name" class="control-label col-md-3 col-sm-3">Product Name</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input asp-for="name" type="text" class="form-control" maxlength=20 readonly="readonly">
+                    <div class="item form-group">
+                        <label asp-for="name" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Customer Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="name" type="text" id="first-name" required="required" class="form-control" readonly="readonly">
+                            <span asp-validation-for="name" class="text-danger"></span>
+                        </div>
                     </div>
-                    <span asp-validation-for="name" class="text-danger"></span>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="address" class="control-label col-md-3 col-sm-3">Address</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input asp-for="address" type="text" class="form-control" placeholder="" readonly="readonly">
+                    <div class="item form-group">
+                        <label asp-for="address" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Address <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="address" type="text" id="last-name" required="required" class="form-control" readonly="readonly">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="contact" class="control-label col-md-3 col-sm-3">Contact</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input asp-for="contact" type="text" class="form-control" placeholder="" readonly="readonly">
+                    <div class="item form-group">
+                        <label asp-for="contact" class="col-form-label col-md-3 col-sm-3 label-align">Contact</label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="contact" class="form-control" type="text" readonly="readonly">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="email" class="control-label col-md-3 col-sm-3">Email</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input asp-for="email" type="email" class="form-control" placeholder="" readonly="readonly">
+                    <div class="item form-group">
+                        <label asp-for="email" class="col-form-label col-md-3 col-sm-3 label-align">Email</label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="email" class="form-control" type="text" readonly="readonly">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="phone_number" class="control-label col-md-3 col-sm-3">Phone Number</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input asp-for="phone_number" type="text" class="form-control" readonly="readonly">
+                    <div class="item form-group">
+                        <label asp-for="phone_number" class="col-form-label col-md-3 col-sm-3 label-align">Phone Number</label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="phone_number" class="form-control" type="text" readonly="readonly">
+                        </div>
                     </div>
-                </div>
-                <div class="ln_solid"></div>
-                <div class="form-group">
-                    <div class="col-md-9 col-sm-9 offset-md-3">
-                        <button asp-controller="Customer" asp-action="Delete" type="submit" class="btn btn-primary">Delete</button>
-                        <button asp-controller="Customer" asp-action="Index" type="submit" class="btn btn-danger">Cancel</button>
+                    <div class="ln_solid"></div>
+                    <div class="item form-group">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                            <button class="btn btn-danger" type="submit" asp-controller="Customer" asp-action="Index">Cancel</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

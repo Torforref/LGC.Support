@@ -33,14 +33,6 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Create(ProductData model)
         {
-            if (String.IsNullOrEmpty(model.name) || model.category != "NULL" || model.brand != "NULL")
-            {
-                ModelState.AddModelError("name", "Name cannot be empty.");
-                ModelState.AddModelError("category", "Category cannot be empty.");
-                ModelState.AddModelError("brand", "Brand cannot be empty.");
-                return View(model);
-            }
-
             var result = _product.Create(model).Result;
             if (result != null)
             {
@@ -67,21 +59,16 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Edit(ProductData model)
         {
-            if (model.category != "NULL" || model.brand != "NULL")
+            var result = _product.Update(model).Result;
+            if (result != null)
             {
-                var result = _product.Update(model).Result;
-                if (result != null)
-                {
-                    return RedirectToAction("Index", "Product");
-                }
+                return RedirectToAction("Index", "Product");
             }
             else
             {
-                ModelState.AddModelError("category", "Category cannot be empty.");
-                ModelState.AddModelError("brand", "Brand cannot be empty.");
-                return View(model);
+                return View();
             }
-            return View();
+
         }
 
         public IActionResult Delete(int? id)

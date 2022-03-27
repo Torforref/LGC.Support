@@ -6,37 +6,15 @@
             </div>
             <div class="" role="main">
                 <div class="">
-                    <div class="page-title">
-                        <div class="title_left">
-                            <h3>Users <small>Some examples to get you started</small></h3>
-                        </div>
-                        <div class="title_right">
-                            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-secondary" type="button">Go!</button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Button Example <small>Users</small></h2>
+                                    <h2>Product List</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li>
                                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">Settings 1</a>
-                                                <a class="dropdown-item" href="#">Settings 2</a>
-                                            </div>
                                         </li>
                                     </ul>
                                     <div class="clearfix"></div>
@@ -47,26 +25,14 @@
                                             <div class="card-box table-responsive">
                                                 <div id="datatable-buttons_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap no-footer">
                                                     <div class="row">
-                                                        <div class="dt-buttons btn-group col-sm-2">
-                                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Copy</span></a>
-                                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>CSV</span></a>
-                                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Excel</span></a>
-                                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>PDF</span></a>
-                                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Print</span></a>
-                                                        </div>
-                                                        <div class="dt-buttons btn-group col-sm-10">
-                                                        </div>
                                                         <div class="col-sm-6">
                                                             <div class="dataTables_length" id="datatable_length">
-                                                                <label>
-                                                                    Show
-                                                                    <select name="datatable_length" aria-controls="datatable" class="form-control input-sm">
-                                                                        <option value="10">10</option>
-                                                                        <option value="25">25</option>
-                                                                        <option value="50">50</option>
-                                                                        <option value="100">100</option>
-                                                                    </select> entries
-                                                                </label>
+                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Copy</span></a>
+                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>CSV</span></a>
+                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Excel</span></a>
+                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>PDF</span></a>
+                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Print</span></a>
+                                                                <a class="btn btn-round btn-primary" tabindex="0" aria-controls="datatable-buttons" asp-controller="Product" asp-action="Create"><i class="fa fa-plus"> Add Product</i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-6">
@@ -75,6 +41,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <br />
                                                     <table id="datatable-buttons" class="table table-striped jambo_table table-bordered dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
                                                         <thead>
                                                             <tr role="row" style="text-align: center">

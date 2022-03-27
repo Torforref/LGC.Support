@@ -11,6 +11,7 @@ namespace LGC.Support.Models
         public string last_name { get; set; }
         public string user_is { get; set; }
         public string create_at { get; set; }
+        public string new_password { get; set; }
         public string confirm_password { get; set; }
         public string error_mess { get; set; }
     }

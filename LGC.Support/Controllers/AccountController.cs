@@ -36,7 +36,9 @@ namespace LGC.Support.Controllers
             if (result != null)
             {
                 var identity = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Name, result.username)
+                    new Claim(ClaimTypes.Name, result.username),
+                    new Claim("UserId", result.id.ToString()),
+                    new Claim("UserFirstName", result.first_name)
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 var principal = new ClaimsPrincipal(identity);
@@ -85,40 +87,27 @@ namespace LGC.Support.Controllers
             }
         }
 
-        public IActionResult Profile(int? id)
+        public IActionResult Profile(int id)
         {
             var result = _user.Get(id).Result;
-
-            if (result == null)
-            {   
-                return NotFound();
-            }
             return View(result);
         }
 
         [HttpPost]
         public IActionResult Profile(UserData model)
         {
-            if (model.password == model.confirm_password)
+            var result = _user.Update(model).Result;
+            if (result != null)
             {
-                var result = _user.RegisterService(model).Result;
-                if (result != null)
-                {
-                    model.error_mess = "Can't create new user account. Username already exists.";
-                    return View(model);
-                }
-                else
-                {
-                    TempData["success"] = "Registered successfully.";
-                    return RedirectToAction("Index", "Home");
-                }
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                model.error_mess = "Password doesn't match. Please try again.";
-                return View(model);
+                return View();
             }
         }
+
+
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

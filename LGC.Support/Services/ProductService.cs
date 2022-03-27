@@ -33,6 +33,7 @@ namespace LGC.Support.Services
         public async Task<ProductData> Create(ProductData model)
         {
             using var conn = await _db.CreateConnectionAsync();
+            model.name = model.name.ToUpper();
             var datas = conn.Query<ProductData>(@"SELECT * FROM Products WHERE (name = @name)", new { model.name }).FirstOrDefault();
             if (datas != null)
             {
@@ -67,6 +68,7 @@ namespace LGC.Support.Services
         public async Task<ProductData> Update(ProductData model)
         {
             using var conn = await _db.CreateConnectionAsync();
+            model.name = model.name.ToUpper();
             var datas = conn.Query<ProductData>(@"SELECT * FROM Products WHERE (id = @id)", new { model.id }).FirstOrDefault();
             if (datas == null)
             {
@@ -74,7 +76,7 @@ namespace LGC.Support.Services
             }
             else
             {
-                var sqlStatement = $@"UPDATE Products SET name = @name, description = @description, category = @category, brand = @brand, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
+                var sqlStatement = @"UPDATE Products SET name = @name, description = @description, category = @category, brand = @brand, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
                 await conn.ExecuteAsync(sqlStatement, new { model.name, model.description, model.category, model.brand, updated_by = "Tithart", updated_at = DateTime.Now, model.id });
                 return datas;
             }
@@ -90,7 +92,7 @@ namespace LGC.Support.Services
             }
             else
             {
-                var sqlStatement = $@"DELETE FROM Products WHERE id = @id";
+                var sqlStatement = @"DELETE FROM Products WHERE id = @id";
                 await conn.ExecuteAsync(sqlStatement, new { model.id });
                 return datas;
             }

@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@{
+    var _userName = User.Identity.Name;
+    var _userID = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == "UserId")
+                .Select(c => c.Value).FirstOrDefault();
+    var _userFName = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == "UserFirstName")
+                .Select(c => c.Value).FirstOrDefault();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -48,7 +58,7 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>John Doe</h2>
+                            <h2>@_userFName</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -113,13 +123,13 @@
                         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                     </div>
                     <nav class="nav navbar-nav">
-                        <ul class=" navbar-right">
+                        <ul class="navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/images/img.jpg" alt="">John Doe
+                                    <img src="~/images/img.jpg" alt="">@_userFName  
                                 </a>
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Profile"> Profile</a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Profile" asp-route-id="@_userID"> Profile</a>
                                     @*<a class="dropdown-item" href="javascript:;"> Settings</a>*@
                                     <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </div>

@@ -1,48 +1,115 @@
-﻿@using LGC.Support.Models
-@model UserData
+﻿@model LGC.Support.Models.UserData
 
-<div class="col-md-8">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Profile</h2>
-            <div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Update Profile</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br>
+                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Account" asp-action="Profile">
+                    <div class="item form-group">
+                        <label asp-for="username" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Username <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="username" class="date-picker form-control" type="text" required="required" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="first_name" class="col-form-label col-md-3 col-sm-3 label-align">
+                            First Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="first_name" type="text" id="first-name" required="required" class="form-control ">
+                            <span asp-validation-for="first_name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="last_name" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Last Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="last_name" type="text" id="last-name" required="required" class="form-control">
+                            <span asp-validation-for="last_name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="user_is" class="col-form-label col-md-3 col-sm-3 label-align">Position</label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="user_is" class="form-control" type="text" readonly="readonly" placeholder="@Model.user_is">
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                    <div class="item form-group">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-danger"> Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="x_content">
-            <br>
-            <form class="form-horizontal form-label-left" asp-controller="Product" asp-action="Edit">
-                <div class="form-group row ">
-                    <label asp-for="username" class="control-label col-md-3 col-sm-3">Username</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input asp-for="username" type="text" class="form-control" maxlength=20 readonly="readonly">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Change Password</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br>
+                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Account" asp-action="ChangePassword">
+                    <div class="item form-group">
+                        <label asp-for="password" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Old Password <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="password" class="date-picker form-control" type="password" required="required">
+                            <span asp-validation-for="confirm_password" class="text-danger"></span>
+                        </div>
                     </div>
-                    <span asp-validation-for="username" class="text-danger"></span>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="first_name" class="control-label col-md-3 col-sm-3">First Name</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input asp-for="first_name" type="text" class="form-control" placeholder="">
+                    <div class="item form-group">
+                        <label asp-for="new_password" class="col-form-label col-md-3 col-sm-3 label-align">
+                            New Password <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="new_password" class="date-picker form-control" type="password" required="required">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="last_name" class="control-label col-md-3 col-sm-3">Last Name</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input asp-for="last_name" type="text" class="form-control" placeholder="">
+                    <div class="item form-group">
+                        <label asp-for="confirm_password" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Confirm Password <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="confirm_password" class="date-picker form-control" type="password" required="required">
+                            <span asp-validation-for="confirm_password" class="text-danger"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="user_is" class="control-label col-md-3 col-sm-3">Position</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input asp-for="user_is" type="text" class="form-control" placeholder="" readonly="readonly">
+                    <div class="ln_solid"></div>
+                    <div class="item form-group">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-danger"> Cancel</a>
+                        </div>
                     </div>
-                </div>
-                <div class="ln_solid"></div>
-                <div class="form-group">
-                    <div class="col-md-9 col-sm-9 offset-md-3">
-                        <button asp-controller="Home" asp-action="Index" type="submit" class="btn btn-primary">Submit</button>
-                        <button asp-controller="Home" asp-action="Index" type="submit" class="btn btn-danger">Cancel</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

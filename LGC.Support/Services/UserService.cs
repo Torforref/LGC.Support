@@ -20,6 +20,7 @@ namespace LGC.Support.Services
             var datas = conn.Query<UserData>(@"SELECT * FROM Users WHERE (username = @user) AND password = @pass", new { user = model.username, pass = model.password }).FirstOrDefault();
             return datas;
         }
+
         public async Task<UserData> RegisterService(UserData model)
         {
             using var conn = await _db.CreateConnectionAsync();
@@ -45,11 +46,21 @@ namespace LGC.Support.Services
             }
         }
 
-        public async Task<UserData> Get(int? id)
+        public async Task<UserData> Get(int id)
         {
             using var conn = await _db.CreateConnectionAsync();
-            var datas = conn.Query<UserData>(@"SELECT * FROM Products WHERE (id = @id)", new { id }).FirstOrDefault();
+            var datas = conn.Query<UserData>(@"SELECT * FROM Users WHERE (id = @id)", new { id }).FirstOrDefault();
             return datas;
         }
+
+        public async Task<UserData> Update(UserData model)
+        {
+            using var conn = await _db.CreateConnectionAsync();
+            var datas = conn.Query<UserData>(@"SELECT * FROM Users WHERE (id = @id)", new { model.id }).FirstOrDefault();
+            var sqlStatement = @"UPDATE Users SET first_name = @first_name, last_name = @last_name WHERE id = @id";
+            await conn.ExecuteAsync(sqlStatement, new { model.first_name, model.last_name, model.id });
+            return datas;
+        }
+
     }
 }

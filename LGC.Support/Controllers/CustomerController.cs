@@ -31,11 +31,6 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Create(CustomerData model)
         {
-            if (String.IsNullOrEmpty(model.name))
-            {
-                ModelState.AddModelError("name", "Name cannot be empty.");
-                return View(model);
-            }
 
             var result = _customer.Create(model).Result;
             if (result != null)

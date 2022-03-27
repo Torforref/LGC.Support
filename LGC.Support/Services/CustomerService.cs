@@ -76,7 +76,7 @@ namespace LGC.Support.Services
             }
             else
             {
-                var sqlStatement = $@"UPDATE Customers SET name = @name, address = @address, contact = @contact, email = @email, phone_number = @phone_number, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
+                var sqlStatement = @"UPDATE Customers SET name = @name, address = @address, contact = @contact, email = @email, phone_number = @phone_number, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
                 await conn.ExecuteAsync(sqlStatement, new { model.name, model.address, model.contact, model.email, model.phone_number, updated_by = "Titharat", updated_at = DateTime.Now, model.id });
                 return datas;
             }
@@ -92,7 +92,7 @@ namespace LGC.Support.Services
             }
             else
             {
-                var sqlStatement = $@"DELETE FROM Customers WHERE id = @id";
+                var sqlStatement = @"DELETE FROM Customers WHERE id = @id";
                 await conn.ExecuteAsync(sqlStatement, new { model.id });
                 return datas;
             }
