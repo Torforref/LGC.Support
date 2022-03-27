@@ -65,7 +65,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id"><i class="fa fa-edit"></i></a>
-                                                        <a class="btn btn-sm btn-danger" asp-controller="Customer" asp-action="Delete" asp-route-id="@customer.id"><i class="fa fa-trash"></i></a>
+                                                        <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@customer.id')" id="@customer.id"><i class="fa fa-trash"></i></button>
                                                     </td>
                                                 </tr>
                                             }
@@ -100,3 +100,41 @@
         </div>
     </div>
 </div>
+
+<script>
+    function ConfirmDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post('@Url.Action("Delete","Customer")',{ id:id }, function(data) {
+                    if (data.result == "ok") {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your customer has been deleted.',
+                            'success',
+                        )
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1500); 
+                        
+                    } else {
+                        Swal.fire({
+                            //position: 'top-end',
+                            type: 'error',
+                            title: data.result,
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }
+                });
+            }
+        })
+    }
+</script>

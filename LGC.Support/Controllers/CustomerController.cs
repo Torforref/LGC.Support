@@ -69,22 +69,18 @@ namespace LGC.Support.Controllers
             }
         }
 
-        public IActionResult Delete(int? id)
-        {
-            var result = _customer.Get(id).Result;
-
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return View(result);
-        }
-
         [HttpPost]
         public IActionResult Delete(CustomerData model)
         {
-            var result = _customer.Delete(model).Result;
-            return RedirectToAction("Index", "Customer");
+            try
+            {
+                var result = _customer.Delete(model).Result;
+                return Json(new { result = "ok" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = ex.Message });
+            }
         }
     }
 }

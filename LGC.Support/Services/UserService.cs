@@ -62,5 +62,23 @@ namespace LGC.Support.Services
             return datas;
         }
 
+        public async Task<UserData> ChangePassword(UserData model)
+        {
+            using var conn = await _db.CreateConnectionAsync();
+            var oldPassword = EncDecHelper.EncryptData(model.password);
+            model.new_password = EncDecHelper.EncryptData(model.new_password);
+            var datas = conn.Query<UserData>(@"SELECT * FROM Users WHERE (id = @id) AND password = @pass", new { model.id, pass = oldPassword }).FirstOrDefault();
+
+            if (datas != null)
+            {
+                var sqlStatement = @"UPDATE Users SET password = @new_password WHERE id = @id";
+                await conn.ExecuteAsync(sqlStatement, new { model.new_password, model.id }); 
+                return datas;
+            }
+            else
+            {
+                return datas;
+            }
+        }
     }
 }

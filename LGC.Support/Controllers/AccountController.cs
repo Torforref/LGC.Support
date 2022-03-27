@@ -22,7 +22,7 @@ namespace LGC.Support.Controllers
         public IActionResult Login()
         {
             var model = new UserData()
-            {
+            {   
                 username = "",
                 password = ""
             };
@@ -38,7 +38,8 @@ namespace LGC.Support.Controllers
                 var identity = new ClaimsIdentity(new[] {
                     new Claim(ClaimTypes.Name, result.username),
                     new Claim("UserId", result.id.ToString()),
-                    new Claim("UserFirstName", result.first_name)
+                    new Claim("UserFirstName", result.first_name),
+                    new Claim("UserLastName", result.last_name)
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 var principal = new ClaimsPrincipal(identity);
@@ -104,6 +105,36 @@ namespace LGC.Support.Controllers
             else
             {
                 return View();
+            }
+        }
+
+        public IActionResult ChangePassword(int id)
+        {
+            var result = _user.Get(id).Result;
+            return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(UserData model)
+        
+        {
+            if (model.new_password == model.confirm_password)
+            {
+                var result = _user.ChangePassword(model).Result;
+                if (result != null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("password", "Incorrect old password.");
+                    return View(model);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("confirm_password", "Password doesn't match. Please try again.");
+                return View(model);
             }
         }
 

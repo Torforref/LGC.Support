@@ -1,5 +1,11 @@
-﻿@model LGC.Support.Models.UserData
-
+﻿@using System.Security.Claims
+@model LGC.Support.Models.UserData
+@{
+    var _userName = User.Identity.Name;
+    var _userID = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == "UserId")
+                .Select(c => c.Value).FirstOrDefault();
+}
 <div class="row">
     <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
@@ -50,6 +56,7 @@
                     <div class="ln_solid"></div>
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
+                            <span class="text-danger">@Model.error_mess</span>
                             <button type="submit" class="btn btn-primary">Update Profile</button>
                             <a asp-controller="Home" asp-action="Index" class="btn btn-danger"> Cancel</a>
                         </div>
@@ -101,6 +108,7 @@
                             <span asp-validation-for="confirm_password" class="text-danger"></span>
                         </div>
                     </div>
+                    <input asp-for="@Model.id" type="hidden" value="@_userID">
                     <div class="ln_solid"></div>
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
