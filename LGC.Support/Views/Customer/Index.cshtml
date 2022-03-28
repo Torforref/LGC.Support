@@ -1,42 +1,33 @@
-﻿<div class="">
-    <div class="clearfix"></div>
+﻿<div class="" role="main">
 
-    <div class="row">
-        <div class="col-md-12 col-sm-12 ">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Customer List</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
+    <div class="container body">
+        <div class="main_container">
+            <div class="top_nav">
+            </div>
+            <div class="" role="main">
+                <div class="">
                     <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class="card-box table-responsive">
-                                <div id="datatable-buttons_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap no-footer">
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Customer List</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="dataTables_length" id="datatable_length">
-                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Copy</span></a>
-                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>CSV</span></a>
-                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Excel</span></a>
-                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>PDF</span></a>
-                                            <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Print</span></a>
-                                            <a class="btn btn-round btn-primary" tabindex="0" aria-controls="datatable-buttons" asp-controller="Customer" asp-action="Create"><i class="fa fa-plus"> Add Customer</i></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div id="datatable_filter" class="dataTables_filter" style="float: right">
-                                                <label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="datatable"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <table id="datatable-buttons" class="table table-striped jambo_table table-bordered dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
-                                        <thead>
+                                        <div class="col-sm-12">
+                                            <div class="card-box table-responsive">
+                                                <div id="datatable-buttons_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap no-footer">
+                                                    <a class="btn btn-round btn-primary" tabindex="0" aria-controls="datatable-buttons" asp-controller="Customer" asp-action="Create"><i class="fa fa-plus"> Add Product</i></a>
+                                                    <table id="datatable-buttons" class="table table-striped jambo_table table-bordered dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
+                                                        <thead>
+                                                            <tr role="row" style="text-align: center">
                                             <tr role="row" style="text-align: center">
                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Name</th>
                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Address</th>
@@ -46,50 +37,34 @@
                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Created At</th>
                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Created By</th>
                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var customer in Model)
-                                            {
-                                                <tr role="row" class="odd">
-                                                    <td class="text-center text-muted"><a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id">@customer.name</a></td>
-                                                    <td class="text-muted">@customer.address</td>
-                                                    <td class="text-center text-muted">@customer.contact</td>
-                                                    <td class="text-center text-muted">@customer.email</td>
-                                                    <td class="text-center">@customer.phone_number</td>
-                                                    <td class="text-center">
-                                                        <div class="badge badge-warning">@customer.created_at</div>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <div class="badge badge-primary">@customer.created_by</div>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id"><i class="fa fa-edit"></i></a>
-                                                        <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@customer.id')" id="@customer.id"><i class="fa fa-trash"></i></button>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                    <div class="dataTables_info" id="datatable-buttons_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
-                                    <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
-                                        <ul class="pagination">
-                                            <li class="paginate_button previous disabled" id="datatable-buttons_previous">
-                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="0" tabindex="0">Previous</a>
-                                            </li>
-                                            <li class="paginate_button active">
-                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="1" tabindex="0">1</a>
-                                            </li>
-                                            <li class="paginate_button ">
-                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="2" tabindex="0">2</a>
-                                            </li>
-                                            <li class="paginate_button ">
-                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="3" tabindex="0">3</a>
-                                            </li>
-                                            <li class="paginate_button next" id="datatable-buttons_next">
-                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="7" tabindex="0">Next</a>
-                                            </li>
-                                        </ul>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var customer in Model)
+                                                            {
+                                                                <tr role="row" class="odd">
+                                                                    <td class="text-center text-muted"><a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id">@customer.name</a></td>
+                                                                    <td class="text-muted">@customer.address</td>
+                                                                    <td class="text-center text-muted">@customer.contact</td>
+                                                                    <td class="text-center text-muted">@customer.email</td>
+                                                                    <td class="text-center">@customer.phone_number</td>
+                                                                    <td class="text-center">
+                                                                        <div class="badge badge-warning">@customer.created_at</div>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <div class="badge badge-primary">@customer.created_by</div>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id"><i class="fa fa-edit"></i></a>
+                                                                        <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@customer.id')" id="@customer.id"><i class="fa fa-trash"></i></button>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +75,6 @@
         </div>
     </div>
 </div>
-
 <script>
     function ConfirmDelete(id) {
         Swal.fire({
@@ -113,17 +87,18 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post('@Url.Action("Delete","Customer")',{ id:id }, function(data) {
+                $.post('@Url.Action("Delete","Customer")', { id: id }, function (data) {
                     if (data.result == "ok") {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your customer has been deleted.',
-                            'success',
-                        )
-                        setTimeout(function(){
+                        Swal.fire({
+                            //position: 'top-end',
+                            icon: 'success',
+                            title: 'Your customer has been deleted.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        setTimeout(function () {
                             location.reload();
-                        }, 1500); 
-                        
+                        }, 2000);
                     } else {
                         Swal.fire({
                             //position: 'top-end',

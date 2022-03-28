@@ -33,6 +33,7 @@ namespace LGC.Support.Services
         public async Task<CustomerData> Create(CustomerData model)
         {
             using var conn = await _db.CreateConnectionAsync();
+            model.name = model.name.ToUpper();
             var datas = conn.Query<CustomerData>(@"SELECT * FROM Customers WHERE (name = @name)", new { model.name }).FirstOrDefault();
             if (datas != null)
             {

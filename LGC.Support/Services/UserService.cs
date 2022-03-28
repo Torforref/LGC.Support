@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using LGC.Support.Models;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,6 +26,9 @@ namespace LGC.Support.Services
         {
             using var conn = await _db.CreateConnectionAsync();
             model.password = EncDecHelper.EncryptData(model.password);
+            TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
+            model.first_name = myTI.ToTitleCase(model.first_name);
+            model.last_name = myTI.ToTitleCase(model.last_name);
             var datas = conn.Query<UserData>(@"SELECT * FROM Users WHERE (username = @user)", new { user = model.username }).FirstOrDefault();
             if (datas != null)
             {
@@ -32,6 +36,7 @@ namespace LGC.Support.Services
             }
             else
             {
+
                 if (model.username == "admin@logicode.co.th")
                 {
                     model.user_is = "Admin";

@@ -22,7 +22,7 @@ namespace LGC.Support.Controllers
         public IActionResult Login()
         {
             var model = new UserData()
-            {   
+            {
                 username = "",
                 password = ""
             };
@@ -48,12 +48,11 @@ namespace LGC.Support.Controllers
                     IsPersistent = true,
                     ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(3000)
                 });
-
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                model.error_mess = "Invid Username / Password ";
+                TempData["ErrorMessage"] = "Invalid Username / Password";
                 return View(model);
             }
 
@@ -67,25 +66,34 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Register(UserData model)
         {
-            if (model.password == model.confirm_password)
+            try
             {
-                var result = _user.RegisterService(model).Result;
-                if (result != null)
+                if (model.password == model.confirm_password)
                 {
-                    model.error_mess = "Can't create new user account. Username already exists.";
-                    return View(model);
+                    var result = _user.RegisterService(model).Result;
+                    if (result != null)
+                    {
+                        TempData["ErrorMessage"] = "Username is duplicate.";
+                        return View(model);
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Registered successfully.";
+                        return RedirectToAction("Login");
+                    }
                 }
                 else
                 {
-                    TempData["success"] = "Registered successfully.";
-                    return RedirectToAction("Index", "Home");
+                    TempData["ErrorMessage"] = "Password doesn't match. Please try again.";
+                    return View(model);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                model.error_mess = "Password doesn't match. Please try again.";
+                TempData["ErrorMessage"] = ex.Message;
                 return View(model);
             }
+
         }
 
         public IActionResult Profile(int id)
@@ -100,7 +108,7 @@ namespace LGC.Support.Controllers
             var result = _user.Update(model).Result;
             if (result != null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -116,24 +124,24 @@ namespace LGC.Support.Controllers
 
         [HttpPost]
         public IActionResult ChangePassword(UserData model)
-        
+
         {
             if (model.new_password == model.confirm_password)
             {
                 var result = _user.ChangePassword(model).Result;
                 if (result != null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    ModelState.AddModelError("password", "Incorrect old password.");
+                    TempData["ErrorMessage"] = "Incorrect old password.";
                     return View(model);
                 }
             }
             else
             {
-                ModelState.AddModelError("confirm_password", "Password doesn't match. Please try again.");
+                TempData["ErrorMessage"] = "New password doesn't match. Please try again.";
                 return View(model);
             }
         }

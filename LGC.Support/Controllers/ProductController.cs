@@ -33,15 +33,24 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Create(ProductData model)
         {
-            var result = _product.Create(model).Result;
-            if (result != null)
+            try
             {
-                ModelState.AddModelError("name", "Product already exit.");
-                return View();
+                var result = _product.Create(model).Result;
+                if (result != null)
+                {
+                    TempData["ErrorMessage"] = "Product is duplicate.";
+                    return View(model);
+                }
+                else
+                {
+                    TempData["Message"] = "Product Created!";
+                    return RedirectToAction("Index");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Product");
+                TempData["ErrorMessage"] = ex.Message;
+                return View(model);
             }
         }
 
@@ -59,14 +68,24 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Edit(ProductData model)
         {
+
             var result = _product.Update(model).Result;
-            if (result != null)
+            try
             {
-                return RedirectToAction("Index", "Product");
+                if (result != null)
+                {
+                    TempData["Message"] = "Product Updated!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return View(model);
             }
 
         }

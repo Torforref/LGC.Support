@@ -32,15 +32,24 @@ namespace LGC.Support.Controllers
         public IActionResult Create(CustomerData model)
         {
 
-            var result = _customer.Create(model).Result;
-            if (result != null)
+            try
             {
-                ModelState.AddModelError("name", "Customer already exit.");
-                return View();
+                var result = _customer.Create(model).Result;
+                if (result != null)
+                {
+                    TempData["ErrorMessage"] = "Customer is duplicate.";
+                    return View(model);
+                }
+                else
+                {
+                    TempData["Message"] = "Customer Created!";
+                    return RedirectToAction("Index");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Customer");
+                TempData["ErrorMessage"] = ex.Message;
+                return View(model);
             }
         }
 
@@ -59,13 +68,22 @@ namespace LGC.Support.Controllers
         public IActionResult Edit(CustomerData model)
         {
             var result = _customer.Update(model).Result;
-            if (result != null)
+            try
             {
-                return RedirectToAction("Index", "Customer");
+                if (result != null)
+                {
+                    TempData["Message"] = "Customer Updated!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return View(model);
             }
         }
 

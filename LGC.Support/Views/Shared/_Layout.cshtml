@@ -49,11 +49,24 @@
     <link href="~/Master/vendors/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
     <link href="~/Master/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
 
-
     <!-- pnotify -->
     <link href="~/Master/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
     <link href="~/Master/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     <link href="~/Master/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+    <!-- datatables -->
+    <link href="~/Master/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Form -->
+    <link href="~/Master/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/starrr/dist/starrr.css" rel="stylesheet">
 
 </head>
 
@@ -95,7 +108,10 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a asp-controller="Job" asp-action="Index"><i class="fa fa-newspaper-o"></i> Job Service<span></span></a>
+                                    <a><i class="fa fa-newspaper-o"></i> Job Service <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a asp-controller="Job" asp-action="Index">Job Service List</a></li>
+                                    </ul>
                                 </li>
                                 <li>
                                     <a><i class="fa fa-male"></i> Customer <span class="fa fa-chevron-down"></span></a>
@@ -280,12 +296,92 @@
     <script src="~/Master/build/js/custom.min.js"></script>
 
     <!-- FullCalendar -->
-    <script src="~/Master/vendors/moment/min/moment.min.js"></script>
     <script src="~/Master/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
 
     <!-- pnotify -->
     <script src="~/Master/vendors/pnotify/dist/pnotify.js"></script>
     <script src="~/Master/vendors/pnotify/dist/pnotify.buttons.js"></script>
     <script src="~/Master/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+    <!-- datatables -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="~/Master/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Master/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Master/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/Master/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/Master/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/Master/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+    <!-- Form -->
+    <script src="~/Master/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Master/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="~/Master/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="~/Master/vendors/google-code-prettify/src/prettify.js"></script>
+    <script src="~/Master/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <script src="~/Master/vendors/switchery/dist/switchery.min.js"></script>
+    <script src="~/Master/vendors/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/Master/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <script src="~/Master/vendors/autosize/dist/autosize.min.js"></script>
+    <script src="~/Master/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <script src="~/Master/vendors/starrr/dist/starrr.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var _message = "@TempData["Message"]";
+
+            if (_message.length > 0 && _message != "" && _message != undefined) {
+                Swal.fire({
+                    //position: 'top-end',
+                    icon: 'success',
+                    title: _message,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                "@TempData.Remove("Message")";
+            }
+
+            var _errormessage = "@TempData["ErrorMessage"]";
+            if (_errormessage.length > 0 && _errormessage != "" && _errormessage != undefined) {
+
+                Swal.fire({
+                    //position: 'top-end',
+                    icon: 'error',
+                    title: _errormessage,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                "@TempData.Remove("ErrorMessage")";
+            }
+
+            var _notimessage = "@TempData["NotiMessage"]";
+
+            if (_notimessage.length > 0 && _notimessage != "" && _notimessage != undefined) {
+
+                Swal.fire({
+                    //position: 'top-end',
+                    icon: 'info',
+                    title: _notimessage,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                "@TempData.Remove("NotiMessage")";
+            }
+
+        });
+    </script>
+
 </body>
 </html>

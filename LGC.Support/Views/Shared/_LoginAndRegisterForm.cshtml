@@ -12,6 +12,16 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="~/LoginAndRegister/css/style.css">
+
+    <!-- sweetalert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Form -->
+    <link href="~/Master/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/starrr/dist/starrr.css" rel="stylesheet">
+
 </head>
 <body>
     <div class="main">
@@ -22,6 +32,58 @@
     <!-- JS -->
     <script src="~/LoginAndRegister/vendor/jquery/jquery.min.js"></script>
     <script src="~/LoginAndRegister/js/main.js"></script>
+    <!-- sweetalert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @RenderSection("scripts", required: false)
+
+        <script>
+        $(document).ready(function () {
+
+            var _message = "@TempData["Message"]";
+
+            if (_message.length > 0 && _message != "" && _message != undefined) {
+                Swal.fire({
+                    //position: 'top-end',
+                    icon: 'success',
+                    title: _message,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                "@TempData.Remove("Message")";
+            }
+
+            var _errormessage = "@TempData["ErrorMessage"]";
+            if (_errormessage.length > 0 && _errormessage != "" && _errormessage != undefined) {
+
+                Swal.fire({
+                    //position: 'top-end',
+                    icon: 'error',
+                    title: _errormessage,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                "@TempData.Remove("ErrorMessage")";
+            }
+
+            var _notimessage = "@TempData["NotiMessage"]";
+
+            if (_notimessage.length > 0 && _notimessage != "" && _notimessage != undefined) {
+
+                Swal.fire({
+                    //position: 'top-end',
+                    icon: 'info',
+                    title: _notimessage,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                "@TempData.Remove("NotiMessage")";
+            }
+
+        });
+    </script>
+
 </body>
 </html>

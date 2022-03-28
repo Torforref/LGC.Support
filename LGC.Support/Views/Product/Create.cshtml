@@ -29,7 +29,6 @@
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                             <input asp-for="name" type="text" required="required" class="form-control">
-                            <span asp-validation-for="name" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="item form-group">
@@ -67,12 +66,7 @@
                     <div class="ln_solid"></div>
                     <div class="item form-group">
                         <diqv class="col-md-6 col-sm-6 offset-md-3">
-                            <button type="submit" class="btn btn-primary" onclick="new PNotify({
-                                  title: 'Product created successfully.',
-                                  text: 'That thing that you were trying to do worked!',
-                                  type: 'success',
-                                  styling: 'bootstrap3'
-                              });">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                             <a asp-controller="Product" asp-action="Index" class="btn btn-danger"> Cancel</a>
                         </diqv>
                     </div>

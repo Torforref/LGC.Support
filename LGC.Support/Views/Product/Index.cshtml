@@ -24,24 +24,7 @@
                                         <div class="col-sm-12">
                                             <div class="card-box table-responsive">
                                                 <div id="datatable-buttons_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap no-footer">
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="dataTables_length" id="datatable_length">
-                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Copy</span></a>
-                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>CSV</span></a>
-                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Excel</span></a>
-                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>PDF</span></a>
-                                                                <a class="btn btn-round btn-info" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Print</span></a>
-                                                                <a class="btn btn-round btn-primary" tabindex="0" aria-controls="datatable-buttons" asp-controller="Product" asp-action="Create"><i class="fa fa-plus"> Add Product</i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div id="datatable_filter" class="dataTables_filter" style="float: right">
-                                                                <label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="datatable"></label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <br />
+                                                    <a class="btn btn-round btn-primary" tabindex="0" aria-controls="datatable-buttons" asp-controller="Product" asp-action="Create"><i class="fa fa-plus"> Add Product</i></a>
                                                     <table id="datatable-buttons" class="table table-striped jambo_table table-bordered dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
                                                         <thead>
                                                             <tr role="row" style="text-align: center">
@@ -85,26 +68,6 @@
                                                             }
                                                         </tbody>
                                                     </table>
-                                                    <div class="dataTables_info" id="datatable-buttons_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
-                                                    <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
-                                                        <ul class="pagination">
-                                                            <li class="paginate_button previous disabled" id="datatable-buttons_previous">
-                                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="0" tabindex="0">Previous</a>
-                                                            </li>
-                                                            <li class="paginate_button active">
-                                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="1" tabindex="0">1</a>
-                                                            </li>
-                                                            <li class="paginate_button ">
-                                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="2" tabindex="0">2</a>
-                                                            </li>
-                                                            <li class="paginate_button ">
-                                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="3" tabindex="0">3</a>
-                                                            </li>
-                                                            <li class="paginate_button next" id="datatable-buttons_next">
-                                                                <a href="#" aria-controls="datatable-buttons" data-dt-idx="7" tabindex="0">Next</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,7 +81,6 @@
         </div>
     </div>
 </div>
-
 <script>
     function ConfirmDelete(id) {
         Swal.fire({
@@ -131,17 +93,18 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post('@Url.Action("Delete","Product")',{ id:id }, function(data) {
+                $.post('@Url.Action("Delete","Product")', { id: id }, function (data) {
                     if (data.result == "ok") {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your product has been deleted.',
-                            'success',
-                        )
-                        setTimeout(function(){
+                        Swal.fire({
+                            //position: 'top-end',
+                            icon: 'success',
+                            title: 'Your product has been deleted.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        setTimeout(function () {
                             location.reload();
-                        }, 1500); 
-                        
+                        }, 2000);
                     } else {
                         Swal.fire({
                             //position: 'top-end',
