@@ -17,10 +17,10 @@
                 <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Customer" asp-action="Create">
                     <div class="item form-group">
                         <label asp-for="created_at" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Date <span class="required">*</span>
+                            Date
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="created_at" class="date-picker form-control" type="text" required="required" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")" readonly="readonly">
+                            <input asp-for="created_at" class="date-picker form-control" type="text" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")" readonly="readonly">
                         </div>
                     </div>
                     <div class="item form-group">
