@@ -61,11 +61,15 @@
     <link href="~/Master/vendors/starrr/dist/starrr.css" rel="stylesheet">
 
     <!-- datatable -->
- <link href="~/Master/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Master/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="~/Master/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="~/Master/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="~/Master/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/Master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 </head>
 
@@ -110,6 +114,7 @@
                                     <a><i class="fa fa-newspaper-o"></i> Job Service <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a asp-controller="Job" asp-action="Index">Job Service List</a></li>
+                                        <li><a asp-controller="Job" asp-action="Create">Create Job Service</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -316,7 +321,7 @@
     <script src="~/Master/vendors/starrr/dist/starrr.js"></script>
 
     <!-- datatables -->
-<script src="~/Master/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Master/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Master/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Master/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <script src="~/Master/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>

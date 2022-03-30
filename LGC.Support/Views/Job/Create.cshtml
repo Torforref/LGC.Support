@@ -1,287 +1,136 @@
-﻿<div class="app-main__inner">
-    <div class="app-page-title">
-        <div class="page-title-wrapper">
-            <div class="page-title-heading">
-                <div class="page-title-icon">
-                    <i class="pe-7s-graph text-success">
-                    </i>
-                </div>
-                <div>
-                    Form Layouts
-                    <div class="page-title-subheading">
-                        Build whatever layout you need with our Architect framework.
-                    </div>
-                </div>
+﻿@using LGC.Support;
+@model dynamic
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Create Job Service</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
             </div>
-            <div class="page-title-actions">
-                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
-                    <i class="fa fa-star"></i>
-                </button>
-                <div class="d-inline-block dropdown">
-                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
-                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                            <i class="fa fa-business-time fa-w-20"></i>
-                        </span>
-                        Buttons
-                    </button>
-                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-inbox"></i>
-                                    <span>
-                                        Inbox
-                                    </span>
-                                    <div class="ml-auto badge badge-pill badge-secondary">86</div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-book"></i>
-                                    <span>
-                                        Book
-                                    </span>
-                                    <div class="ml-auto badge badge-pill badge-danger">5</div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-picture"></i>
-                                    <span>
-                                        Picture
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a disabled="" href="javascript:void(0);" class="nav-link disabled">
-                                    <i class="nav-link-icon lnr-file-empty"></i>
-                                    <span>
-                                        File Disabled
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+            <div class="x_content">
+                <br>
+
+
+                @*                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Job" asp-action="Create">
+                    <div class="item form-group">
+                    <label for="@Model.job.created_at" class="col-form-label col-md-3 col-sm-3 label-align">
+                    Date
+                    </label>
+                    <div class="col-md-6 col-sm-6 ">
+                    <input for="@Model.job.created_at" class="date-picker form-control" type="text" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")" readonly="readonly">
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="tab-content">
-        <div class="tab-pane tabs-animation fade active show" id="tab-content-0" role="tabpanel">
-            <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Create Job Service</h5>
-                    <br />
-                    <form class="">
-                        <div>
-                            <div class="form-row" id="JobServiceRow">
-                                <div class="position-relative form-group col-md-6">
-                                    <label for="exampleSelect" class="">Job Number</label>
-                                    <select name="select" id="exampleSelect" disabled class="form-control">
-                                        <option>LGCSP2022/01</option>
-                                    </select>
-                                </div>
-                                <div class="position-relative form-group col-md-6">
-                                    <label for="exampleSelect" class="">Wating to add date picker</label>
-                                    <select name="select" id="exampleSelect" class="form-control">
-                                        <option>@DateTime.Now</option>
-                                    </select>
-                                </div>
-                                <div class="position-relative form-group col-md-6">
-                                    <label for="exampleSelect" class="">Service Type</label>
-                                    <select name="select" id="exampleSelect" class="form-control">
-                                        <option>PM : Preventive Maintenance</option>
-                                        <option>MA : Maintenance Agreement</option>
-                                    </select>
-                                </div>
-                                <div class="position-relative form-group col-md-6">
-                                    <label for="exampleSelect" class="">Select Customer</label>
-                                    <select name="select" id="exampleSelect" class="form-control">
-                                        <option>Logicode 1</option>
-                                        <option>Logicode 2</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="CustomerContact" class="">Contact</label>
-                                        <input name="contact" id="contact" type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="email" class="">Email</label>
-                                        <input name="email" id="email" type="email" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="phone_number" class="">Phone number</label>
-                                        <input name="phone_number" id="phone_number" type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="position-relative form-group col-md-6">
-                                    <label for="address" class="">Address</label>
-                                    <input name="address" id="address" type="text" class="form-control">
-                                </div>
-                            </div>
+                    </div>
+                    <div class="item form-group">
+                    <label for="@Model.job.job_number" class="col-form-label col-md-3 col-sm-3 label-align">
+                    Job Service No. <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 ">
+                    <input for="@Model.job.job_number" type="text" required="required" class="form-control" readonly="readonly">
+                    </div>
+                    </div>
+                    <div class="item form-group">
+                    <label for="@Model.job.service_type" class="col-form-label col-md-3 col-sm-3 label-align">
+                    Select Service <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6">
+                    <select for="@Model.job.service_type" class="form-control" required="required">
+                    <option value=@null>---- Select ----</option>
+                    <option value="PM">PM : Preventive Maintenance</option>
+                    <option value="MA">MA : Maintenance Agreement</option>
+                    </select>
+                    </div>
+                    </div>
+                    <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                    On Site Date <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 ">
+                    <input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                    <script>
+                    function timeFunctionLong(input) {
+                    setTimeout(function() {
+                    input.type = 'text';
+                    }, 60000);
+                    }
+                    </script>
+                    </div>
+                    </div>
+                    <div class="item form-group">
+                    <label for="@Model.job.customer_po" class="col-form-label col-md-3 col-sm-3 label-align">
+                    Customer PO No. <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 ">
+                    <input for="@Model.job.customer_po" type="text" required="required" class="form-control">
+                    </div>
+                    </div>
+                    <div class="form-group row">
+                    <label for="@Model.job.description" class="col-form-label col-md-3 col-sm-3 label-align">
+                    Description <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-9 ">
+                    <textarea for="@Model.job.description" class="form-control" rows="3"></textarea>
+                    </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                    <div class="item form-group">
+                    <diqv class="col-md-6 col-sm-6 offset-md-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a asp-controller="Job" asp-action="Index" class="btn btn-danger"> Cancel</a>
+                    </diqv>
+                    </div>
+                    </form>*@
 
 
 
-
-
-
-
-
-
-                            <div class="position-relative form-row col-md-12" id="AddProductToJobService">
-                                @{
-                                    var product_number = 0;
-                                    var SelectProductName_ = "SelectProductName_" + product_number;
-                                    var SelectProductQty_ = "SelectProductQty_" + product_number;
-                                    var ProductSN_ = "ProductSN_" + product_number;
-                                }
-                                <div class="position-relative col-md-5 form-group">
-                                    <label for="exampleSelect" class="">Select Product</label>
-                                    <select name="select" id="@SelectProductName_" class="form-control">
-                                        <option>--- Select Product---</option>
-                                        <option>TSC DA210</option>
-                                        <option>CIP 1564A</option>
-                                        <option>HNW 1950G-HD</option>
-                                        <option>VENUS XPRT085</option>
-                                    </select>
-                                </div>
-                                <div class="position-relative col-md-1 form-group">
-                                    <label for="exampleSelect">Qty.</label>
-                                    <select name="SelectProductQty" id="@SelectProductQty_" class="form-control" onchange="HandleSelectProductQty(event)">
-                                        @for (var i = 1; i<100; i++)
-                                        {
-                                            <option value="@i">@i</option>
-                                        }
-                                    </select>
-                                </div>
-
-                                <div class="position-relative col-md-5 form-group" id="@ProductSN_">
-                                    <label for="" class="">Serial Number</label>
-                                    <input type="text" class="form-control">
-                                </div>
-
-
-                                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow btn btn-danger form-group" data-original-title="Delete" style="margin-top: 30px; margin-left: 25px">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                                
-                                <script>
-                                    function HandleSelectProductQty(event) {
-                                        var selectElement = event.target;
-                                        var value = selectElement.value;
-                                        
-                                        document.getElementById("@ProductSN_").innerHTML = '';
-                                       for (var i = 0; i<value; i++)
-                                        {
-                                            document.getElementById("@ProductSN_").innerHTML += '<label for="" class="" id="">Serial Number No.' + (i+1) + '</label><input type="text" class="form-control">';
-                                        }
-                                    }
-                                </script>
-
-                            </div>
-                        </div>
-
-                        <h5>Total Qty. ###</h5>
-
-                        <div>
-                            <button onclick="AddAnotherProduct()" type="button" class="mt-2 btn btn-dark">Add another product</button>
-                        </div>
-
-                        <script>
-                            function AddAnotherProduct() {
-                                @{
-                                    product_number += 1;
-                                    SelectProductName_ = "SelectProductName_" + product_number;
-                                    SelectProductQty_ = "SelectProductQty_" + product_number;
-                                    ProductSN_ = "ProductSN_" + product_number;
-                                }
-                                document.getElementById("AddProductToJobService").innerHTML += '<div class="position-relative col-md-5"><label for="exampleSelect" class="">Select Product</label><select name="select" id="@SelectProductName_" class="form-control"><option>--- Select Product---</option><option>TSC DA210</option><option>CIP 1564A</option> <option>HNW 1950G-HD</option> <option>VENUS XPRT085</option></select></div><div class="position-relative col-md-1"><label for="exampleSelect">Qty.</label><select name="SelectProductQty" id="@SelectProductQty_" class="form-control" onchange="HandleSelectProductQty(event)">@for (var i = 1; i<100; i++){<option value="@i">@i</option> }</select> </div> <div class="position-relative col-md-5" id="@ProductSN_"><label for="" class="" >Serial Number</label> <input type="text" class="form-control"> </div><button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow btn btn-danger" data-original-title="Delete" style="margin: 33px 33px"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                        Select Service <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6">
+                        <select class="form-control select_page" required="required">
+                            @foreach (ProductData product in Model.product)
+                            {
+                                <option value="@product.name">@product.name</option>
                             }
-                        </script>
-
-                        <br />
-                        <br />
-                        <button class="mt-2 btn btn-primary" type="submit">Submit</button>
-
-
-                                
-
-
-
-
-
-
-
-
-                    </form>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-        </div>
-        <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
-            <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <h5 class="card-title">Grid</h5>
-                    <form class="">
-                        <div class="position-relative row form-group">
-                            <label for="exampleEmail" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10"><input name="email" id="exampleEmail" type="email" class="form-control"></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="examplePassword" class="col-sm-2 col-form-label">Password</label>
-                            <div class="col-sm-10"><input name="password" id="examplePassword" type="password" class="form-control"></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="exampleSelect" class="col-sm-2 col-form-label">Select</label>
-                            <div class="col-sm-10"><select name="select" id="exampleSelect" class="form-control"></select></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="exampleSelectMulti" class="col-sm-2 col-form-label">Select Multiple</label>
-                            <div class="col-sm-10"><select multiple="" name="selectMulti" id="exampleSelectMulti" class="form-control"></select></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="exampleText" class="col-sm-2 col-form-label">Text Area</label>
-                            <div class="col-sm-10"><textarea name="text" id="exampleText" class="form-control"></textarea></div>
-                        </div>
-                        <div class="position-relative row form-group">
-                            <label for="exampleFile" class="col-sm-2 col-form-label">File</label>
-                            <div class="col-sm-10">
-                                <input name="file" id="exampleFile" type="file" class="form-control-file">
-                                <small class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-                            </div>
-                        </div>
-                        <fieldset class="position-relative row form-group">
-                            <legend class="col-form-label col-sm-2">Radio Buttons</legend>
-                            <div class="col-sm-10">
-                                <div class="position-relative form-check"><label class="form-check-label"><input name="radio2" type="radio" class="form-check-input"> Option one is this and that—be sure to include why it's great</label></div>
-                                <div class="position-relative form-check">
-                                    <label class="form-check-label">
-                                        <input name="radio2" type="radio" class="form-check-input"> Option two can be something else and selecting it will deselect option
-                                        one
-                                    </label>
-                                </div>
-                                <div class="position-relative form-check disabled"><label class="form-check-label"><input name="radio2" disabled="" type="radio" class="form-check-input"> Option three is disabled</label></div>
-                            </div>
-                        </fieldset>
-                        <div class="position-relative row form-group">
-                            <label for="checkbox2" class="col-sm-2 col-form-label">Checkbox</label>
-                            <div class="col-sm-10">
-                                <div class="position-relative form-check"><label class="form-check-label"><input id="checkbox2" type="checkbox" class="form-check-input"> Check me out</label></div>
-                            </div>
-                        </div>
-                        <div class="position-relative row form-check">
-                            <div class="col-sm-10 offset-sm-2">
-                                <button class="btn btn-secondary">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                        Select Service <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6">
+                        <select class="form-control select_page" required="required">
+                            @foreach (CustomerData customer in Model.customer)
+                            {
+                                <option value="@customer.name">@customer.name</option>
+                            }
+                        </select>
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+@section Scripts{
+<script>
+
+        $(document).ready(function() {
+        $(".select_page").select2();
+    });
+
+
+</script>
+}
+

@@ -11,7 +11,7 @@
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Customer List &emsp;</h2>
+                                    <h2 style="font-weight: bold">Customer List &emsp;</h2>
                                     <a class="btn-sm btn-dark" tabindex="0" aria-controls="datatable-buttons" asp-controller="Customer" asp-action="Create"><i class="fa fa-plus"> Add</i></a>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li>
@@ -26,8 +26,7 @@
                                             <div class="card-box table-responsive">
                                            <table id="myTable" class="table table-striped table-bordered" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
                                                         <thead>
-                                                            <tr role="row" style="text-align: center">
-                                                            <tr role="row" style="text-align: center">
+                                                            <tr role="row" style="text-align: center; background-color: #4B5F71; color: #E9EDEF">
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Name</th>
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Address</th>
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Contact</th>
@@ -39,26 +38,26 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach (var customer in Model)
-                                                            {
-                                                                <tr role="row" class="odd">
-                                                                    <td class="text-center text-muted"><a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id">@customer.name</a></td>
-                                                                    <td class="text-muted">@customer.address</td>
-                                                                    <td class="text-center text-muted">@customer.contact</td>
-                                                                    <td class="text-center text-muted">@customer.email</td>
-                                                                    <td class="text-center">@customer.phone_number</td>
-                                                                    <td class="text-center">
-                                                                        <div class="badge badge-warning">@customer.created_at</div>
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        <div class="badge badge-primary">@customer.created_by</div>
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id"><i class="fa fa-edit"></i></a>
-                                                                        <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@customer.id')" id="@customer.id"><i class="fa fa-trash"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                            }
+                                                        @foreach (var customer in Model)
+                                                        {
+                                                                    <tr role="row" class="odd">
+                                                                        <td class="text-center text-muted"><a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id">@customer.name</a></td>
+                                                                        <td class="text-muted">@customer.address</td>
+                                                                        <td class="text-center text-muted">@customer.contact</td>
+                                                                        <td class="text-center text-muted">@customer.email</td>
+                                                                        <td class="text-center">@customer.phone_number</td>
+                                                                        <td class="text-center">
+                                                                            <div class="badge badge-warning">@customer.created_at</div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <div class="badge badge-primary">@customer.created_by</div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id"><i class="fa fa-edit"></i></a>
+                                                                            <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@customer.id')" id="@customer.id"><i class="fa fa-trash"></i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                        }
                                                         </tbody>
                                                     </table>
                                             </div>
@@ -77,25 +76,25 @@
 @section Scripts{
 <script>
 
-    $(function() {
-      $("#myTable").length && $("#myTable").DataTable({
-                        dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>"+
-"<'row'<'col-sm-12'tr>>" +
-"<'row'<'col-sm-5'i><'col-sm-7'p>>",
-                          lengthChange: false,
-                        buttons: [{
-                            extend: "copy",
-                            className: "btn-sm  btn-dark"
-                        }, {
-                            extend: "csv",
-                            className: "btn-sm btn-dark"
-                        },{
-                              extend: 'excelHtml5',
-                            className: "btn-sm btn-dark"
-                        }],
-                        responsive: !0
-                    })
-});
+    $(function () {
+        $("#myTable").length && $("#myTable").DataTable({
+            dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+            lengthChange: false,
+            buttons: [{
+                extend: "copy",
+                className: "btn-sm  btn-dark"
+            }, {
+                extend: "csv",
+                className: "btn-sm btn-dark"
+            }, {
+                extend: 'excelHtml5',
+                className: "btn-sm btn-dark"
+            }],
+            responsive: !0
+        })
+    });
 
 
     function ConfirmDelete(id) {

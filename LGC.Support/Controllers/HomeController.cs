@@ -21,9 +21,16 @@ namespace LGC.Suport.Controllers
         {
             return View();
         }
+
         public IActionResult Calendar()
         {
             return View();
+        }
+
+        [Route("/Home/HandleError/{code:int}")]
+        public IActionResult HandleError(int code)
+        {
+            return View("~/Views/Shared/HandleError.cshtml");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

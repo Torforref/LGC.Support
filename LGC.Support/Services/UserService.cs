@@ -14,6 +14,7 @@ namespace LGC.Support.Services
         {
             _db = _database;
         }
+
         public async Task<UserData> LoginService(UserData model)
         {
             using var conn = await _db.CreateConnectionAsync();

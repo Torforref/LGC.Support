@@ -61,11 +61,15 @@ namespace LGC.Suport
             services.AddScoped(typeof(UserService));
             services.AddScoped(typeof(ProductService));
             services.AddScoped(typeof(CustomerService));
+            services.AddScoped(typeof(JobService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStatusCodePages();
+            app.UseStatusCodePagesWithReExecute("/Home/HandleError/{0}");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,6 +80,7 @@ namespace LGC.Suport
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
