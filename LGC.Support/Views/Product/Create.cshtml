@@ -28,7 +28,7 @@
                             Product Name <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="name" type="text" required="required" class="form-control">
+                            <input asp-for="name" type="text" required="required" class="form-control" maxlength="20">
                         </div>
                     </div>
                     <div class="item form-group">
@@ -44,7 +44,7 @@
                             Select Category <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <select asp-for="category" class="form-control" required="required">
+                            <select asp-for="category" class="form-control select_page" required="required">
                                 <option value=@null>---- Select ----</option>
                                 <option value="PRINTER">PRINTER</option>
                             </select>
@@ -55,7 +55,7 @@
                             Select Brand <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6">
-                            <select asp-for="brand" class="form-control" required="required">
+                            <select asp-for="brand" class="form-control select_page" required="required">
                                 <option value=@null>---- Select ----</option>
                                 <option value="TSC">TSC</option>
                                 <option value="HONEYWELL">HONEYWELL</option>
@@ -76,3 +76,15 @@
     </div>
 </div>
 
+@section Scripts{
+<script>
+
+        $(document).ready(function() {
+        $(".select_page").select2({
+            width: '100%'
+        });
+    });
+
+
+</script>
+}

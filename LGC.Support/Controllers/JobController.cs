@@ -29,28 +29,23 @@ namespace LGC.Support.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.product = _product.GetAll().Result;
+            ViewBag.customer = _customer.GetAll().Result;
 
-            /*var result = _job.GetJobNumber().Result;
+            var result = _job.GetJobNumber().Result;
+            ViewBag.jobnumber = $"LGCSV{(result.id + 1).ToString("D4")}";
 
-            model.job_number = $"LGCSV{(result.id + 1).ToString("D4")}";*/
-
-            dynamic mymodel = new ExpandoObject();
-            mymodel.product = _product.GetAll().Result;
-            mymodel.customer = _customer.GetAll().Result;
-            mymodel.job = _job.GetJobNumber().Result;
-
-            return View(mymodel);
-
+            return View();
         }
 
-        [HttpPost]
+/*        [HttpPost]
         public IActionResult Create(JobData model)
         {
             var x = model.service_type;
            
             return View("Index");
 
-        }
+        }*/
 
     }
 }

@@ -1,5 +1,4 @@
-﻿@using LGC.Support;
-@model dynamic
+﻿@model JobData
 
 <div class="row">
     <div class="col-md-12 col-sm-12 ">
@@ -17,104 +16,134 @@
                 <br>
 
 
-                @*                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Job" asp-action="Create">
+                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Job" asp-action="Create">
                     <div class="item form-group">
-                    <label for="@Model.job.created_at" class="col-form-label col-md-3 col-sm-3 label-align">
-                    Date
-                    </label>
-                    <div class="col-md-6 col-sm-6 ">
-                    <input for="@Model.job.created_at" class="date-picker form-control" type="text" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")" readonly="readonly">
-                    </div>
-                    </div>
-                    <div class="item form-group">
-                    <label for="@Model.job.job_number" class="col-form-label col-md-3 col-sm-3 label-align">
-                    Job Service No. <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 ">
-                    <input for="@Model.job.job_number" type="text" required="required" class="form-control" readonly="readonly">
-                    </div>
+                        <label asp-for="created_at" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Start Date
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="created_at" class="date-picker form-control" type="text" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")" readonly="readonly">
+                        </div>
                     </div>
                     <div class="item form-group">
-                    <label for="@Model.job.service_type" class="col-form-label col-md-3 col-sm-3 label-align">
-                    Select Service <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6">
-                    <select for="@Model.job.service_type" class="form-control" required="required">
-                    <option value=@null>---- Select ----</option>
-                    <option value="PM">PM : Preventive Maintenance</option>
-                    <option value="MA">MA : Maintenance Agreement</option>
-                    </select>
-                    </div>
+                        <label asp-for="job_number" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Job Service No. <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="job_number" type="text" class="form-control" readonly="readonly" placeholder="@ViewBag.jobnumber">
+                        </div>
                     </div>
                     <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align">
-                    On Site Date <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 ">
-                    <input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
-                    <script>
-                    function timeFunctionLong(input) {
-                    setTimeout(function() {
-                    input.type = 'text';
-                    }, 60000);
-                    }
-                    </script>
-                    </div>
+                        <label class="col-form-label col-md-3 col-sm-3 label-align">
+                            Select Customer <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <select class="form-control select_page" required="required">
+                                <option value="@null">---- Select ----</option>
+                                @foreach (CustomerData customer in @ViewBag.customer)
+                                {
+                                    <option value="@customer.id">@customer.name</option>
+                                }
+                            </select>
+                        </div>
                     </div>
                     <div class="item form-group">
-                    <label for="@Model.job.customer_po" class="col-form-label col-md-3 col-sm-3 label-align">
-                    Customer PO No. <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 ">
-                    <input for="@Model.job.customer_po" type="text" required="required" class="form-control">
+                        <label asp-for="service_type" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Select Service <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <select asp-for="service_type" class="form-control select_page" required="required">
+                                <option value=@null>---- Select ----</option>
+                                <option value="PM">PM : Preventive Maintenance</option>
+                                <option value="MA">MA : Maintenance Agreement</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="item form-group">
+                        <label asp-for="expire_date" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Expire Date
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="expire_date" class="date-picker form-control" type="text" placeholder="@DateTime.Now.AddYears(2).ToString("dd MMMM yyyy")" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align">
+                            On Site Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                            <script>
+                                function timeFunctionLong(input) {
+                                setTimeout(function() {
+                                input.type = 'text';
+                                }, 60000);
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="customer_po" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Customer PO No. <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="customer_po" type="text" required="required" class="form-control">
+                        </div>
                     </div>
                     <div class="form-group row">
-                    <label for="@Model.job.description" class="col-form-label col-md-3 col-sm-3 label-align">
-                    Description <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-9 ">
-                    <textarea for="@Model.job.description" class="form-control" rows="3"></textarea>
+                        <label asp-for="description" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Description <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-9 ">
+                            <textarea asp-for="description" class="form-control" rows="3"></textarea>
+                        </div>
                     </div>
+                    <br />
+                    <br />
+
+
+
+                    <div class="item form-group" id="product_detail">
+
+                        <label class="col-form-label col-md-3 col-sm-3 label-align">
+                            <span>No.1 </span> Select Product <span class="required">*</span>
+                        </label>
+                        <div class="col-md-3 col-sm-3">
+                            <select class="form-control select_page" required="required" id="PD_0">
+                                <option value=@null>---- Select ----</option>
+                                @foreach (ProductData product in @ViewBag.product)
+                                {
+                                    <option value="@product.id">@product.name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <label asp-for="job_number" class="col-form-label col-md-1 col-sm-1 label-align">
+                            Serial No. <span class="required">*</span>
+                        </label>
+                        <div class="col-md-3 col-sm-3 ">
+                            <input for="" id="SN_0" type="text" class="form-control" required="required">
+                        </div>
+
                     </div>
+
+
+
+
                     <div class="ln_solid"></div>
                     <div class="item form-group">
-                    <diqv class="col-md-6 col-sm-6 offset-md-3">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a asp-controller="Job" asp-action="Index" class="btn btn-danger"> Cancel</a>
-                    </diqv>
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a asp-controller="Job" asp-action="Index" class="btn btn-danger"> Cancel</a>
+                        </div>
                     </div>
-                    </form>*@
+
+                </form>
 
 
 
-                <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align">
-                        Select Service <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6">
-                        <select class="form-control select_page" required="required">
-                            @foreach (ProductData product in Model.product)
-                            {
-                                <option value="@product.name">@product.name</option>
-                            }
-                        </select>
-                    </div>
-                </div>
 
-                <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align">
-                        Select Service <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6">
-                        <select class="form-control select_page" required="required">
-                            @foreach (CustomerData customer in Model.customer)
-                            {
-                                <option value="@customer.name">@customer.name</option>
-                            }
-                        </select>
-                    </div>
-                </div>
+
 
 
             </div>
@@ -126,10 +155,11 @@
 @section Scripts{
 <script>
 
-        $(document).ready(function() {
-        $(".select_page").select2();
-    });
-
+            $(document).ready(function() {
+            $(".select_page").select2({
+                width: '100%'
+            });
+        });
 
 </script>
 }
