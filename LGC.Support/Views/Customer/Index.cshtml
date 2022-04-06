@@ -46,9 +46,7 @@
                                                                         <td class="text-center text-muted">@customer.contact</td>
                                                                         <td class="text-center text-muted">@customer.email</td>
                                                                         <td class="text-center">@customer.phone_number</td>
-                                                                        <td class="text-center">
-                                                                            <div class="badge badge-warning">@customer.created_at</div>
-                                                                        </td>
+                                                                        <td class="text-center">@customer.created_at.ToString("dd MMMM yyyy")</td>
                                                                         <td class="text-center">
                                                                             <div class="badge badge-primary">@customer.created_by</div>
                                                                         </td>

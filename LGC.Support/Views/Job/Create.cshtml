@@ -30,15 +30,15 @@
                             Job Service No. <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6">
-                            <input asp-for="job_number" type="text" class="form-control" readonly="readonly" placeholder="@ViewBag.jobnumber">
+                            <input asp-for="job_number" type="text" class="form-control" readonly="readonly" placeholder="@ViewBag.job_number">
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label class="col-form-label col-md-3 col-sm-3 label-align">
+                        <label asp-for="customer_id" class="col-form-label col-md-3 col-sm-3 label-align">
                             Select Customer <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6">
-                            <select class="form-control select_page" required="required">
+                            <select asp-for="customer_id" class="form-control select_page" required="required">
                                 <option value="@null">---- Select ----</option>
                                 @foreach (CustomerData customer in @ViewBag.customer)
                                 {
@@ -52,7 +52,7 @@
                             Select Service <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6">
-                            <select asp-for="service_type" class="form-control select_page" required="required">
+                            <select asp-for="service_type" onchange="update_expire_date(this);" class="form-control select_page" required="required">
                                 <option value=@null>---- Select ----</option>
                                 <option value="PM">PM : Preventive Maintenance</option>
                                 <option value="MA">MA : Maintenance Agreement</option>
@@ -63,16 +63,16 @@
                         <label asp-for="expire_date" class="col-form-label col-md-3 col-sm-3 label-align">
                             Expire Date
                         </label>
-                        <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="expire_date" class="date-picker form-control" type="text" placeholder="@DateTime.Now.AddYears(2).ToString("dd MMMM yyyy")" readonly="readonly">
+                        <div class="col-md-6 col-sm-6" id="expire_date">
+                            <input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label class="col-form-label col-md-3 col-sm-3 label-align">
+                        <label asp-for="onsite_date" class="col-form-label col-md-3 col-sm-3 label-align">
                             On Site Date <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                            <input asp-for="onsite_date" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
                             <script>
                                 function timeFunctionLong(input) {
                                 setTimeout(function() {
@@ -90,6 +90,14 @@
                             <input asp-for="customer_po" type="text" required="required" class="form-control">
                         </div>
                     </div>
+                    <div class="item form-group">
+                        <label asp-for="price" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Price
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="price" type="number" class="form-control">
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label asp-for="description" class="col-form-label col-md-3 col-sm-3 label-align">
                             Description <span class="required">*</span>
@@ -100,49 +108,54 @@
                     </div>
                     <br />
                     <br />
+                    <div class="ln_solid" id="ln_solid"></div>
 
 
+                    <input type="hidden" value="0" id="total_chq">
+                    <input type="hidden" value="1" id="item_count">
+                    <div id="item_detail">
 
-                    <div class="item form-group" id="product_detail">
-
-                        <label class="col-form-label col-md-3 col-sm-3 label-align">
-                            <span>No.1 </span> Select Product <span class="required">*</span>
-                        </label>
-                        <div class="col-md-3 col-sm-3">
-                            <select class="form-control select_page" required="required" id="PD_0">
-                                <option value=@null>---- Select ----</option>
-                                @foreach (ProductData product in @ViewBag.product)
-                                {
-                                    <option value="@product.id">@product.name</option>
-                                }
-                            </select>
+                        <div class="item form-group" id="item_0">
+                            <label asp-for="product_details.Products[0].product_id" class="col-form-label col-md-3 col-sm-3 label-align">
+                                Item <span class="required">*</span>
+                            </label>
+                            <div class="col-md-2 col-sm-2">
+                                <select asp-for="product_details.Products[0].product_id" class="form-control select_page" required="required" id="select_0">
+                                    <option value=@null>---- Select ----</option>
+                                    @foreach (ProductData product in @ViewBag.product)
+                                    {
+                                        <option value="@product.id">@product.name</option>
+                                    }
+                                </select>
+                            </div>
+                            <label asp-for="product_details.Products[0].serial_number" class="col-form-label col-md-1 col-sm-1 label-align">
+                                Serial No. <span class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3 ">
+                                <input asp-for="product_details.Products[0].serial_number" id="serial_0" type="text" class="form-control" required="required">
+                            </div>
                         </div>
 
-                        <label asp-for="job_number" class="col-form-label col-md-1 col-sm-1 label-align">
-                            Serial No. <span class="required">*</span>
-                        </label>
-                        <div class="col-md-3 col-sm-3 ">
-                            <input for="" id="SN_0" type="text" class="form-control" required="required">
-                        </div>
 
                     </div>
+                    <br />
 
-
-
-
-                    <div class="ln_solid"></div>
-                    <div class="item form-group">
+                    <div style="text-align: center" id="total_item">
+                        <strong id=current_item><h2>Total quantity: 1 items</h2></strong>
+                    </div>
+                    <div class="ln_solid" id="ln_solid"></div>
+                    <div class="item form-group" id="button_form">
                         <div class="col-md-6 col-sm-6 offset-md-3">
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <a asp-controller="Job" asp-action="Index" class="btn btn-danger"> Cancel</a>
+                            <button type="button" class="btn btn-dark" style="color: #ffff;" onclick="add();"> Add</button>
                         </div>
                     </div>
-
                 </form>
 
 
 
-
+                
 
 
 
@@ -155,11 +168,85 @@
 @section Scripts{
 <script>
 
-            $(document).ready(function() {
+    $(document).ready(function() 
+    {
+        $(".select_page").select2({
+            width: '100%'
+        });
+    });
+
+
+    function add()
+    {
+        var new_chq_no = parseInt($('#total_chq').val())+1;
+        var new_input=`<div class="item form-group" id="item_${new_chq_no}">
+                <label name="product_details.Products[${new_chq_no}].product_id" class="col-form-label col-md-3 col-sm-3 label-align">
+                    Item <span class="required">*</span>
+                </label>
+                <div class="col-md-2 col-sm-2">
+                <select name="product_details.Products[${new_chq_no}].product_id" class="form-control select_page" required="required" id="select_${new_chq_no}">
+                        <option value=@null>---- Select ----</option>
+                        @foreach (ProductData product in @ViewBag.product){
+                            <option value="@product.id">@product.name</option>
+                        }
+                    </select>
+                </div>
+                <label name="product_details.Products[${new_chq_no}].serial_number" class="col-form-label col-md-1 col-sm-1 label-align">
+                    Serial No. <span class="required">*</span>
+                    </label>
+                <div class="col-md-3 col-sm-3 ">
+                    <input name="product_details.Products[${new_chq_no}].serial_number" id="serial_${new_chq_no}" type="text" class="form-control" required="required">
+                </div>
+            <button class="btn btn-danger btn-sm" onclick="remove();" value="${new_chq_no}" id="delete_item" style="height: 35px; margin-left: 15px"><i class="fa fa-trash" style="text-size: 10px"></i></button>
+            </div>`;
+        var total_item = $('#current_item').remove();
+        var item_count = parseInt($('#item_count').val())+1;
+        total_item = `<strong id=current_item><h2>Total quantity: ${item_count} items</h2></strong>`;
+            $('#item_detail').append(new_input);
+            $('#total_item').append(total_item);
+            $('#total_chq').val(new_chq_no);
+            $('#item_count').val(item_count);
             $(".select_page").select2({
                 width: '100%'
             });
-        });
+    }
+
+
+    function remove() 
+    {
+        var item_id = $('#delete_item').val();
+        var product = `item_${item_id}`;
+        var item_count = parseInt($('#item_count').val())-1;
+        var total_item = $('#current_item').remove();
+        total_item = `<strong id=current_item><h2>Total quantity: ${item_count} items</h2></strong>`;
+            $('#total_item').append(total_item);
+            $('#'+product+'').remove();
+            $('#item_count').val(item_count);
+            $(".select_page").select2({
+                width: '100%'
+            });
+    }
+
+    function update_expire_date(service_type) 
+    {
+        var exp_date;
+        if (service_type.value == "MA") {
+            exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="@DateTime.Now.AddYears(1).ToString("dd MMMM yyyy")" readonly="readonly">';
+            $('#exp_date').remove();
+            $('#expire_date').append(exp_date);
+        }
+        else if (service_type.value == "PM")
+        {
+            exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="@DateTime.Now.AddYears(3).ToString("dd MMMM yyyy")" readonly="readonly">';
+            $('#exp_date').remove();
+            $('#expire_date').append(exp_date);
+        }
+        else {
+            exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">';
+            $('#exp_date').remove();
+            $('#expire_date').append(exp_date);
+        }
+    }
 
 </script>
 }

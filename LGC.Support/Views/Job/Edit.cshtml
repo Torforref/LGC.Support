@@ -1,0 +1,159 @@
+﻿@using LGC.Support.Models
+@model JobData
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Create Job Service</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br>
+
+
+                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Job" asp-action="Edit">
+                    <div class="item form-group">
+                        <label asp-for="created_at" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Start Date
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="created_at" class="date-picker form-control" type="text" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="job_number" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Job Service No. <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="job_number" type="text" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label name="customer_id" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Customer Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input name="customer_id" type="text" id="first-name" class="form-control" readonly="readonly" placeholder="@ViewBag.customer.name">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="service_type" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Service <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="service_type" type="text" id="first-name" required="required" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="expire_date" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Expire Date
+                        </label>
+                        <div class="col-md-6 col-sm-6" id="expire_date">
+                            <input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="onsite_date" class="col-form-label col-md-3 col-sm-3 label-align">
+                            On Site Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="onsite_date" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                            <script>
+                                function timeFunctionLong(input) {
+                                setTimeout(function() {
+                                input.type = 'text';
+                                }, 60000);
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="customer_po" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Customer PO No. <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="customer_po" type="text" required="required" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="price" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Price
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="price" type="number" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="description" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Description <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-9 ">
+                            <textarea asp-for="description" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="ln_solid" id="ln_solid"></div>
+
+
+                    <input type="hidden" value="0" id="total_chq">
+                    <div id="item_detail">
+
+                        @foreach (ProductData product in @ViewBag.product_detail)
+                        {
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                    Item <span class="required">*</span>
+                                </label>
+                                <div class="col-md-2 col-sm-2">
+                                    <input type="text" class="form-control" readonly="readonly" placeholder="@product.name">
+                                </div>
+                                <label class="col-form-label col-md-1 col-sm-1 label-align">
+                                    Serial No. <span class="required">*</span>
+                                </label>
+                                <div class="col-md-3 col-sm-3 ">
+                                    <input type="text" class="form-control" readonly="readonly" placeholder="@product.serial_number">
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    <br />
+
+                    <div style="text-align: center" id="total_item">
+                        <strong id=current_item><h2>Total quantity: @ViewBag.product_detail.Count items</h2></strong>
+                    </div>
+                    <div class="ln_solid" id="ln_solid"></div>
+                    <div class="item form-group" id="button_form">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <a asp-controller="Job" asp-action="Index" class="btn btn-danger"> Cancel</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+<script>
+
+    $(document).ready(function()
+    {
+        $(".select_page").select2({
+            width: '100%'
+        });
+    });
+
+</script>
+}
+

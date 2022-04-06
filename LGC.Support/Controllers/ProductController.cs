@@ -68,7 +68,6 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Edit(ProductData model)
         {
-
             var result = _product.Update(model).Result;
             try
             {

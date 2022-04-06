@@ -14,5 +14,6 @@ namespace LGC.Suport.Models
         public DateTime created_at { get; set; } = DateTime.Now;
         public string updated_by { get; set; }
         public DateTime updated_at { get; set; } = DateTime.Now;
+        public string serial_number { get; set; }
     }
 }
