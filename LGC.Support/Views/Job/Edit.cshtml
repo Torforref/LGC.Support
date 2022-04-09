@@ -35,11 +35,13 @@
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label name="customer_id" class="col-form-label col-md-3 col-sm-3 label-align">
+                        <label asp-for="CustomerDetails.name" class="col-form-label col-md-3 col-sm-3 label-align">
                             Customer Name <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <input name="customer_id" type="text" id="first-name" class="form-control" readonly="readonly" placeholder="@ViewBag.customer.name">
+                            <select asp-for="CustomerDetails.name" class="form-control select_page" disabled="disabled">
+                                <option value="@Model.CustomerDetails.id">@Model.CustomerDetails.name</option>
+                            </select>
                         </div>
                     </div>
                     <div class="item form-group">
@@ -47,7 +49,9 @@
                             Service <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="service_type" type="text" id="first-name" required="required" class="form-control" readonly="readonly">
+                            <select asp-for="service_type" class="form-control select_page" disabled="disabled">
+                                @Model.service_type == "PM" ? <option value="PM">PM : Preventive Maintenance</option> : <option value="MA">MA : Maintenance Agreement</option>
+                            </select>
                         </div>
                     </div>
                     <div class="item form-group">
@@ -105,20 +109,20 @@
                     <input type="hidden" value="0" id="total_chq">
                     <div id="item_detail">
 
-                        @foreach (ProductData product in @ViewBag.product_detail)
+                        @foreach (var product in @Model.JodDetails)
                         {
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align">
                                     Item <span class="required">*</span>
                                 </label>
                                 <div class="col-md-2 col-sm-2">
-                                    <input type="text" class="form-control" readonly="readonly" placeholder="@product.name">
+                                    <input asp-for="@product.product_name" type="text" class="form-control" readonly="readonly">
                                 </div>
                                 <label class="col-form-label col-md-1 col-sm-1 label-align">
                                     Serial No. <span class="required">*</span>
                                 </label>
                                 <div class="col-md-3 col-sm-3 ">
-                                    <input type="text" class="form-control" readonly="readonly" placeholder="@product.serial_number">
+                                    <input asp-for="@product.serial_number" type="text" class="form-control" readonly="readonly">
                                 </div>
                             </div>
                         }
@@ -127,7 +131,7 @@
                     <br />
 
                     <div style="text-align: center" id="total_item">
-                        <strong id=current_item><h2>Total quantity: @ViewBag.product_detail.Count items</h2></strong>
+                        <strong id=current_item><h2>Total quantity: @Model.JodDetails.Count items</h2></strong>
                     </div>
                     <div class="ln_solid" id="ln_solid"></div>
                     <div class="item form-group" id="button_form">

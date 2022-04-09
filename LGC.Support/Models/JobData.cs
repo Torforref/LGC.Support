@@ -26,6 +26,8 @@ namespace LGC.Suport.Models
         public string updated_by { get; set; }
         public DateTime updated_at { get; set; } = DateTime.Now;
 
-        public JobDetailDataViewModel product_details { get; set; }
-}
+        public List<JobProductDetailData> JodDetails { get; set; }
+        public CustomerData CustomerDetails { get; set; }
+
+    }
 }

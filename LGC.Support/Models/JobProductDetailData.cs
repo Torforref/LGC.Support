@@ -8,12 +8,8 @@ namespace LGC.Support.Models
         public int job_id { get; set; }
         public int product_id { get; set; }
         public string serial_number { get; set; }
+        public string product_name { get; set; }
 
     }
 
-    public class JobDetailDataViewModel
-    {
-        public List<JobProductDetailData> Products { get; set; }
-
-    }
 }

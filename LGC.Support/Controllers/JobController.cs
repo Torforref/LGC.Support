@@ -29,6 +29,7 @@ namespace LGC.Support.Controllers
             ViewBag.product = _product.GetAll().Result;
             ViewBag.customer = _customer.GetAll().Result;
             var data = _job.GetAll().Result;
+
             return View(data);
         }
 
@@ -89,19 +90,9 @@ namespace LGC.Support.Controllers
             }
             else
             {
-                List<ProductData> job_product_details = new List<ProductData>();
-
-                var product_details = _job.GetJobProductDetail(id).Result;
-
-                foreach (var item in product_details)
-                {
-                    var data = _product.Get(item.product_id).Result;
-                    job_product_details.Add(new ProductData() { name = data.name, serial_number = item.serial_number });
-                }
-
-                ViewBag.product_detail = job_product_details;
-                ViewBag.customer = _customer.Get(result.customer_id).Result;
-                return View(result);
+                var re = new JobData();
+                re = _job.GetForEdit(id).Result;
+                return View(re);
             }
         }
 

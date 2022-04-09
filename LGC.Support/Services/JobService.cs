@@ -30,6 +30,37 @@ namespace LGC.Support.Services
             return datas;
         }
 
+        public async Task<JobData> GetForEdit(int? id)
+        {
+            using var conn = await _db.CreateConnectionAsync();
+            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @id)", new { id }).FirstOrDefault();
+
+            datas.JodDetails = conn.Query<JobProductDetailData>(@"SELECT j.[id]
+              ,[job_id]
+              ,[product_id], p.name as product_name
+              ,[serial_number]
+              FROM [dbo].[JobProductDetails] as j
+              inner join [dbo].[Products] as p
+              on j.product_id = p.id where job_id = @id", new { id }).ToList();
+
+            datas.CustomerDetails = conn.Query<CustomerData>(@"SELECT 
+                Customers.name, 
+                Jobs.id, 
+                Jobs.job_number, 
+                Jobs.service_type, 
+                Jobs.onsite_limited, 
+                Jobs.onsite_date, 
+                Jobs.customer_po, 
+                Jobs.description, 
+                Jobs.customer_id, 
+                Jobs.job_product_detail_id, 
+                Jobs.price
+            FROM Jobs 
+            INNER JOIN Customers 
+            ON Jobs.customer_id = Customers.id").FirstOrDefault();
+
+            return datas;
+        }
 
         public async Task<JobData> Get(int? id)
         {
@@ -37,13 +68,19 @@ namespace LGC.Support.Services
             var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @id)", new { id }).FirstOrDefault();
             return datas;
         }
-
-        public async Task<List<JobProductDetailData>> GetJobProductDetail(int? id)
-        {
-            using var conn = await _db.CreateConnectionAsync();
-            var datas = conn.Query<JobProductDetailData>(@"SELECT * FROM JobProductDetails WHERE (job_id = @id)", new { id }).ToList();
-            return datas;
-        }
+        /*
+                public async Task<List<JobProductDetailData>> GetJobProductDetail(int? id)
+                {
+                    using var conn = await _db.CreateConnectionAsync();
+                    var datas = conn.Query<JobProductDetailData>(@"SELECT j.[id]
+                      ,[job_id]
+                      ,[product_id], p.name as product_name
+                      ,[serial_number]
+                  FROM [dbo].[JobProductDetails]  as j
+                  inner join [dbo].[Products]  as p
+                  on j.product_id = p.id where job_id = @id ", new { id }).ToList();
+                    return datas;
+                }*/
 
         public async Task<JobData> Create(JobData model)
         {
@@ -56,7 +93,7 @@ namespace LGC.Support.Services
             }
             else
             {
-                foreach (var product in model.product_details.Products)
+                foreach (var product in model.JodDetails)
                 {
                     var sqlStatement1 = $@"INSERT INTO JobProductDetails (
                     job_id, 

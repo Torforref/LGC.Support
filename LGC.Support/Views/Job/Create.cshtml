@@ -116,11 +116,11 @@
                     <div id="item_detail">
 
                         <div class="item form-group" id="item_0">
-                            <label asp-for="product_details.Products[0].product_id" class="col-form-label col-md-3 col-sm-3 label-align">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
                                 Item <span class="required">*</span>
                             </label>
                             <div class="col-md-2 col-sm-2">
-                                <select asp-for="product_details.Products[0].product_id" class="form-control select_page" required="required" id="select_0">
+                                <select class="form-control select_page select_item" required="required" id="select_item_id_0" style="vertical-align: text-top">
                                     <option value=@null>---- Select ----</option>
                                     @foreach (ProductData product in @ViewBag.product)
                                     {
@@ -128,37 +128,60 @@
                                     }
                                 </select>
                             </div>
-                            <label asp-for="product_details.Products[0].serial_number" class="col-form-label col-md-1 col-sm-1 label-align">
-                                Serial No. <span class="required">*</span>
+                            <label class="col-form-label col-md-1 label-align">
+                                Qty. <span class="required">*</span>
                             </label>
-                            <div class="col-md-3 col-sm-3 ">
-                                <input asp-for="product_details.Products[0].serial_number" id="serial_0" type="text" class="form-control" required="required">
+                            <div class="col-md-2 col-sm-2">
+                                <select class="form-control select_page item_qty" required="required" id="serial_qty_0" style="vertical-align: text-top">
+                                    <option value=@null>---- Select ----</option>
+                                    @for (var i = 1; i<100; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
                             </div>
+                            <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px" id="0" data-toggle="modal" data-target="exampleModalScrollable_0">Add S/N</button>
                         </div>
 
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalScrollable_0" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollable_0" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollable_0">Add Serial Number</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body modal-body_0">
 
+                                        <!-- Serial Number Field -->
+                                        <div id="modal-body_0">
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary btn_saveModal" id="0">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <br />
 
                     <div style="text-align: center" id="total_item">
-                        <strong id=current_item><h2>Total quantity: 1 items</h2></strong>
+                        <strong id=current_total_items><h2>Total quantity: 1 items</h2></strong>
                     </div>
                     <div class="ln_solid" id="ln_solid"></div>
                     <div class="item form-group" id="button_form">
                         <div class="col-md-6 col-sm-6 offset-md-3">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <a asp-controller="Job" asp-action="Index" class="btn btn-danger"> Cancel</a>
-                            <button type="button" class="btn btn-dark" style="color: #ffff;" onclick="add();"> Add</button>
+                            <a asp-controller="Job" asp-action="Index" class="btn btn-danger">Cancel</a>
+                            <button type="button" class="btn btn-dark btn-addItem" style="color: #ffff;">Add</button>
                         </div>
                     </div>
                 </form>
-
-
-
-                
-
-
-
             </div>
         </div>
     </div>
@@ -167,86 +190,258 @@
 
 @section Scripts{
 <script>
+         var selectedData = [[]];
+         var count_item = 1;
 
-    $(document).ready(function() 
-    {
-        $(".select_page").select2({
-            width: '100%'
-        });
-    });
+         $(document).ready(function()
+         {
+             $(".select_page").select2({
+                 width: '100%'
+             });
+         });
+
+         $(document).on("click", ".btn_addSN", function() {
+             var item_id = $(this).attr("id");
+             var item_value = parseInt($(`#select_item_id_${item_id}`).val());
+
+             if (isNaN(item_value)) {
+                 alert("Please select item.");
+             } 
+             else 
+             {
+                var serial_qty = $(`#serial_qty_${item_id}`).val();
+                var count_serial_field = $(`.serial_field_${item_id}`).length;
+
+                 if (selectedData[item_id].length === 0) {
+                     $(`#modal-body_${item_id}`).remove();
+                     $(`.modal-body_${item_id}`).append(`<div id="modal-body_${item_id}"></div>`);
+                     for (let i=0; i<serial_qty; i++) {
+                     var SN_field = `<div id="serial_field_${item_id}_${i}" class="item form-group serial_field_${item_id}">
+                                         <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                             Serial No.${(i+1)} <span class="required">*</span>
+                                         </label>
+                                         <div class="col-md-9 col-sm-9 ">
+                                             <input id="serial_value_${item_id}_${i}" type="text" class="form-control" required="required">
+                                         </div>
+                                     </div>`
+                     $(`#modal-body_${item_id}`).append(SN_field);
+
+                     }
+
+                 }
+                 else if (selectedData[item_id].length > serial_qty) {
+
+                    if (count_serial_field > serial_qty) {
+                        for (let i=count_serial_field; i>serial_qty; i--) {
+                            $(`#serial_field_${(i-1)}`).remove();
+                            selectedData[item_id].pop();
+                            alert(`#serial_field_${(i-1)}`)
+                        }
+                    }
+                 }
+                 else
+                 {
+                     alert("else")
+                     for (let i=0; i<selectedData[item_id].length; i++) {
+                         var show_SN = selectedData[item_id][i];
+                         $(`.modal-body_${item_id} #serial_value_${item_id}_${i}`).val(show_SN.serial_number);
+                     }
+
+                    if (count_serial_field > selectedData[item_id].length) {
+                        for (let i=count_serial_field; i>=selectedData[item_id].length; i--) {
+                            $(`#serial_field_${item_id}_${i}`).find("input").val('');
+                        }
+                     }
+
+                     if (count_serial_field > serial_qty) {
+                         for (let i=count_serial_field; i>=serial_qty; i--) {
+                             $(`#serial_field_${item_id}_${i}`).remove();
+                         }
+                     }
+                     else
+                     {
+                         for (let i=selectedData[item_id].length; i<serial_qty; i++) {
+                             if ($(`#serial_field_${item_id}_${i}`).length) {
+                                 continue;
+                             }
+                             else
+                             {
+                                 var SN_field = `<div id="serial_field_${item_id}_${i}" class="item form-group serial_field_${item_id}">
+                                                     <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                                         Serial No.${(i+1)} <span class="required">*</span>
+                                                     </label>
+                                                     <div class="col-md-9 col-sm-9 ">
+                                                         <input id="serial_value_${item_id}_${i}" type="text" class="form-control" required="required">
+                                                     </div>
+                                                 </div>`
+                                 $(`#modal-body_${item_id}`).append(SN_field);
+                             }
+                         }
+                     }
+                    
+                 }
+             $(`#exampleModalScrollable_${item_id}`).modal('show');
+             }
+             $(".select_page").select2({
+                width: '100%'
+             });
+         });
 
 
-    function add()
-    {
-        var new_chq_no = parseInt($('#total_chq').val())+1;
-        var new_input=`<div class="item form-group" id="item_${new_chq_no}">
-                <label name="product_details.Products[${new_chq_no}].product_id" class="col-form-label col-md-3 col-sm-3 label-align">
+         $(document).on("click", ".btn_saveModal", function() {
+             var modal_id = $(this).attr("id");
+             var serial_qty = $(`#serial_qty_${modal_id}`).val();
+             var sn_is_null = false;
+            for (let i=0; i<serial_qty; i++) {
+                 var x = $(`#serial_value_${modal_id}_${i}`).val();
+                 if (x === "") {
+                     alert(`Serial number ${(i+1)} value is required.`);
+                     sn_is_null = true;
+                     break;
+                 }
+             }
+             var select_item_id = $(`#select_item_id_${modal_id}`).val();
+             if (sn_is_null === false) {
+                 for (let i=0; i<serial_qty; i++) {
+                     var SN = $(`#serial_value_${modal_id}_${i}`).val();
+                     selectedData[modal_id][i] = {
+                         product_id : select_item_id,
+                         serial_number : SN
+                     }
+                 }
+                 $(`#exampleModalScrollable_${modal_id}`).modal('hide');
+             }
+         });
+
+
+         $(document).on("click", ".btn-addItem", function() {
+            var new_item_field = `<div class="item form-group" id="item_${count_item}">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">
                     Item <span class="required">*</span>
                 </label>
                 <div class="col-md-2 col-sm-2">
-                <select name="product_details.Products[${new_chq_no}].product_id" class="form-control select_page" required="required" id="select_${new_chq_no}">
+                    <select class="form-control select_page select_item" required="required" id="select_item_id_${count_item}"
+                        style="vertical-align: text-top">
                         <option value=@null>---- Select ----</option>
-                        @foreach (ProductData product in @ViewBag.product){
-                            <option value="@product.id">@product.name</option>
+                        @foreach (ProductData product in @ViewBag.product)
+                        {
+                        <option value="@product.id">@product.name</option>
                         }
                     </select>
                 </div>
-                <label name="product_details.Products[${new_chq_no}].serial_number" class="col-form-label col-md-1 col-sm-1 label-align">
-                    Serial No. <span class="required">*</span>
-                    </label>
-                <div class="col-md-3 col-sm-3 ">
-                    <input name="product_details.Products[${new_chq_no}].serial_number" id="serial_${new_chq_no}" type="text" class="form-control" required="required">
+                <label class="col-form-label col-md-1 label-align">
+                    Qty. <span class="required">*</span>
+                </label>
+                <div class="col-md-2 col-sm-2">
+                    <select class="form-control select_page item_qty" required="required" id="serial_qty_${count_item}"
+                        style="vertical-align: text-top">
+                        <option value=@null>---- Select ----</option>
+                        @for (var i = 1; i<100; i++) { <option value="@i">@i</option>
+                            }
+                    </select>
                 </div>
-            <button class="btn btn-danger btn-sm" onclick="remove();" value="${new_chq_no}" id="delete_item" style="height: 35px; margin-left: 15px"><i class="fa fa-trash" style="text-size: 10px"></i></button>
-            </div>`;
-        var total_item = $('#current_item').remove();
-        var item_count = parseInt($('#item_count').val())+1;
-        total_item = `<strong id=current_item><h2>Total quantity: ${item_count} items</h2></strong>`;
-            $('#item_detail').append(new_input);
-            $('#total_item').append(total_item);
-            $('#total_chq').val(new_chq_no);
-            $('#item_count').val(item_count);
+                <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px"
+                    id=${count_item} data-toggle="modal" data-target="exampleModalScrollable_${count_item}">Add S/N</button>
+                <button class="btn btn-danger btn-sm btn_delete_item" id=${count_item} style="height: 35px; margin-left: 15px"><i
+                        class="fa fa-trash" style="text-size: 10px"></i></button>
+            </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalScrollable_${count_item}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalScrollable_${count_item}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalScrollable_${count_item}">Add Serial Number</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body modal-body_${count_item}">
+
+                            <!-- Serial Number Field -->
+                            <div id="modal-body_${count_item}">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btn_saveModal" id=${count_item}>Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+
+            $('#item_detail').append(new_item_field);
+            selectedData[count_item] = [];
+            count_item++;
             $(".select_page").select2({
                 width: '100%'
             });
-    }
+         });
 
 
-    function remove() 
-    {
-        var item_id = $('#delete_item').val();
-        var product = `item_${item_id}`;
-        var item_count = parseInt($('#item_count').val())-1;
-        var total_item = $('#current_item').remove();
-        total_item = `<strong id=current_item><h2>Total quantity: ${item_count} items</h2></strong>`;
-            $('#total_item').append(total_item);
-            $('#'+product+'').remove();
-            $('#item_count').val(item_count);
+         $(document).on("click", ".btn_delete_item", function() {
+             var current_item_field = $(this).attr("id");
+             $(`#item_${current_item_field}`).remove();
+             $(`#exampleModalScrollable_${current_item_field}`).remove();
+
+             selectedData[current_item_field] = [];
             $(".select_page").select2({
                 width: '100%'
             });
-    }
+         });
 
-    function update_expire_date(service_type) 
-    {
-        var exp_date;
-        if (service_type.value == "MA") {
-            exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="@DateTime.Now.AddYears(1).ToString("dd MMMM yyyy")" readonly="readonly">';
-            $('#exp_date').remove();
-            $('#expire_date').append(exp_date);
-        }
-        else if (service_type.value == "PM")
-        {
-            exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="@DateTime.Now.AddYears(3).ToString("dd MMMM yyyy")" readonly="readonly">';
-            $('#exp_date').remove();
-            $('#expire_date').append(exp_date);
-        }
-        else {
-            exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">';
-            $('#exp_date').remove();
-            $('#expire_date').append(exp_date);
-        }
-    }
+
+        $(document).on("change", ".item_qty", function() {
+            var total_item = $('#current_total_items').remove();
+            var sum_qty = 0;
+            for (i=0; i<count_item; i++){
+                var count_qty = parseInt($(`#serial_qty_${i}`).val());
+                if (isNaN(count_qty)) {
+                    continue;
+                }
+                else
+                {
+                    sum_qty += count_qty;
+                }
+            }
+            total_item = `<strong id=current_total_items><h2>Total quantity: ${sum_qty} items</h2></strong>`;
+            $('#total_item').append(total_item);
+        });
+
+
+        $(document).on("change", ".select_item", function() {
+            var current_item_field = $(this).attr("id");
+            current_item_field = current_item_field.split("_");
+            current_item_field = current_item_field[current_item_field.length-1];
+            var select_item_id = $(`#select_item_id_${current_item_field}`).val();
+
+            selectedData[current_item_field].forEach(item => (item.product_id = select_item_id));
+        });
+
+
+         function update_expire_date(service_type)
+         {
+             var exp_date;
+             if (service_type.value == "MA") {
+                 exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="@DateTime.Now.AddYears(1).ToString("dd MMMM yyyy")" readonly="readonly">';
+                 $('#exp_date').remove();
+                 $('#expire_date').append(exp_date);
+             }
+             else if (service_type.value == "PM")
+             {
+                 exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="@DateTime.Now.AddYears(3).ToString("dd MMMM yyyy")" readonly="readonly">';
+                 $('#exp_date').remove();
+                 $('#expire_date').append(exp_date);
+             }
+             else {
+                 exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">';
+                 $('#exp_date').remove();
+                 $('#expire_date').append(exp_date);
+             }
+         }
 
 </script>
 }
