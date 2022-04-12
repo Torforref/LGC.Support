@@ -55,7 +55,6 @@ namespace LGC.Support.Controllers
                 TempData["ErrorMessage"] = "Invalid Username / Password";
                 return View(model);
             }
-
         }
 
         public IActionResult Register()

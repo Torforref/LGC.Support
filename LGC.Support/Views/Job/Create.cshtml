@@ -92,10 +92,10 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="price" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Price
+                            Price <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6">
-                            <input asp-for="price" type="number" class="form-control">
+                            <input asp-for="price" type="number" required="required" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -120,6 +120,7 @@
                                 Item <span class="required">*</span>
                             </label>
                             <div class="col-md-2 col-sm-2">
+
                                 <select class="form-control select_page select_item" required="required" id="select_item_0" style="vertical-align: text-top">
                                     <option value=@null>---- Select ----</option>
                                     @foreach (ProductData product in @ViewBag.product)
@@ -171,7 +172,7 @@
                     <br />
 
                     <div style="text-align: center" id="total_item">
-                        <strong id=current_total_items><h2>Total quantity: 1 items</h2></strong>
+                        <strong id=current_total_items><h2>Total quantity: 0 items</h2></strong>
                     </div>
                     <div class="ln_solid" id="ln_solid"></div>
                     <div class="item form-group" id="button_form">
@@ -207,13 +208,19 @@
          });
      });
 
+
      $(document).on("click", ".btn_addSN", function() {
          var item_id = $(this).attr("id");
          var item_value = parseInt($(`#select_item_${item_id}`).val());
          var item_qty = parseInt($(`#serial_qty_${item_id}`).val());
 
          if (isNaN(item_value) || isNaN(item_qty)) {
-             alert("Please select Item and Qty.");
+            Swal.fire({
+                icon: 'error',
+                title: "Please select Item and Qty.",
+                showConfirmButton: false,
+                timer: 2000
+            });
          }
          else
          {
@@ -229,7 +236,7 @@
                                          Serial No.${(i+1)} <span class="required">*</span>
                                      </label>
                                      <div class="col-md-9 col-sm-9 ">
-                                         <input id="serial_value_${item_id}_${i}" type="text" class="form-control" required="required">
+                                         <input id="serial_value_${item_id}_${i}" type="text" class="form-control modal_serial" required="required">
                                      </div>
                                  </div>`
                  $(`#modal-body_${item_id}`).append(SN_field);
@@ -238,7 +245,6 @@
 
              }
              else if (selectedData[item_id].length > serial_qty) {
-                 alert("else if")
                 if (count_serial_field > serial_qty) {
                     for (i=count_serial_field; i>serial_qty; i--) {
                         $(`#serial_field_${item_id}_${(i-1)}`).remove();
@@ -249,7 +255,6 @@
              }
              else
              {
-                 alert("else")
                  for (var i=0; i<selectedData[item_id].length; i++) {
                      var show_SN = selectedData[item_id][i];
                      $(`.modal-body_${item_id} #serial_value_${item_id}_${i}`).val(show_SN.serial_number);
@@ -269,19 +274,15 @@
                  else
                  {
                      for (i=selectedData[item_id].length; i<serial_qty; i++) {
-                         if ($(`#serial_field_${item_id}_${i}`).length) {
-                             continue;
-                         }
-                         else
-                         {
-                             var SN_field = `<div id="serial_field_${item_id}_${i}" class="item form-group serial_field_${item_id}">
-                                                 <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                                     Serial No.${(i+1)} <span class="required">*</span>
-                                                 </label>
-                                                 <div class="col-md-9 col-sm-9 ">
-                                                     <input id="serial_value_${item_id}_${i}" type="text" class="form-control" required="required">
-                                                 </div>
-                                             </div>`
+                         if (!$(`#serial_field_${item_id}_${i}`).length) {
+                            var SN_field = `<div id="serial_field_${item_id}_${i}" class="item form-group serial_field_${item_id}">
+                                                <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                                    Serial No.${(i+1)} <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-9 col-sm-9 ">
+                                                    <input id="serial_value_${item_id}_${i}" type="text" class="form-control modal_serial" required="required">
+                                                </div>
+                                            </div>`
                              $(`#modal-body_${item_id}`).append(SN_field);
                          }
                      }
@@ -301,9 +302,8 @@
          var serial_qty = $(`#serial_qty_${modal_id}`).val();
          var sn_is_null = false;
         for (var i=0; i<serial_qty; i++) {
-             var x = $(`#serial_value_${modal_id}_${i}`).val();
-             if (x === "") {
-                 alert(`Serial number ${(i+1)} value is required.`);
+             var serial_value = $(`#serial_value_${modal_id}_${i}`).val();
+             if (serial_value === "") {
                  sn_is_null = true;
                  break;
              }
@@ -320,7 +320,12 @@
                     var SN2 = $(`#serial_value_${modal_id}_${j}`).val();
 
                     if (SN1 === SN2) {
-                        alert(`Serial No. "${(SN1)}" is duplicate.`);
+                        Swal.fire({
+                            icon: 'error',
+                            title: `Serial No. "${(SN1)}" is duplicate.`,
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
                         sn_field_is_duplicate = true;
                     }
                 }
@@ -329,17 +334,18 @@
             if (sn_field_is_duplicate === false) {
                 for (var i=0; i<serial_qty; i++) {
                     for (let j=0; j<selectedData.length; j++) {
-                        if (parseInt(modal_id) === j) {
-                            continue;
-                        }
-                        else
-                        {
-                            for (let k=0; k<selectedData[j].length; k++) {
+                        if (!parseInt(modal_id) === j) {
+                                for (let k=0; k<selectedData[j].length; k++) {
                                 var new_SN = $(`#serial_value_${modal_id}_${i}`).val();
                                 var old_SN = $(`#serial_value_${j}_${k}`).val();
 
                                 if (new_SN === old_SN) {
-                                    alert(`Serial No. "${(new_SN)}" is duplicate.`);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: `Serial No. "${(new_SN)}" is duplicate.`,
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    });
                                     sn_data_is_duplicate = true;
                                 }
                             }
@@ -391,9 +397,8 @@
             </div>
             <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px"
                 id=${count_item} data-toggle="modal" data-target="exampleModalScrollable_${count_item}"> S / N </button>
-            <button class="btn btn-danger btn-sm btn_delete_item" id=${count_item} style="height: 35px; margin-left: 15px"><i
+            <button type="button" class="btn btn-danger btn-sm btn_delete_item" id=${count_item} style="height: 35px; margin-left: 15px"><i
                     class="fa fa-trash" style="text-size: 10px"></i></button>
-        </div>
         </div>
 
         <!-- Modal -->
@@ -435,7 +440,12 @@
          for (var i=0; i<count_item; i++) {
              if ($(`#item_${i}`).length) {
                  if (selectedData[i].length === 0) {
-                     alert("Please select Item or Qty and entry serial number.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Please select Item or Qty and entry serial number.",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
                      item_input_compeleted = false;
                      break;
                  }
@@ -455,11 +465,7 @@
 
              var count = 0;
             for (var i=0; i<selectedData.length; i++) {
-                if (selectedData[i].length === 0) {
-                    continue;
-                }
-                else
-                {
+                if (selectedData[i].length > 0) {
                     for (var j=0; j<selectedData[i].length; j++) {
                         var item_to_model = `<input hidden name="JodDetails[${count}].product_id" class="form-control" value="${selectedData[i][j].product_id}">
                                              <input hidden name="JodDetails[${count}].serial_number" class="form-control" value="${selectedData[i][j].serial_number}">`
@@ -506,11 +512,7 @@
         var sum_qty = 0;
         for (var i=0; i<count_item; i++) {
             var count_qty = parseInt($(`#serial_qty_${i}`).val());
-            if (isNaN(count_qty)) {
-                continue;
-            }
-            else
-            {
+            if (!isNaN(count_qty)) {
                 sum_qty += count_qty;
             }
         }
@@ -551,6 +553,14 @@
             $('#expire_date').append(exp_date);
         }
     });
+
+
+    $('.modal_serial').keypress(function(e) {
+        if (e.which === 13) {
+            e.which = 9;
+        }
+    });
+    modal_serial
 
 </script>
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 
 namespace LGC.Support.Controllers
 {
@@ -92,6 +93,32 @@ namespace LGC.Support.Controllers
             {
                 var re = new JobData();
                 re = _job.GetForEdit(id).Result;
+
+                List<JobProductDetailData> data = new List<JobProductDetailData>();
+                data.Add(new JobProductDetailData { product_id = re.JodDetails[0].product_id, product_name = re.JodDetails[0].product_name });
+
+                for (var i = 1; i<re.JodDetails.Count; i++)
+                {
+                    var duplicate = false;
+                    var new_id = re.JodDetails[i].product_id;
+
+                    foreach (var old_id in data)
+                    {
+                        if (old_id.product_id == new_id)
+                        {
+                            duplicate = true;
+                            break;
+                        }
+                    }
+
+                    if (!duplicate)
+                    {
+                        data.Add(new JobProductDetailData { product_id = re.JodDetails[i].product_id, product_name = re.JodDetails[i].product_name });
+                    }
+                }
+
+                ViewBag.Count_Product_Unique = data;
+
                 return View(re);
             }
         }

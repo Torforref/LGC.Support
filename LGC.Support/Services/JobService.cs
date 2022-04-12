@@ -43,21 +43,7 @@ namespace LGC.Support.Services
               inner join [dbo].[Products] as p
               on j.product_id = p.id where job_id = @id", new { id }).ToList();
 
-            datas.CustomerDetails = conn.Query<CustomerData>(@"SELECT 
-                Customers.name, 
-                Jobs.id, 
-                Jobs.job_number, 
-                Jobs.service_type, 
-                Jobs.onsite_limited, 
-                Jobs.onsite_date, 
-                Jobs.customer_po, 
-                Jobs.description, 
-                Jobs.customer_id, 
-                Jobs.job_product_detail_id, 
-                Jobs.price
-            FROM Jobs 
-            INNER JOIN Customers 
-            ON Jobs.customer_id = Customers.id").FirstOrDefault();
+            datas.CustomerDetails = conn.Query<CustomerData>(@"SELECT * FROM Customers WHERE (id = @customer_id)", new { datas.customer_id } ).FirstOrDefault();
 
             return datas;
         }
@@ -68,19 +54,7 @@ namespace LGC.Support.Services
             var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @id)", new { id }).FirstOrDefault();
             return datas;
         }
-        /*
-                public async Task<List<JobProductDetailData>> GetJobProductDetail(int? id)
-                {
-                    using var conn = await _db.CreateConnectionAsync();
-                    var datas = conn.Query<JobProductDetailData>(@"SELECT j.[id]
-                      ,[job_id]
-                      ,[product_id], p.name as product_name
-                      ,[serial_number]
-                  FROM [dbo].[JobProductDetails]  as j
-                  inner join [dbo].[Products]  as p
-                  on j.product_id = p.id where job_id = @id ", new { id }).ToList();
-                    return datas;
-                }*/
+
 
         public async Task<JobData> Create(JobData model)
         {
@@ -187,8 +161,8 @@ namespace LGC.Support.Services
             }
             else
             {
-                var sqlStatement = @"UPDATE Jobs SET description = @description, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
-                await conn.ExecuteAsync(sqlStatement, new { model.description, updated_by = "Tithart", updated_at = DateTime.Now, model.id });
+                var sqlStatement = @"UPDATE Jobs SET onsite_date = @onsite_date, description = @description, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
+                await conn.ExecuteAsync(sqlStatement, new { model.onsite_date, model.description, updated_by = "Tithart", updated_at = DateTime.Now, model.id });
                 return datas;
             }
         }
