@@ -11,8 +11,7 @@
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2 style="font-weight: bold">Customer List &emsp;</h2>
-                                    <a class="btn-sm btn-dark" tabindex="0" aria-controls="datatable-buttons" asp-controller="Customer" asp-action="Create"><i class="fa fa-plus"> Add</i></a>
+                                    <h2 style="font-weight: bold">Customer List &emsp;<a class="btn-sm btn-dark" tabindex="0" aria-controls="datatable-buttons" asp-controller="Customer" asp-action="Create"><i class="fa fa-plus"> Add</i></a></h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li>
                                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -41,10 +40,10 @@
                                                         @foreach (var customer in Model)
                                                         {
                                                                     <tr role="row" class="odd">
-                                                                        <td class="text-center text-muted"><a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id">@customer.name</a></td>
-                                                                        <td class="text-muted">@customer.address</td>
-                                                                        <td class="text-center text-muted">@customer.contact</td>
-                                                                        <td class="text-center text-muted">@customer.email</td>
+                                                                        <td class="text-center"><a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id">@customer.name</a></td>
+                                                                        <td class="">@customer.address</td>
+                                                                        <td class="text-center">@customer.contact</td>
+                                                                        <td class="text-center">@customer.email</td>
                                                                         <td class="text-center">@customer.phone_number</td>
                                                                         <td class="text-center">@customer.created_at.ToString("dd MMMM yyyy")</td>
                                                                         <td class="text-center">

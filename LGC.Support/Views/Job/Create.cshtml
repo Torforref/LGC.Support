@@ -1,10 +1,11 @@
-﻿@model JobData
+﻿@using Newtonsoft.Json
+@model JobData
 
 <div class="row">
     <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Create Job Service</h2>
+                <h2 style="font-weight: bold">Create Job Service</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -111,8 +112,6 @@
                     <div class="ln_solid" id="ln_solid"></div>
 
 
-                    <input type="hidden" value="0" id="total_chq">
-                    <input type="hidden" value="1" id="item_count">
                     <div id="item_detail">
 
                         <div class="item form-group" id="item_0">
@@ -133,14 +132,9 @@
                                 Qty. <span class="required">*</span>
                             </label>
                             <div class="col-md-2 col-sm-2">
-                                <select class="form-control select_page item_qty" required="required" id="serial_qty_0" style="vertical-align: text-top">
-                                    <option value=@null>---- Select ----</option>
-                                    @for (var i = 1; i<100; i++)
-                                    {
-                                        <option value="@i">@i</option>
-                                    }
-                                </select>
+                                    <input type="number" class="form-control item_qty" required="required" id="serial_qty_0" style="vertical-align: text-top">
                             </div>
+
                             <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px" id="0" data-toggle="modal" data-target="exampleModalScrollable_0"> S / N </button>
                         </div>
 
@@ -162,7 +156,7 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary btn_saveModal" id="0">Save changes</button>
+                                        <button type="button" class="btn btn-primary btn_saveModal" id="0">Save Changes</button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
@@ -200,6 +194,7 @@
 @section Scripts{
 <script>
      var selectedData = [[]];
+     var sn_from_db = @Html.Raw(JsonConvert.SerializeObject(ViewBag.SN_form_DB));
      var count_item = 1;
 
      $(document).ready(function() {
@@ -212,8 +207,8 @@
      $(document).on("click", ".btn_addSN", function() {
          var item_id = $(this).attr("id");
          var item_value = parseInt($(`#select_item_${item_id}`).val());
-         var item_qty = parseInt($(`#serial_qty_${item_id}`).val());
-
+         var item_qty = parseFloat($(`#serial_qty_${item_id}`).val());
+         
          if (isNaN(item_value) || isNaN(item_qty)) {
             Swal.fire({
                 icon: 'error',
@@ -221,6 +216,25 @@
                 showConfirmButton: false,
                 timer: 2000
             });
+         }
+         else if (item_qty % 1 !== 0) {
+            Swal.fire({
+                icon: 'error',
+                title: "Please entry only integer.",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            $(`#serial_qty_${item_id}`).val(null);
+            var total_item = $('#current_total_items').remove();
+            var sum_qty = 0;
+            for (var i=0; i<count_item; i++) {
+                var count_qty = parseInt($(`#serial_qty_${i}`).val());
+                if (!isNaN(count_qty)) {
+                    sum_qty += count_qty;
+                }
+            }
+            total_item = `<strong id=current_total_items><h2>Total quantity: ${sum_qty} items</h2></strong>`;
+            $('#total_item').append(total_item);
          }
          else
          {
@@ -301,6 +315,8 @@
          var modal_id = $(this).attr("id");
          var serial_qty = $(`#serial_qty_${modal_id}`).val();
          var sn_is_null = false;
+
+
         for (var i=0; i<serial_qty; i++) {
              var serial_value = $(`#serial_value_${modal_id}_${i}`).val();
              if (serial_value === "") {
@@ -308,10 +324,12 @@
                  break;
              }
         }
+
         var select_item_id = $(`#select_item_${modal_id}`).val();
         if (sn_is_null === false) {
             var sn_field_is_duplicate = false;
-            var sn_data_is_duplicate = false;
+            var sn_item_is_duplicate = false;
+            var sn_DB_is_duplicate = false;
 
             for (var i=0; i<serial_qty; i++) {
                 for (let j=i+1; j<serial_qty; j++) {
@@ -327,6 +345,7 @@
                             timer: 2000
                         });
                         sn_field_is_duplicate = true;
+                        break;
                     }
                 }
             }
@@ -335,7 +354,7 @@
                 for (var i=0; i<serial_qty; i++) {
                     for (let j=0; j<selectedData.length; j++) {
                         if (!parseInt(modal_id) === j) {
-                                for (let k=0; k<selectedData[j].length; k++) {
+                            for (let k=0; k<selectedData[j].length; k++) {
                                 var new_SN = $(`#serial_value_${modal_id}_${i}`).val();
                                 var old_SN = $(`#serial_value_${j}_${k}`).val();
 
@@ -346,7 +365,8 @@
                                         showConfirmButton: false,
                                         timer: 2000
                                     });
-                                    sn_data_is_duplicate = true;
+                                    sn_item_is_duplicate = true;
+                                    break;
                                 }
                             }
                         }
@@ -354,7 +374,26 @@
                 }
             }
 
-            if (sn_data_is_duplicate === false && sn_field_is_duplicate === false) {
+           if (sn_field_is_duplicate === false) {
+                for (var i=0; i<serial_qty; i++) {
+                    for (let j=0; j<sn_from_db.length; j++) {
+                        var new_SN = $(`#serial_value_${modal_id}_${i}`).val();
+                        var old_SN = sn_from_db[j].serial_number;
+                        if (new_SN === old_SN) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: `Serial No. "${(new_SN)}" is duplicate.`,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            sn_DB_is_duplicate = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (sn_item_is_duplicate === false && sn_field_is_duplicate === false && sn_DB_is_duplicate === false) {
                 for (var i=0; i<serial_qty; i++) {
                     var SN = $(`#serial_value_${modal_id}_${i}`).val();
                     selectedData[modal_id][i] = {
@@ -387,13 +426,7 @@
                 Qty. <span class="required">*</span>
             </label>
             <div class="col-md-2 col-sm-2">
-                <select class="form-control select_page item_qty" required="required" id="serial_qty_${count_item}"
-                    style="vertical-align: text-top">
-                    <option value=@null>---- Select ----</option>
-                    @for (var i = 1; i<100; i++) {
-    <option value="@i">@i</option>
-                        }
-                </select>
+<input type="number" required="required" class="form-control item_qty" required="required" id="serial_qty_${count_item}" style="vertical-align: text-top">
             </div>
             <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px"
                 id=${count_item} data-toggle="modal" data-target="exampleModalScrollable_${count_item}"> S / N </button>
@@ -420,7 +453,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn_saveModal" id=${count_item}>Save changes</button>
+                        <button type="button" class="btn btn-primary btn_saveModal" id=${count_item}>Save Changes</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -560,7 +593,6 @@
             e.which = 9;
         }
     });
-    modal_serial
 
 </script>
 }

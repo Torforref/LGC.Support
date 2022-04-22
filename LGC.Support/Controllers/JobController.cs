@@ -38,6 +38,7 @@ namespace LGC.Support.Controllers
         {
             ViewBag.product = _product.GetAll().Result;
             ViewBag.customer = _customer.GetAll().Result;
+            ViewBag.SN_form_DB = _job.GetAllJobDetails().Result;
 
             var job_number = _job.GetJobNumber().Result;
             if (job_number != null)
@@ -68,10 +69,10 @@ namespace LGC.Support.Controllers
                 model.job_number = "LGCSV0001";
             }
 
-
             try
             {
                 var result = _job.Create(model).Result;
+                TempData["Message"] = "Job Created!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -144,6 +145,36 @@ namespace LGC.Support.Controllers
                 TempData["ErrorMessage"] = ex.Message;
                 return View(model);
             }
+        }
+
+        public IActionResult SearchBySN()
+        {
+            var model = new JobData()
+            {
+                job_number = null
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult SearchBySN(JobData model)
+        {
+            var result = _job.GetJobBySN(model).Result;
+            
+            if (result != null)
+            {
+                // var data = _job.Get(result.job_id).Result;
+                // data.CustomerDetails = _customer.Get(data.customer_id).Result;
+                result.CustomerDetails =_customer.Get(result.customer_id).Result;
+
+                return View(result);
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Serial Number not found, please try again.";
+                return View(model);
+            }
+            
         }
     }
 }

@@ -22,11 +22,6 @@ namespace LGC.Suport.Controllers
             return View();
         }
 
-        public IActionResult Calendar()
-        {
-            return View();
-        }
-
         [Route("/Home/HandleError/{code:int}")]
         public IActionResult HandleError(int code)
         {

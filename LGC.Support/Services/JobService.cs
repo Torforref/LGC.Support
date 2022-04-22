@@ -69,6 +69,7 @@ namespace LGC.Support.Services
             {
                 foreach (var product in model.JodDetails)
                 {
+                    product.serial_number = product.serial_number.ToUpper();
                     var sqlStatement1 = $@"INSERT INTO JobProductDetails (
                     job_id, 
                     product_id, 
@@ -166,5 +167,32 @@ namespace LGC.Support.Services
                 return datas;
             }
         }
+
+        public async Task<JobData> GetJobBySN(JobData model)
+        {
+            using var conn = await _db.CreateConnectionAsync();
+            var Product_detail = conn.Query<JobProductDetailData>(@"SELECT * FROM JobProductDetails WHERE (serial_number = @serial_number)", new { model.JodDetails[0].serial_number }).FirstOrDefault();
+
+            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @job_id)", new { Product_detail.job_id }).FirstOrDefault();
+
+            datas.JodDetails = conn.Query<JobProductDetailData>(@"SELECT j.[id]
+              ,[job_id]
+              ,[product_id], p.name as product_name
+              ,[serial_number]
+              FROM [dbo].[JobProductDetails] as j
+              inner join [dbo].[Products] as p
+              on j.product_id = p.id where serial_number = @serial_number", new { Product_detail.serial_number }).ToList();
+
+            return datas;
+        }
+
+        public async Task<List<JobProductDetailData>> GetAllJobDetails()
+        {
+            using var conn = await _db.CreateConnectionAsync();
+            var datas = conn.Query<JobProductDetailData>(@"SELECT * FROM JobProductDetails").ToList();
+            return datas;
+        }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using LGC.Support.Models
+@using Newtonsoft.Json
 @model JobData
 
 <div class="row">
@@ -51,7 +52,7 @@
                         <div class="col-md-6 col-sm-6 ">
                             <select asp-for="service_type" class="form-control select_page" disabled="disabled">
                                 @Model.service_type == "PM" ?
-                                <option value="PM">PM : Preventive Maintenance</option> :
+                                <option value="PM">PM : Preventive Maintenance</option>
                                 <option value="MA">MA : Maintenance Agreement</option>
                             </select>
                         </div>
@@ -126,25 +127,27 @@
                                     Qty. <span class="required">*</span>
                                 </label>
                                 <div class="col-md-2 col-sm-2">
-                                    <select class="form-control select_page item_qty" required="required" id="serial_qty_@i" style="vertical-align: text-top" disabled="disabled">
-                                        @{
-                                            List<string> sn_data = new List<string>();
-                                            foreach (var item in @Model.JodDetails)
+                                    @{
+                                        List<string> sn_data = new List<string>();
+                                        foreach (var item in @Model.JodDetails)
+                                        {
+                                            if (item.product_id == @ViewBag.Count_Product_Unique[i].product_id)
                                             {
-                                                if (item.product_id == @ViewBag.Count_Product_Unique[i].product_id)
-                                                {
-                                                    sn_data.Add(item.serial_number);
-                                                }
+                                                sn_data.Add(item.serial_number);
                                             }
-                                            <option value="@sn_data.Count">@sn_data.Count</option>
                                         }
-                                    </select>
+                                        <input type="number" class="form-control item_qty" id="serial_qty_@i" style="vertical-align: text-top" placeholder="@sn_data.Count" readonly="readonly">
+                                    }
+
                                 </div>
+
                                 <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px"
                                     id=@i data-toggle="modal" data-target="exampleModalScrollable_@i">
                                     S / N
                                 </button>
                             </div>
+
+
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModalScrollable_@i" tabindex="-1" role="dialog"
@@ -152,7 +155,7 @@
                                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalScrollable_@i">Add Serial Number</h5>
+                                            <h5 class="modal-title" id="exampleModalScrollable_@i">@ViewBag.Count_Product_Unique[i].product_name - Serial Number</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -161,23 +164,36 @@
 
                                             <!-- Serial Number Field -->
                                         <div id="modal-body_@i">
-                                                @for (var j = 0; j < sn_data.Count; j++)
-                                                {
-                                                    var x = $"{@i}_{@j}";
-                                                    <div id="serial_field_@x" class="item form-group serial_field_@i">
-                                                        <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                                            Serial No.@(j+1) <span class="required">*</span>
-                                                        </label>
-                                                        <div class="col-md-9 col-sm-9 ">
-                                                            <input id="serial_value_@x" type="text" class="form-control modal_serial" placeholder="@sn_data[j]" readonly="readonly">
-                                                        </div>
-                                                    </div>
-                                                }
+                                                <table id="myTable_@i" class="table table-striped table-bordered" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
+                                                    <thead>
+                                                        <tr role="row" style="text-align: center; background-color: #4B5F71; color: #E9EDEF">
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">No.</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Item</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Serial Number</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        @for (var j = 0; j<sn_data.Count; j++)
+                                                        {
+                                                            <tr role="row" class="odd">
+                                                                <td class="text-center">@(j+1)</td>
+                                                                <td class="text-center">@ViewBag.Count_Product_Unique[i].product_name</td>
+                                                                <td class="text-center">@sn_data[j]</td>
+
+                                                            </tr>
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+
+
+
                                             </div>
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary btn_saveModal" id=@i>Save changes</button>
+                                            <button type="button" class="btn btn-primary btn_saveModal" id=@i>Save Changes</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
@@ -207,93 +223,34 @@
     </div>
 </div>
 
-<div class="" role="main">
-
-    <div class="container body">
-        <div class="main_container">
-            <div class="top_nav">
-            </div>
-            <div class="" role="main">
-                <div class="">
-                    <div class="clearfix"></div>
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 ">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2 style="font-weight: bold">Items Details</h2>
-
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li>
-                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
-                                    <div class="row">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-8">
-                                            <div class="card-box table-responsive">
-                                                <table id="myTable" class="table table-striped table-bordered" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
-                                                    <thead>
-                                                        <tr role="row" style="text-align: center; background-color: #4B5F71; color: #E9EDEF">
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">No.</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Product Name</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Qty.</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Serial Number</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                        @for (var i = 0; i<@Model.JodDetails.Count; i++)
-                                                        {
-                                                            <tr role="row" class="odd">
-
-                                                                <td class="text-center">@(i+1)</td>
-                                                                <td class="text-muted">@Model.JodDetails[i].product_name</td>
-                                                                <td class="text-center">1</td>
-                                                                <td class="text-center">@Model.JodDetails[i].serial_number</td>
-
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
 
 @section Scripts{
 <script>
 
+    var count_item = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Count_Product_Unique.Count));
+
     $(function () {
-        $("#myTable").length && $("#myTable").DataTable({
-            dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            lengthChange: false,
-            buttons: [{
-                extend: "copy",
-                className: "btn-sm  btn-dark"
-            }, {
-                extend: "csv",
-                className: "btn-sm btn-dark"
-            }, {
-                extend: 'excelHtml5',
-                className: "btn-sm btn-dark"
-            }],
-            responsive: !0
-        })
+
+        for (var i=0; i<count_item; i++) {
+            $(`#myTable_${i}`).length && $(`#myTable_${i}`).DataTable({
+                dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                lengthChange: false,
+                buttons: [{
+                    extend: "copy",
+                    className: "btn-sm  btn-dark"
+                }, {
+                    extend: "csv",
+                    className: "btn-sm btn-dark"
+                }, {
+                    extend: 'excelHtml5',
+                    className: "btn-sm btn-dark"
+                }],
+                responsive: !0
+            });
+        }
+
     });
 
     $(document).ready(function()

@@ -62,6 +62,7 @@ namespace LGC.Suport
             services.AddScoped(typeof(ProductService));
             services.AddScoped(typeof(CustomerService));
             services.AddScoped(typeof(JobService));
+            services.AddScoped(typeof(CalendarService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,7 +93,7 @@ namespace LGC.Suport
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Job}/{action=Index}/{id?}");
+                    pattern: "{controller=Calendar}/{action=Index}/{id?}");
             });
         }
     }

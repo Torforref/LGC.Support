@@ -11,8 +11,8 @@
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2 style="font-weight: bold">Product List &emsp;</h2>
-                                    <a class="btn-sm btn-dark" tabindex="0" aria-controls="datatable-buttons" asp-controller="Product" asp-action="Create"><i class="fa fa-plus"> Add</i></a>
+                                    <h2 style="font-weight: bold">Product List &emsp;<a class="btn-sm btn-dark" tabindex="0" aria-controls="datatable-buttons" asp-controller="Product" asp-action="Create"><i class="fa fa-plus"> Add</i></a></h2>
+                                    
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li>
                                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -43,7 +43,7 @@
                                                         {
                                                             <tr role="row" class="odd">
                                                                 <td class="text-center text-muted"><a asp-controller="Product" asp-action="Edit" asp-route-id="@product.id">@product.name</a></td>
-                                                                <td class="text-muted">@product.description</td>
+                                                                <td class="">@product.description</td>
                                                                 <td class="text-center">@product.category</td>
                                                                 <td class="text-center">@product.brand</td>
                                                                 <td class="text-center">@product.created_at.ToString("dd MMMM yyyy")</td>

@@ -71,6 +71,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+
+
 </head>
 
 <body class="nav-md">
@@ -115,6 +117,7 @@
                                     <ul class="nav child_menu">
                                         <li><a asp-controller="Job" asp-action="Index">Job Service List</a></li>
                                         <li><a asp-controller="Job" asp-action="Create">Create Job Service</a></li>
+                                        <li><a asp-controller="Job" asp-action="SearchBySN">Search By Serial Number</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -132,7 +135,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a asp-controller="Home" asp-action="Calendar"><i class="fa fa-calendar"></i> Calendar<span></span></a>
+                                    <a asp-controller="Calendar" asp-action="Index"><i class="fa fa-calendar"></i> Calendar<span></span></a>
                                 </li>
 
                             </ul>
@@ -385,6 +388,6 @@
 
         });
     </script>
-        @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

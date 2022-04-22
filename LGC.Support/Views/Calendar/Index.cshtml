@@ -1,108 +1,274 @@
-﻿<div class="app-main__inner">
-    <div class="app-page-title">
-        <div class="page-title-wrapper">
-            <div class="page-title-heading">
-                <div class="page-title-icon">
-                    <i class="pe-7s-car icon-gradient bg-warm-flame">
-                    </i>
-                </div>
-                <div>
-                    Calendar
-                    <div class="page-title-subheading">
-                        Calendars are used in a lot of apps. We thought to include one for React.
-                    </div>
-                </div>
+﻿@using Newtonsoft.Json
+@model LGC.Support.Models.CalendarData
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 style="font-weight: bold">Calendar Events &emsp;<button class="btn-sm btn-dark btn-add-event" tabindex="0" aria-controls="datatable-buttons"><i class="fa fa-plus"> Add</i></button></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
             </div>
-            <div class="page-title-actions">
-                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
-                    <i class="fa fa-star"></i>
-                </button>
-                <div class="d-inline-block dropdown">
-                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
-                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                            <i class="fa fa-business-time fa-w-20"></i>
-                        </span>
-                        Buttons
-                    </button>
-                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-inbox"></i>
-                                    <span>
-                                        Inbox
-                                    </span>
-                                    <div class="ml-auto badge badge-pill badge-secondary">86</div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-book"></i>
-                                    <span>
-                                        Book
-                                    </span>
-                                    <div class="ml-auto badge badge-pill badge-danger">5</div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link">
-                                    <i class="nav-link-icon lnr-picture"></i>
-                                    <span>
-                                        Picture
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a disabled="" href="javascript:void(0);" class="nav-link disabled">
-                                    <i class="nav-link-icon lnr-file-empty"></i>
-                                    <span>
-                                        File Disabled
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
-        <li class="nav-item">
-            <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="#tab-content-0">
-                <span>Basic Calendar</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a role="tab" class="nav-link" id="tab-1" data-toggle="tab" href="#tab-content-1">
-                <span>List View</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
-                <span>Background Events</span>
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
-            <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <div id="calendar" class="fc fc-bootstrap4 fc-ltr"><div class="fc-toolbar fc-header-toolbar"><div class="fc-left"><div class="btn-group"><button type="button" class="fc-prev-button btn btn-primary" aria-label="prev"><span class="fa fa-chevron-left"></span></button><button type="button" class="fc-next-button btn btn-primary" aria-label="next"><span class="fa fa-chevron-right"></span></button></div><button type="button" class="fc-today-button btn btn-primary">today</button></div><div class="fc-right"><div class="btn-group"><button type="button" class="fc-month-button btn btn-primary active">month</button><button type="button" class="fc-basicWeek-button btn btn-primary ">week</button><button type="button" class="fc-basicDay-button btn btn-primary ">day</button></div></div><div class="fc-center"><h2>March 2018</h2></div><div class="fc-clear"></div></div><div class="fc-view-container" style=""><div class="fc-view fc-month-view fc-basic-view" style=""><table class="table-bordered"><thead class="fc-head"><tr><td class="fc-head-container "><div class="fc-row table-bordered" style=""><table class="table-bordered"><thead><tr><th class="fc-day-header  fc-sun"><span>Sun</span></th><th class="fc-day-header  fc-mon"><span>Mon</span></th><th class="fc-day-header  fc-tue"><span>Tue</span></th><th class="fc-day-header  fc-wed"><span>Wed</span></th><th class="fc-day-header  fc-thu"><span>Thu</span></th><th class="fc-day-header  fc-fri"><span>Fri</span></th><th class="fc-day-header  fc-sat"><span>Sat</span></th></tr></thead></table></div></td></tr></thead><tbody class="fc-body"><tr><td class=""><div class="fc-scroller fc-day-grid-container" style="overflow: hidden; height: 733.891px;"><div class="fc-day-grid fc-unselectable"><div class="fc-row fc-week table-bordered fc-rigid" style="height: 122px;"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-other-month fc-past" data-date="2018-02-25"></td><td class="fc-day  fc-mon fc-other-month fc-past" data-date="2018-02-26"></td><td class="fc-day  fc-tue fc-other-month fc-past" data-date="2018-02-27"></td><td class="fc-day  fc-wed fc-other-month fc-past" data-date="2018-02-28"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-01"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-02"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-03"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-other-month fc-past" data-date="2018-02-25"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-02-25&quot;,&quot;type&quot;:&quot;day&quot;}">25</a></td><td class="fc-day-top fc-mon fc-other-month fc-past" data-date="2018-02-26"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-02-26&quot;,&quot;type&quot;:&quot;day&quot;}">26</a></td><td class="fc-day-top fc-tue fc-other-month fc-past" data-date="2018-02-27"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-02-27&quot;,&quot;type&quot;:&quot;day&quot;}">27</a></td><td class="fc-day-top fc-wed fc-other-month fc-past" data-date="2018-02-28"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-02-28&quot;,&quot;type&quot;:&quot;day&quot;}">28</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-01"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-01&quot;,&quot;type&quot;:&quot;day&quot;}">1</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-02"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-02&quot;,&quot;type&quot;:&quot;day&quot;}">2</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-03"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-03&quot;,&quot;type&quot;:&quot;day&quot;}">3</a></td></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable"><div class="fc-content"> <span class="fc-title">All Day Event</span></div><div class="fc-resizer fc-end-resizer"></div></a></td><td></td><td></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered fc-rigid" style="height: 121px;"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-past" data-date="2018-03-04"></td><td class="fc-day  fc-mon fc-past" data-date="2018-03-05"></td><td class="fc-day  fc-tue fc-past" data-date="2018-03-06"></td><td class="fc-day  fc-wed fc-past" data-date="2018-03-07"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-08"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-09"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-10"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2018-03-04"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-04&quot;,&quot;type&quot;:&quot;day&quot;}">4</a></td><td class="fc-day-top fc-mon fc-past" data-date="2018-03-05"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-05&quot;,&quot;type&quot;:&quot;day&quot;}">5</a></td><td class="fc-day-top fc-tue fc-past" data-date="2018-03-06"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-06&quot;,&quot;type&quot;:&quot;day&quot;}">6</a></td><td class="fc-day-top fc-wed fc-past" data-date="2018-03-07"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-07&quot;,&quot;type&quot;:&quot;day&quot;}">7</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-08"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-08&quot;,&quot;type&quot;:&quot;day&quot;}">8</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-09"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-09&quot;,&quot;type&quot;:&quot;day&quot;}">9</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-10"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-10&quot;,&quot;type&quot;:&quot;day&quot;}">10</a></td></tr></thead><tbody><tr><td rowspan="2"></td><td rowspan="2"></td><td rowspan="2"></td><td class="fc-event-container" colspan="3"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable"><div class="fc-content"> <span class="fc-title">Long Event</span></div><div class="fc-resizer fc-end-resizer"></div></a></td><td rowspan="2"></td></tr><tr class=""><td></td><td></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">4p</span> <span class="fc-title">Repeating Event</span></div></a></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered fc-rigid" style="height: 122px;"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-past" data-date="2018-03-11"></td><td class="fc-day  fc-mon fc-past" data-date="2018-03-12"></td><td class="fc-day  fc-tue fc-past" data-date="2018-03-13"></td><td class="fc-day  fc-wed fc-past" data-date="2018-03-14"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-15"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-16"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-17"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2018-03-11"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-11&quot;,&quot;type&quot;:&quot;day&quot;}">11</a></td><td class="fc-day-top fc-mon fc-past" data-date="2018-03-12"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-12&quot;,&quot;type&quot;:&quot;day&quot;}">12</a></td><td class="fc-day-top fc-tue fc-past" data-date="2018-03-13"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-13&quot;,&quot;type&quot;:&quot;day&quot;}">13</a></td><td class="fc-day-top fc-wed fc-past" data-date="2018-03-14"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-14&quot;,&quot;type&quot;:&quot;day&quot;}">14</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-15"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-15&quot;,&quot;type&quot;:&quot;day&quot;}">15</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-16"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-16&quot;,&quot;type&quot;:&quot;day&quot;}">16</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-17"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-17&quot;,&quot;type&quot;:&quot;day&quot;}">17</a></td></tr></thead><tbody><tr><td class="fc-event-container" colspan="2"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable"><div class="fc-content"> <span class="fc-title">Conference</span></div><div class="fc-resizer fc-end-resizer"></div></a></td><td class="fc-event-container" rowspan="6"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">7a</span> <span class="fc-title">Birthday Party</span></div></a></td><td rowspan="6"></td><td rowspan="6"></td><td class="fc-event-container" rowspan="6"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">4p</span> <span class="fc-title">Repeating Event</span></div></a></td><td rowspan="6"></td></tr><tr class=""><td rowspan="5"></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">10:30a</span> <span class="fc-title">Meeting</span></div></a></td></tr><tr class=""><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">12p</span> <span class="fc-title">Lunch</span></div></a></td></tr><tr class=""><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">2:30p</span> <span class="fc-title">Meeting</span></div></a></td></tr><tr class=""><td class="fc-event-container fc-limited"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">5:30p</span> <span class="fc-title">Happy Hour</span></div></a></td><td class="fc-more-cell" rowspan="1"><div><a class="fc-more">+2 more</a></div></td></tr><tr class="fc-limited"><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">8p</span> <span class="fc-title">Dinner</span></div></a></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered fc-rigid" style="height: 122px;"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-past" data-date="2018-03-18"></td><td class="fc-day  fc-mon fc-past" data-date="2018-03-19"></td><td class="fc-day  fc-tue fc-past" data-date="2018-03-20"></td><td class="fc-day  fc-wed fc-past" data-date="2018-03-21"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-22"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-23"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-24"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2018-03-18"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-18&quot;,&quot;type&quot;:&quot;day&quot;}">18</a></td><td class="fc-day-top fc-mon fc-past" data-date="2018-03-19"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-19&quot;,&quot;type&quot;:&quot;day&quot;}">19</a></td><td class="fc-day-top fc-tue fc-past" data-date="2018-03-20"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-20&quot;,&quot;type&quot;:&quot;day&quot;}">20</a></td><td class="fc-day-top fc-wed fc-past" data-date="2018-03-21"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-21&quot;,&quot;type&quot;:&quot;day&quot;}">21</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-22"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-22&quot;,&quot;type&quot;:&quot;day&quot;}">22</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-23"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-23&quot;,&quot;type&quot;:&quot;day&quot;}">23</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-24"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-24&quot;,&quot;type&quot;:&quot;day&quot;}">24</a></td></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered fc-rigid" style="height: 121px;"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-past" data-date="2018-03-25"></td><td class="fc-day  fc-mon fc-past" data-date="2018-03-26"></td><td class="fc-day  fc-tue fc-past" data-date="2018-03-27"></td><td class="fc-day  fc-wed fc-past" data-date="2018-03-28"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-29"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-30"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-31"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2018-03-25"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-25&quot;,&quot;type&quot;:&quot;day&quot;}">25</a></td><td class="fc-day-top fc-mon fc-past" data-date="2018-03-26"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-26&quot;,&quot;type&quot;:&quot;day&quot;}">26</a></td><td class="fc-day-top fc-tue fc-past" data-date="2018-03-27"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-27&quot;,&quot;type&quot;:&quot;day&quot;}">27</a></td><td class="fc-day-top fc-wed fc-past" data-date="2018-03-28"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-28&quot;,&quot;type&quot;:&quot;day&quot;}">28</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-29"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-29&quot;,&quot;type&quot;:&quot;day&quot;}">29</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-30"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-30&quot;,&quot;type&quot;:&quot;day&quot;}">30</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-31"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-31&quot;,&quot;type&quot;:&quot;day&quot;}">31</a></td></tr></thead><tbody><tr><td></td><td></td><td></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable" href="http://google.com/"><div class="fc-content"> <span class="fc-title">Click for Google</span></div><div class="fc-resizer fc-end-resizer"></div></a></td><td></td><td></td><td></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered fc-rigid" style="height: 123px;"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-other-month fc-past" data-date="2018-04-01"></td><td class="fc-day  fc-mon fc-other-month fc-past" data-date="2018-04-02"></td><td class="fc-day  fc-tue fc-other-month fc-past" data-date="2018-04-03"></td><td class="fc-day  fc-wed fc-other-month fc-past" data-date="2018-04-04"></td><td class="fc-day  fc-thu fc-other-month fc-past" data-date="2018-04-05"></td><td class="fc-day  fc-fri fc-other-month fc-past" data-date="2018-04-06"></td><td class="fc-day  fc-sat fc-other-month fc-past" data-date="2018-04-07"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-other-month fc-past" data-date="2018-04-01"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-01&quot;,&quot;type&quot;:&quot;day&quot;}">1</a></td><td class="fc-day-top fc-mon fc-other-month fc-past" data-date="2018-04-02"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-02&quot;,&quot;type&quot;:&quot;day&quot;}">2</a></td><td class="fc-day-top fc-tue fc-other-month fc-past" data-date="2018-04-03"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-03&quot;,&quot;type&quot;:&quot;day&quot;}">3</a></td><td class="fc-day-top fc-wed fc-other-month fc-past" data-date="2018-04-04"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-04&quot;,&quot;type&quot;:&quot;day&quot;}">4</a></td><td class="fc-day-top fc-thu fc-other-month fc-past" data-date="2018-04-05"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-05&quot;,&quot;type&quot;:&quot;day&quot;}">5</a></td><td class="fc-day-top fc-fri fc-other-month fc-past" data-date="2018-04-06"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-06&quot;,&quot;type&quot;:&quot;day&quot;}">6</a></td><td class="fc-day-top fc-sat fc-other-month fc-past" data-date="2018-04-07"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-07&quot;,&quot;type&quot;:&quot;day&quot;}">7</a></td></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div></div></div></div></td></tr></tbody></table></div></div></div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
-            <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <div id="calendar-list" class="fc fc-bootstrap4 fc-ltr"><div class="fc-toolbar fc-header-toolbar"><div class="fc-left"><div class="btn-group"><button type="button" class="fc-prev-button btn btn-primary" aria-label="prev"><span class="fa fa-chevron-left"></span></button><button type="button" class="fc-next-button btn btn-primary" aria-label="next"><span class="fa fa-chevron-right"></span></button></div><button type="button" class="fc-today-button btn btn-primary">today</button></div><div class="fc-right"><div class="btn-group"><button type="button" class="fc-listDay-button btn btn-primary ">list day</button><button type="button" class="fc-listWeek-button btn btn-primary active">list week</button><button type="button" class="fc-month-button btn btn-primary ">month</button></div></div><div class="fc-center"><h2>Mar 11 – 17, 2018</h2></div><div class="fc-clear"></div></div><div class="fc-view-container" style=""><div class="fc-view fc-listWeek-view fc-list-view card card-primary" style=""><div class="fc-scroller" style="overflow: hidden auto; height: auto;"><table class="fc-list-table table"><tbody><tr class="fc-list-heading" data-date="2018-03-11"><td class="table-active" colspan="3"><a class="fc-list-heading-main" data-goto="{&quot;date&quot;:&quot;2018-03-11&quot;,&quot;type&quot;:&quot;day&quot;}">Sunday</a><a class="fc-list-heading-alt" data-goto="{&quot;date&quot;:&quot;2018-03-11&quot;,&quot;type&quot;:&quot;day&quot;}">March 11, 2018</a></td></tr><tr class="fc-list-item"><td class="fc-list-item-time ">all-day</td><td class="fc-list-item-marker "><span class="fc-event-dot"></span></td><td class="fc-list-item-title "><a>Conference</a></td></tr><tr class="fc-list-heading" data-date="2018-03-12"><td class="table-active" colspan="3"><a class="fc-list-heading-main" data-goto="{&quot;date&quot;:&quot;2018-03-12&quot;,&quot;type&quot;:&quot;day&quot;}">Monday</a><a class="fc-list-heading-alt" data-goto="{&quot;date&quot;:&quot;2018-03-12&quot;,&quot;type&quot;:&quot;day&quot;}">March 12, 2018</a></td></tr><tr class="fc-list-item"><td class="fc-list-item-time ">all-day</td><td class="fc-list-item-marker "><span class="fc-event-dot"></span></td><td class="fc-list-item-title "><a>Conference</a></td></tr><tr class="fc-list-item"><td class="fc-list-item-time ">10:30am - 12:30pm</td><td class="fc-list-item-marker "><span class="fc-event-dot"></span></td><td class="fc-list-item-title "><a>Meeting</a></td></tr><tr class="fc-list-item"><td class="fc-list-item-time ">12:00pm</td><td class="fc-list-item-marker "><span class="fc-event-dot"></span></td><td class="fc-list-item-title "><a>Lunch</a></td></tr><tr class="fc-list-item"><td class="fc-list-item-time ">2:30pm</td><td class="fc-list-item-marker "><span class="fc-event-dot"></span></td><td class="fc-list-item-title "><a>Meeting</a></td></tr><tr class="fc-list-item"><td class="fc-list-item-time ">5:30pm</td><td class="fc-list-item-marker "><span class="fc-event-dot"></span></td><td class="fc-list-item-title "><a>Happy Hour</a></td></tr><tr class="fc-list-item"><td class="fc-list-item-time ">8:00pm</td><td class="fc-list-item-marker "><span class="fc-event-dot"></span></td><td class="fc-list-item-title "><a>Dinner</a></td></tr><tr class="fc-list-heading" data-date="2018-03-13"><td class="table-active" colspan="3"><a class="fc-list-heading-main" data-goto="{&quot;date&quot;:&quot;2018-03-13&quot;,&quot;type&quot;:&quot;day&quot;}">Tuesday</a><a class="fc-list-heading-alt" data-goto="{&quot;date&quot;:&quot;2018-03-13&quot;,&quot;type&quot;:&quot;day&quot;}">March 13, 2018</a></td></tr><tr class="fc-list-item"><td class="fc-list-item-time ">7:00am</td><td class="fc-list-item-marker "><span class="fc-event-dot"></span></td><td class="fc-list-item-title "><a>Birthday Party</a></td></tr><tr class="fc-list-heading" data-date="2018-03-16"><td class="table-active" colspan="3"><a class="fc-list-heading-main" data-goto="{&quot;date&quot;:&quot;2018-03-16&quot;,&quot;type&quot;:&quot;day&quot;}">Friday</a><a class="fc-list-heading-alt" data-goto="{&quot;date&quot;:&quot;2018-03-16&quot;,&quot;type&quot;:&quot;day&quot;}">March 16, 2018</a></td></tr><tr class="fc-list-item"><td class="fc-list-item-time ">4:00pm</td><td class="fc-list-item-marker "><span class="fc-event-dot"></span></td><td class="fc-list-item-title "><a>Repeating Event</a></td></tr></tbody></table></div></div></div></div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane tabs-animation fade" id="tab-content-2" role="tabpanel">
-            <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <div id="calendar-bg-events" class="fc fc-bootstrap4 fc-ltr"><div class="fc-toolbar fc-header-toolbar"><div class="fc-left"><div class="btn-group"><button type="button" class="fc-prev-button btn btn-primary" aria-label="prev"><span class="fa fa-chevron-left"></span></button><button type="button" class="fc-next-button btn btn-primary" aria-label="next"><span class="fa fa-chevron-right"></span></button></div><button type="button" class="fc-today-button btn btn-primary">today</button></div><div class="fc-right"><div class="btn-group"><button type="button" class="fc-month-button btn btn-primary active">month</button><button type="button" class="fc-agendaWeek-button btn btn-primary ">week</button><button type="button" class="fc-agendaDay-button btn btn-primary ">day</button><button type="button" class="fc-listMonth-button btn btn-primary ">list</button></div></div><div class="fc-center"><h2>March 2018</h2></div><div class="fc-clear"></div></div><div class="fc-view-container" style=""><div class="fc-view fc-month-view fc-basic-view" style=""><table class="table-bordered"><thead class="fc-head"><tr><td class="fc-head-container "><div class="fc-row table-bordered"><table class="table-bordered"><thead><tr><th class="fc-day-header  fc-sun"><span>Sun</span></th><th class="fc-day-header  fc-mon"><span>Mon</span></th><th class="fc-day-header  fc-tue"><span>Tue</span></th><th class="fc-day-header  fc-wed"><span>Wed</span></th><th class="fc-day-header  fc-thu"><span>Thu</span></th><th class="fc-day-header  fc-fri"><span>Fri</span></th><th class="fc-day-header  fc-sat"><span>Sat</span></th></tr></thead></table></div></td></tr></thead><tbody class="fc-body"><tr><td class=""><div class="fc-scroller fc-day-grid-container" style="overflow: hidden; height: auto;"><div class="fc-day-grid fc-unselectable"><div class="fc-row fc-week table-bordered"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-other-month fc-past" data-date="2018-02-25"></td><td class="fc-day  fc-mon fc-other-month fc-past" data-date="2018-02-26"></td><td class="fc-day  fc-tue fc-other-month fc-past" data-date="2018-02-27"></td><td class="fc-day  fc-wed fc-other-month fc-past" data-date="2018-02-28"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-01"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-02"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-03"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-other-month fc-past" data-date="2018-02-25"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-02-25&quot;,&quot;type&quot;:&quot;day&quot;}">25</a></td><td class="fc-day-top fc-mon fc-other-month fc-past" data-date="2018-02-26"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-02-26&quot;,&quot;type&quot;:&quot;day&quot;}">26</a></td><td class="fc-day-top fc-tue fc-other-month fc-past" data-date="2018-02-27"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-02-27&quot;,&quot;type&quot;:&quot;day&quot;}">27</a></td><td class="fc-day-top fc-wed fc-other-month fc-past" data-date="2018-02-28"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-02-28&quot;,&quot;type&quot;:&quot;day&quot;}">28</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-01"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-01&quot;,&quot;type&quot;:&quot;day&quot;}">1</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-02"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-02&quot;,&quot;type&quot;:&quot;day&quot;}">2</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-03"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-03&quot;,&quot;type&quot;:&quot;day&quot;}">3</a></td></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">1p</span> <span class="fc-title">Business Lunch</span></div></a></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td class="fc-nonbusiness fc-bgevent" colspan="1"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="fc-nonbusiness fc-bgevent" colspan="1"></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-past" data-date="2018-03-04"></td><td class="fc-day  fc-mon fc-past" data-date="2018-03-05"></td><td class="fc-day  fc-tue fc-past" data-date="2018-03-06"></td><td class="fc-day  fc-wed fc-past" data-date="2018-03-07"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-08"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-09"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-10"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2018-03-04"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-04&quot;,&quot;type&quot;:&quot;day&quot;}">4</a></td><td class="fc-day-top fc-mon fc-past" data-date="2018-03-05"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-05&quot;,&quot;type&quot;:&quot;day&quot;}">5</a></td><td class="fc-day-top fc-tue fc-past" data-date="2018-03-06"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-06&quot;,&quot;type&quot;:&quot;day&quot;}">6</a></td><td class="fc-day-top fc-wed fc-past" data-date="2018-03-07"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-07&quot;,&quot;type&quot;:&quot;day&quot;}">7</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-08"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-08&quot;,&quot;type&quot;:&quot;day&quot;}">8</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-09"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-09&quot;,&quot;type&quot;:&quot;day&quot;}">9</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-10"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-10&quot;,&quot;type&quot;:&quot;day&quot;}">10</a></td></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td class="fc-nonbusiness fc-bgevent" colspan="1"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="fc-nonbusiness fc-bgevent" colspan="1"></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td></td><td></td><td class="fc-bgevent" style="background-color:var(--success)" colspan="2"></td><td></td><td></td><td></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-past" data-date="2018-03-11"></td><td class="fc-day  fc-mon fc-past" data-date="2018-03-12"></td><td class="fc-day  fc-tue fc-past" data-date="2018-03-13"></td><td class="fc-day  fc-wed fc-past" data-date="2018-03-14"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-15"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-16"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-17"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2018-03-11"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-11&quot;,&quot;type&quot;:&quot;day&quot;}">11</a></td><td class="fc-day-top fc-mon fc-past" data-date="2018-03-12"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-12&quot;,&quot;type&quot;:&quot;day&quot;}">12</a></td><td class="fc-day-top fc-tue fc-past" data-date="2018-03-13"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-13&quot;,&quot;type&quot;:&quot;day&quot;}">13</a></td><td class="fc-day-top fc-wed fc-past" data-date="2018-03-14"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-14&quot;,&quot;type&quot;:&quot;day&quot;}">14</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-15"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-15&quot;,&quot;type&quot;:&quot;day&quot;}">15</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-16"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-16&quot;,&quot;type&quot;:&quot;day&quot;}">16</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-17"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-17&quot;,&quot;type&quot;:&quot;day&quot;}">17</a></td></tr></thead><tbody><tr><td></td><td></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#257e4a;border-color:#257e4a"><div class="fc-content"><span class="fc-time">11a</span> <span class="fc-title">Meeting</span></div></a></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td class="fc-nonbusiness fc-bgevent" colspan="1"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="fc-nonbusiness fc-bgevent" colspan="1"></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-past" data-date="2018-03-18"></td><td class="fc-day  fc-mon fc-past" data-date="2018-03-19"></td><td class="fc-day  fc-tue fc-past" data-date="2018-03-20"></td><td class="fc-day  fc-wed fc-past" data-date="2018-03-21"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-22"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-23"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-24"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2018-03-18"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-18&quot;,&quot;type&quot;:&quot;day&quot;}">18</a></td><td class="fc-day-top fc-mon fc-past" data-date="2018-03-19"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-19&quot;,&quot;type&quot;:&quot;day&quot;}">19</a></td><td class="fc-day-top fc-tue fc-past" data-date="2018-03-20"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-20&quot;,&quot;type&quot;:&quot;day&quot;}">20</a></td><td class="fc-day-top fc-wed fc-past" data-date="2018-03-21"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-21&quot;,&quot;type&quot;:&quot;day&quot;}">21</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-22"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-22&quot;,&quot;type&quot;:&quot;day&quot;}">22</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-23"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-23&quot;,&quot;type&quot;:&quot;day&quot;}">23</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-24"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-24&quot;,&quot;type&quot;:&quot;day&quot;}">24</a></td></tr></thead><tbody><tr><td class="fc-event-container" colspan="2"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable"><div class="fc-content"> <span class="fc-title">Conference</span></div><div class="fc-resizer fc-end-resizer"></div></a></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td class="fc-nonbusiness fc-bgevent" colspan="1"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="fc-nonbusiness fc-bgevent" colspan="1"></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="fc-bgevent" style="background-color:var(--danger)" colspan="1"></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-past" data-date="2018-03-25"></td><td class="fc-day  fc-mon fc-past" data-date="2018-03-26"></td><td class="fc-day  fc-tue fc-past" data-date="2018-03-27"></td><td class="fc-day  fc-wed fc-past" data-date="2018-03-28"></td><td class="fc-day  fc-thu fc-past" data-date="2018-03-29"></td><td class="fc-day  fc-fri fc-past" data-date="2018-03-30"></td><td class="fc-day  fc-sat fc-past" data-date="2018-03-31"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2018-03-25"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-25&quot;,&quot;type&quot;:&quot;day&quot;}">25</a></td><td class="fc-day-top fc-mon fc-past" data-date="2018-03-26"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-26&quot;,&quot;type&quot;:&quot;day&quot;}">26</a></td><td class="fc-day-top fc-tue fc-past" data-date="2018-03-27"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-27&quot;,&quot;type&quot;:&quot;day&quot;}">27</a></td><td class="fc-day-top fc-wed fc-past" data-date="2018-03-28"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-28&quot;,&quot;type&quot;:&quot;day&quot;}">28</a></td><td class="fc-day-top fc-thu fc-past" data-date="2018-03-29"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-29&quot;,&quot;type&quot;:&quot;day&quot;}">29</a></td><td class="fc-day-top fc-fri fc-past" data-date="2018-03-30"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-30&quot;,&quot;type&quot;:&quot;day&quot;}">30</a></td><td class="fc-day-top fc-sat fc-past" data-date="2018-03-31"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-03-31&quot;,&quot;type&quot;:&quot;day&quot;}">31</a></td></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">8p</span> <span class="fc-title">Party</span></div></a></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td class="fc-nonbusiness fc-bgevent" colspan="1"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="fc-nonbusiness fc-bgevent" colspan="1"></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td class="fc-bgevent" style="background-color:var(--danger)" colspan="3"></td><td></td><td></td><td></td><td></td></tr></tbody></table></div></div><div class="fc-row fc-week table-bordered"><div class="fc-bg"><table class="table-bordered"><tbody><tr><td class="fc-day  fc-sun fc-other-month fc-past" data-date="2018-04-01"></td><td class="fc-day  fc-mon fc-other-month fc-past" data-date="2018-04-02"></td><td class="fc-day  fc-tue fc-other-month fc-past" data-date="2018-04-03"></td><td class="fc-day  fc-wed fc-other-month fc-past" data-date="2018-04-04"></td><td class="fc-day  fc-thu fc-other-month fc-past" data-date="2018-04-05"></td><td class="fc-day  fc-fri fc-other-month fc-past" data-date="2018-04-06"></td><td class="fc-day  fc-sat fc-other-month fc-past" data-date="2018-04-07"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-other-month fc-past" data-date="2018-04-01"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-01&quot;,&quot;type&quot;:&quot;day&quot;}">1</a></td><td class="fc-day-top fc-mon fc-other-month fc-past" data-date="2018-04-02"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-02&quot;,&quot;type&quot;:&quot;day&quot;}">2</a></td><td class="fc-day-top fc-tue fc-other-month fc-past" data-date="2018-04-03"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-03&quot;,&quot;type&quot;:&quot;day&quot;}">3</a></td><td class="fc-day-top fc-wed fc-other-month fc-past" data-date="2018-04-04"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-04&quot;,&quot;type&quot;:&quot;day&quot;}">4</a></td><td class="fc-day-top fc-thu fc-other-month fc-past" data-date="2018-04-05"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-05&quot;,&quot;type&quot;:&quot;day&quot;}">5</a></td><td class="fc-day-top fc-fri fc-other-month fc-past" data-date="2018-04-06"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-06&quot;,&quot;type&quot;:&quot;day&quot;}">6</a></td><td class="fc-day-top fc-sat fc-other-month fc-past" data-date="2018-04-07"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-04-07&quot;,&quot;type&quot;:&quot;day&quot;}">7</a></td></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td class="fc-nonbusiness fc-bgevent" colspan="1"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><div class="fc-bgevent-skeleton"><table><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="fc-nonbusiness fc-bgevent" colspan="1"></td></tr></tbody></table></div></div></div></div></td></tr></tbody></table></div></div></div>
+            <div class="x_content">
+                <div id="calendar" class="fc fc-unthemed fc-ltr">
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div id="CalenderModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #172D44; color: #ffff">
+                <h4 class="modal-title" id="myModalLabel">New Calendar</h4>
+            </div>
+            <div class="modal-body">
+                <div id="testmodal" style="padding: 5px 20px;">
+                    <form asp-controller="Calendar" asp-action="Index" id="event-modal-form" class="form-horizontal calender" role="form">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                Title <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-9">
+                                <input asp-for="title" type="text" id="event-title" required="required" class="form-control">
+                            </div>
+                        </div>
+                        <div class="item form-group" hidden="hidden" id="event-created_by-form">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                Created by
+                            </label>
+                            <div class="col-md-9 col-sm-9">
+                                <input asp-for="created_by" type="text" id="event-created_by" readonly="readonly" class="form-control">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                Date <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                <input asp-for="event_date" id="event-date" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                                <script>
+                                    function timeFunctionLong(input) {
+                                        setTimeout(function() {
+                                            input.type = 'text';
+                                        }, 60000);
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                Description
+                            </label>
+                            <div class="col-md-9 col-sm-9">
+                                <textarea asp-for="description" id="event-description" class="form-control" rows="3" style="height: 111px;" maxlength=255></textarea>
+                            </div>
+                        </div>
+
+                        <input hidden name="id" type="text" id="event-id" required="required" class="form-control">
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary antosubmit btn-save-modal">Save Changes</button>
+                            <button hidden="hidden" type="button" class="btn btn-danger btn-delete-modal">Delete</button>
+                            <button type="button" class="btn btn-danger antoclose btn-close-modal" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+<script>
+
+    var events = []
+    var events_from_db = @Html.Raw(JsonConvert.SerializeObject(ViewBag.events));
+
+
+
+    for (var i = 0; i < events_from_db.length; i++) {
+        events.push({
+            title: events_from_db[i].title,
+            start: events_from_db[i].event_date
+        });
+    }
+
+
+
+
+    $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month' // ,agendaWeek,agendaDay
+        },
+        buttonText: {
+            today: 'today',
+            month: 'month',
+            week: 'week',
+            day: 'day'
+        },
+        eventSources: [
+            // your event source
+            {
+                events: events,
+                textColor: '#ffff',
+                color: '#0C73B2'// an option!
+            }
+        ],
+        dayClick: function (date, jsEvent, view) {
+            var today_date = moment().format('YYYY-MM-DD');
+            
+            if (date.format('YYYY-MM-DD') > today_date || date.format('YYYY-MM-DD') === today_date) {
+                $(".btn-delete-modal").attr("hidden", "hidden");
+                $("#event-created_by-form").attr("hidden", "hidden");
+                $("#event-date").val(date.format());
+                $("#CalenderModal").attr("class", "modal fade show");
+                $("#CalenderModal").attr("style", "display: block; padding-right: 16px;");
+            }
+        },
+
+        eventMouseover: function () {
+            $(this).css('background-color', '#1C96BA');
+        },
+
+        eventMouseout: function () {
+            $(this).css('background-color', '#0C73B2');
+        },
+
+        eventClick: function (event, element) {
+            for (var i = 0; i < events_from_db.length; i++) {
+
+                if (event.title === events_from_db[i].title) {
+                    $("#event-title").val(`${events_from_db[i].title}`);
+                    $("#event-created_by").val(`${events_from_db[i].created_by}`);
+                    $("#event-date").val(`${events_from_db[i].event_date}`);
+                    if (events_from_db[i].description !== null) {
+                        $("#event-description").val(`${events_from_db[i].description}`);
+                    }
+                    $("#event-id").val(`${events_from_db[i].id}`);
+                    break;
+                }
+            }
+            $("#CalenderModal").attr("class", "modal fade show");
+            $("#CalenderModal").attr("style", "display: block; padding-right: 16px;");
+            $(".btn-delete-modal").removeAttr("hidden");
+            $("#event-created_by-form").removeAttr("hidden");
+
+        }
+
+    });
+   
+
+    $(document).on("click", ".btn-add-event", function () {
+        
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+        
+        month < 10 ? month=`0${month}` : month
+        today = `${year}-${month}-${day}`;
+        $("#event-date").attr('min', today);
+
+        $("#event-date").val("");
+        $("#CalenderModal").attr("class", "modal fade show");
+        $("#CalenderModal").attr("style", "display: block; padding-right: 16px;");
+
+    });
+
+
+    $(document).on("click", ".btn-close-modal", function () {
+        $("#event-id").val("");
+        $("#event-title").val("");
+        $("#event-created_by").val("");
+        $("#event-description").val("");
+        $("#CalenderModal").attr("class", "modal fade");
+        $("#CalenderModal").attr("style", "");
+    });
+
+
+
+
+
+    $(document).on("click", ".btn-save-modal", function () {
+        var event_title = $("#event-title").val();
+        var event_date = $("#event-date").val();
+        var event_id = $("#event-id").val();
+        var event_duplicate = false;
+
+        for (var i = 0; i < events_from_db.length; i++) {
+
+            if (events_from_db[i].title === event_title && events_from_db[i].event_date === event_date && event_id === "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: `Event title on ${event_date} is duplicate.`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                event_duplicate = true;
+                break;
+            }
+        }
+
+        if (event_duplicate === false && event_title !== "" && event_date !== "") {
+            $("#event-modal-form").submit();
+        }
+    });
+
+
+    $(document).on("click", ".btn-delete-modal", function () {
+        var event_id = $("#event-id").val();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post('@Url.Action("Delete","Calendar")', { id: event_id }, function (data) {
+                    if (data.result == "ok") {
+                        Swal.fire({
+                            //position: 'top-end',
+                            icon: 'success',
+                            title: 'Your event has been deleted.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        Swal.fire({
+                            //position: 'top-end',
+                            type: 'error',
+                            title: data.result,
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }
+                });
+            }
+        })
+
+    });
+
+
+</script>
+
+}
