@@ -159,22 +159,29 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult SearchBySN(JobData model)
         {
-            var result = _job.GetJobBySN(model).Result;
-            
-            if (result != null)
+            try
             {
-                // var data = _job.Get(result.job_id).Result;
-                // data.CustomerDetails = _customer.Get(data.customer_id).Result;
-                result.CustomerDetails =_customer.Get(result.customer_id).Result;
+                var result = _job.GetJobBySN(model).Result;
 
-                return View(result);
+                if (result != null)
+                {
+                    // var data = _job.Get(result.job_id).Result;
+                    // data.CustomerDetails = _customer.Get(data.customer_id).Result;
+                    result.CustomerDetails =_customer.Get(result.customer_id).Result;
+
+                    return View(result);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Serial Number not found, please try again.";
+                    return View(model);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Serial Number not found, please try again.";
+                TempData["ErrorMessage"] = ex.Message;
                 return View(model);
             }
-            
         }
     }
 }

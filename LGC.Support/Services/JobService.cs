@@ -43,7 +43,7 @@ namespace LGC.Support.Services
               inner join [dbo].[Products] as p
               on j.product_id = p.id where job_id = @id", new { id }).ToList();
 
-            datas.CustomerDetails = conn.Query<CustomerData>(@"SELECT * FROM Customers WHERE (id = @customer_id)", new { datas.customer_id } ).FirstOrDefault();
+            datas.CustomerDetails = conn.Query<CustomerData>(@"SELECT * FROM Customers WHERE (id = @customer_id)", new { datas.customer_id }).FirstOrDefault();
 
             return datas;
         }
@@ -69,7 +69,7 @@ namespace LGC.Support.Services
             {
                 foreach (var product in model.JodDetails)
                 {
-                    product.serial_number = product.serial_number.ToUpper();
+                    // product.serial_number = product.serial_number.ToUpper();
                     var sqlStatement1 = $@"INSERT INTO JobProductDetails (
                     job_id, 
                     product_id, 
@@ -173,9 +173,19 @@ namespace LGC.Support.Services
             using var conn = await _db.CreateConnectionAsync();
             var Product_detail = conn.Query<JobProductDetailData>(@"SELECT * FROM JobProductDetails WHERE (serial_number = @serial_number)", new { model.JodDetails[0].serial_number }).FirstOrDefault();
 
-            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @job_id)", new { Product_detail.job_id }).FirstOrDefault();
+            var job_id = -1;
+            if (Product_detail != null)
+            {
+                job_id = Product_detail.job_id;
+            }
 
-            datas.JodDetails = conn.Query<JobProductDetailData>(@"SELECT j.[id]
+            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @job_id)", new { job_id }).FirstOrDefault();
+          
+
+            if (datas != null)
+            {
+
+                datas.JodDetails = conn.Query<JobProductDetailData>(@"SELECT j.[id]
               ,[job_id]
               ,[product_id], p.name as product_name
               ,[serial_number]
@@ -183,7 +193,13 @@ namespace LGC.Support.Services
               inner join [dbo].[Products] as p
               on j.product_id = p.id where serial_number = @serial_number", new { Product_detail.serial_number }).ToList();
 
-            return datas;
+                return datas;
+            }
+            else
+            {
+                return datas;
+            }
+
         }
 
         public async Task<List<JobProductDetailData>> GetAllJobDetails()
