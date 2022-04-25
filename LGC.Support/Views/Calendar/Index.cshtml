@@ -5,11 +5,18 @@
     <div class="col-md-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2 style="font-weight: bold">Calendar Events &emsp;<button class="btn-sm btn-dark btn-add-event" tabindex="0" aria-controls="datatable-buttons"><i class="fa fa-plus"> Add</i></button></h2>
+                <h2 style="font-weight: bold">
+                    Calendar Events &emsp;
+                    <button class="btn-sm btn-dark btn-add-event" tabindex="0" aria-controls="datatable-buttons"><i class="fa fa-plus"> Add</i></button>
+                    <div>
+                        <button class="btn-sm btn-dark btn-add-event" tabindex="0" aria-controls="datatable-buttons"><i class="fa fa-clock-o"> Set a Reminder</i></button>
+                    </div>
+                </h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
+                </ul>
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -60,6 +67,19 @@
                                         }, 60000);
                                     }
                                 </script>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                Remind me:
+                            </label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <select asp-for="remind_before_day" class="form-control" id="event-reminder">
+                                    <option value="1">1 Day before</option>
+                                    <option value="3">3 Days before</option>
+                                    <option value="5">5 Days before</option>
+                                    <option value="7">7 Days before</option>
+                                </select>
                             </div>
                         </div>
                         <div class="item form-group">
@@ -130,11 +150,12 @@
         ],
         dayClick: function (date, jsEvent, view) {
             var today_date = moment().format('YYYY-MM-DD');
-            
+
             if (date.format('YYYY-MM-DD') > today_date || date.format('YYYY-MM-DD') === today_date) {
                 $(".btn-delete-modal").attr("hidden", "hidden");
                 $("#event-created_by-form").attr("hidden", "hidden");
                 $("#event-date").val(date.format());
+                $("#event-reminder").val("1").change();
                 $("#CalenderModal").attr("class", "modal fade show");
                 $("#CalenderModal").attr("style", "display: block; padding-right: 16px;");
             }
@@ -158,6 +179,7 @@
                     if (events_from_db[i].description !== null) {
                         $("#event-description").val(`${events_from_db[i].description}`);
                     }
+                    $("#event-reminder").val(`${events_from_db[i].remind_before_day}`);
                     $("#event-id").val(`${events_from_db[i].id}`);
                     break;
                 }
@@ -170,20 +192,22 @@
         }
 
     });
-   
+                        
+
 
     $(document).on("click", ".btn-add-event", function () {
-        
+
         var today = new Date();
         var year = today.getFullYear();
         var month = today.getMonth() + 1;
         var day = today.getDate();
-        
+
         month < 10 ? month=`0${month}` : month
         today = `${year}-${month}-${day}`;
         $("#event-date").attr('min', today);
-
         $("#event-date").val("");
+        $("#event-reminder").val("1").change();
+        
         $("#CalenderModal").attr("class", "modal fade show");
         $("#CalenderModal").attr("style", "display: block; padding-right: 16px;");
 

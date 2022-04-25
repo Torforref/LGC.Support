@@ -27,13 +27,17 @@ namespace LGC.Suport
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+
+
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.  
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(option =>
                 {
@@ -42,7 +46,7 @@ namespace LGC.Suport
             services.Configure<CookieTempDataProviderOptions>(options => {
                 options.Cookie.IsEssential = true;
             });
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("SupportConnection")));
+          //  services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("SupportConnection")));
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -58,6 +62,10 @@ namespace LGC.Suport
             {
                 return new SqlConnectionFactory(Configuration.GetConnectionString("SupportConnection"));
             });
+
+            services.AddTransient<Support.Services.EmailService>();
+
+
             services.AddScoped(typeof(UserService));
             services.AddScoped(typeof(ProductService));
             services.AddScoped(typeof(CustomerService));

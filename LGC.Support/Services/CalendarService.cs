@@ -29,6 +29,7 @@ namespace LGC.Support.Services
             var sqlStatement = $@"INSERT INTO Calendars (
                     title,
                     event_date,
+                    remind_before_day,
                     description, 
                     created_by, 
                     created_at, 
@@ -37,13 +38,14 @@ namespace LGC.Support.Services
                 ) VALUES (
                     @title, 
                     @event_date, 
+                    @remind_before_day,
                     @description, 
                     @created_by, 
                     @created_at, 
                     @updated_by, 
                     @updated_at
                     )";
-            await conn.ExecuteAsync(sqlStatement, new { model.title, model.event_date, model.description, created_by = "Titharat", created_at = DateTime.Now, updated_by = "Titharat", updated_at = DateTime.Now });
+            await conn.ExecuteAsync(sqlStatement, new { model.title, model.event_date, model.remind_before_day, model.description, created_by = "Titharat", created_at = DateTime.Now, updated_by = "Titharat", updated_at = DateTime.Now });
         }
 
 
@@ -57,8 +59,8 @@ namespace LGC.Support.Services
             }
             else
             {
-                var sqlStatement = @"UPDATE Calendars SET title = @title, event_date = @event_date, description = @description, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
-                await conn.ExecuteAsync(sqlStatement, new { model.title, model.event_date, model.description, updated_by = "Titharat", updated_at = DateTime.Now, id = model.id });
+                var sqlStatement = @"UPDATE Calendars SET title = @title, event_date = @event_date, remind_before_day = @remind_before_day, description = @description, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
+                await conn.ExecuteAsync(sqlStatement, new { model.title, model.event_date, model.remind_before_day, model.description, updated_by = "Titharat", updated_at = DateTime.Now, id = model.id });
 
                 return datas;
             }
