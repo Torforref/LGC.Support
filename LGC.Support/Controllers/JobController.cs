@@ -85,6 +85,7 @@ namespace LGC.Support.Controllers
         public IActionResult Edit(int? id)
         {
             var result = _job.Get(id).Result;
+            ViewBag.SN_form_DB = _job.GetAllJobDetails().Result;
 
             if (result == null)
             {
@@ -127,9 +128,9 @@ namespace LGC.Support.Controllers
         [HttpPost]
         public IActionResult Edit(JobData model)
         {
-            var result = _job.Update(model).Result;
             try
             {
+                var result = _job.Update(model).Result;
                 if (result != null)
                 {
                     TempData["Message"] = "Job Updated!";

@@ -95,7 +95,6 @@ namespace LGC.Support.Services
                     job_number, 
                     service_type, 
                     onsite_limited, 
-                    onsite_date, 
                     customer_po, 
                     description, 
                     status, 
@@ -113,7 +112,6 @@ namespace LGC.Support.Services
                     @job_number, 
                     @service_type, 
                     @onsite_limited, 
-                    @onsite_date, 
                     @customer_po, 
                     @description, 
                     @status, 
@@ -133,7 +131,6 @@ namespace LGC.Support.Services
                     model.job_number,
                     model.service_type,
                     model.onsite_limited,
-                    model.onsite_date,
                     model.customer_po,
                     model.description,
                     model.customer_id,
@@ -162,8 +159,17 @@ namespace LGC.Support.Services
             }
             else
             {
-                var sqlStatement = @"UPDATE Jobs SET onsite_date = @onsite_date, description = @description, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
-                await conn.ExecuteAsync(sqlStatement, new { model.onsite_date, model.description, updated_by = "Tithart", updated_at = DateTime.Now, model.id });
+                var sqlStatement = @"UPDATE Jobs SET description = @description, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
+                await conn.ExecuteAsync(sqlStatement, new { model.description, updated_by = "Tithart", updated_at = DateTime.Now, model.id });
+
+                if (model.JodDetails != null)
+                {
+                    foreach (var item in model.JodDetails)
+                    {
+                        sqlStatement = @"UPDATE JobProductDetails SET serial_number = @new_serial_number WHERE serial_number = @old_serial_number";
+                        await conn.ExecuteAsync(sqlStatement, new { item.new_serial_number, item.old_serial_number });
+                    }
+                }
                 return datas;
             }
         }

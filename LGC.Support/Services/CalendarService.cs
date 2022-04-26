@@ -18,7 +18,7 @@ namespace LGC.Support.Services
         public async Task<List<CalendarData>> GetAll()
         {
             using var conn = await _db.CreateConnectionAsync();
-            var datas = conn.Query<CalendarData>(@"SELECT * FROM Calendars").ToList();
+            var datas = conn.Query<CalendarData>(@"SELECT * FROM Calendars WHERE CAST(event_date AS DATE) >= CAST(GETDATE() AS DATE)").ToList();
             return datas;
         }
 

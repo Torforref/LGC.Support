@@ -6,7 +6,7 @@
     <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
             <div class="x_title">
-                <h2 style="font-weight: bold">Service No. @Model.job_number - @Model.CustomerDetails.name</h2>
+                <h2 style="font-weight: bold">@Model.job_number - @Model.CustomerDetails.name</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -65,21 +65,21 @@
                             <input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">
                         </div>
                     </div>
-                    <div class="item form-group">
+                    @*                    <div class="item form-group">
                         <label asp-for="onsite_date" class="col-form-label col-md-3 col-sm-3 label-align">
-                            On Site Date <span class="required">*</span>
+                        On Site Date <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="onsite_date" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
-                            <script>
-                                function timeFunctionLong(input) {
-                                setTimeout(function() {
-                                input.type = 'text';
-                                }, 60000);
-                                }
-                            </script>
+                        <input asp-for="onsite_date" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                        <script>
+                        function timeFunctionLong(input) {
+                        setTimeout(function() {
+                        input.type = 'text';
+                        }, 60000);
+                        }
+                        </script>
                         </div>
-                    </div>
+                        </div>*@
                     <div class="item form-group">
                         <label asp-for="customer_po" class="col-form-label col-md-3 col-sm-3 label-align">
                             Customer PO No. <span class="required">*</span>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="form-group row">
                         <label asp-for="description" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Description <span class="required">*</span>
+                            Description
                         </label>
                         <div class="col-md-6 col-sm-9 ">
                             <textarea asp-for="description" class="form-control" rows="3"></textarea>
@@ -152,7 +152,7 @@
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModalScrollable_@i" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalScrollable_@i" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalScrollable_@i">@ViewBag.Count_Product_Unique[i].product_name - Serial Number</h5>
@@ -179,8 +179,7 @@
                                                             <tr role="row" class="odd">
                                                                 <td class="text-center">@(j+1)</td>
                                                                 <td class="text-center">@ViewBag.Count_Product_Unique[i].product_name</td>
-                                                                <td class="text-center">@sn_data[j]</td>
-
+                                                                <td class="text-center"><a href="#" id="@sn_data[j]" class="edit-sn">@sn_data[j]</a></td>
                                                             </tr>
                                                         }
 
@@ -193,7 +192,6 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary btn_saveModal" id=@i>Save Changes</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
@@ -212,10 +210,18 @@
                     <div class="ln_solid" id="ln_solid"></div>
                     <div class="item form-group" id="button_form">
                         <div class="col-md-6 col-sm-6 offset-md-3">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                            <a asp-controller="Job" asp-action="Index" class="btn btn-danger"> Cancel</a>
+                            <button type="button" class="btn btn-dark btn-confirmSN" style="color: #ffff;">Confirm S/N</button>
+                            <button type="button" class="btn btn-dark btn-editSN" style="color: #ffff;" disabled="disabled">Edit S/N</button>
+                            <a asp-controller="Job" asp-action="Index" class="btn btn-danger" style="float: right;"> Cancel</a>
+                            <button type="submit" class="btn btn-primary btn-update" style="float: right;" disabled="disabled">Update</button>
                         </div>
                     </div>
+
+
+                        <div class="item form-group" id="edit_sn">
+                        </div>
+
+
                 </form>
 
             </div>
@@ -224,10 +230,67 @@
 </div>
 
 
+
+
+
+<div id="CalenderModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 15%">
+            <div class="modal-header" style="background-color: #2C4E71; color: #ffff">
+                <h4 class="modal-title" id="myModalLabel">Edit Serial Number</h4>
+            </div>
+            <div class="modal-body">
+                <div id="testmodal" style="padding: 5px 20px;">
+                    <form id="event-modal-form" class="form-horizontal calender" role="form">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                Old S/N
+                            </label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="text" id="old_sn" readonly="readonly" class="form-control">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                New S/N <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="text" id="new_sn" required="required" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary antosubmit btn-save-modal">Save Changes</button>
+                            <button type="button" class="btn btn-danger antoclose btn-close-modal" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 @section Scripts{
 <script>
 
     var count_item = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Count_Product_Unique.Count));
+    var sn_from_db = @Html.Raw(JsonConvert.SerializeObject(ViewBag.SN_form_DB));
+    var new_sn_data = []
 
     $(function () {
 
@@ -266,6 +329,102 @@
         $(`#exampleModalScrollable_${item_id}`).modal('show');
 
     });
+
+
+    $(document).on("click", ".edit-sn", function() {
+        var old_sn = $(this).attr("id");
+        $("#old_sn").val(old_sn);
+        $("#CalenderModal").attr("class", "modal fade show");
+        $("#CalenderModal").attr("style", "display: block; padding-right: 16px;");
+        $(document).off('focusin.modal');
+    });
+
+
+    $(document).on("click", ".btn-close-modal", function () {
+        $("#CalenderModal").attr("class", "modal fade");
+        $("#CalenderModal").attr("style", "");                
+        $("#old_sn").val("");
+        $("#new_sn").val("");
+    });
+
+
+    $(document).on("click", ".btn-save-modal", function () {
+        var old_sn = $("#old_sn").val();
+        var new_sn = $("#new_sn").val();
+        var sn_is_duplicate = false;
+
+       if (new_sn !== "") {
+            if (new_sn_data.length > 0) {
+                for (var i=0; i<new_sn_data.length; i++) {
+                    if (new_sn === new_sn_data[i].new_sn_to_db) {
+                       Swal.fire({
+                            icon: 'error',
+                            title: `Serial No. "${(new_sn)}" is duplicate.`,
+                            showConfirmButton: false,
+                            timer: 2000
+                       });
+                        sn_is_duplicate = true;
+                        break;
+                    }
+                }
+            }
+
+            if (sn_is_duplicate === false) {
+                for (var i=0; i<sn_from_db.length; i++) {
+                    if (new_sn === sn_from_db[i].serial_number) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: `Serial No. "${(new_sn)}" is duplicate.`,
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        sn_is_duplicate = true;
+                        break;
+                    }
+                }
+            }
+
+            if (sn_is_duplicate === false) {
+                new_sn_data.push({
+                    old_sn_from_db: old_sn,
+                    new_sn_to_db: new_sn
+                })
+
+                $(`#${old_sn}`).html(new_sn);
+                $(`#${old_sn}`).attr("style", "color: red");
+                $("#CalenderModal").attr("class", "modal fade");
+                $("#CalenderModal").attr("style", "");
+                $("#old_sn").val("");
+                $("#new_sn").val("");
+            }
+
+        }  
+    });
+
+
+        $(document).on("click", ".btn-confirmSN", function() {
+
+            for (var i=0; i<new_sn_data.length; i++) {
+                var update_sn = `<input hidden name="JodDetails[${i}].old_serial_number" class="form-control" value="${new_sn_data[i].old_sn_from_db}">
+                                 <input hidden name="JodDetails[${i}].new_serial_number" class="form-control" value="${new_sn_data[i].new_sn_to_db}">`
+                        
+               $("#edit_sn").append(update_sn)
+            }
+
+            $(".btn-confirmSN").prop('disabled', true);
+            $(".btn_addSN").prop('disabled', true);
+            $(".btn-editSN").prop('disabled', false);
+            $(".btn-update").prop('disabled', false);
+        });
+
+        $(document).on("click", ".btn-editSN", function() {
+            $(".btn-confirmSN").prop('disabled', false);
+            $(".btn_addSN").prop('disabled', false);
+            $(".btn-editSN").prop('disabled', true);
+            $(".btn-update").prop('disabled', true);
+        });
+
+
 
 </script>
 }

@@ -101,7 +101,7 @@ namespace LGC.Suport
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Calendar}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

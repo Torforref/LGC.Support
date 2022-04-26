@@ -9,6 +9,8 @@ namespace LGC.Support.Models
         public int product_id { get; set; }
         public string serial_number { get; set; }
         public string product_name { get; set; }
+        public string old_serial_number { get; set; }
+        public string new_serial_number { get; set; }
 
     }
 
