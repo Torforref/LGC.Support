@@ -28,7 +28,7 @@
                             Product Name <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="name" type="text" required="required" class="form-control" maxlength="20">
+                            <input asp-for="name" type="text" style="text-transform:uppercase" required="required" class="form-control" maxlength="20">
                         </div>
                     </div>
                     <div class="item form-group">
@@ -37,6 +37,14 @@
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                             <input asp-for="description" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="description2" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Description 2
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="description2" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="item form-group">

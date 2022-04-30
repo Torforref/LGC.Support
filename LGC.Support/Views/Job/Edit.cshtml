@@ -24,7 +24,7 @@
                             Start Date
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="created_at" class="date-picker form-control" type="text" readonly="readonly">
+                            <input asp-for="created_at" asp-format="{0:dd MMMM yyyy}" class="date-picker form-control" type="text" readonly="readonly">
                         </div>
                     </div>
                     <div class="item form-group">
@@ -46,14 +46,29 @@
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label asp-for="service_type" class="col-form-label col-md-3 col-sm-3 label-align">
+                        <label asp-for="service_plan" class="col-form-label col-md-3 col-sm-3 label-align">
                             Service <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                            <select asp-for="service_type" class="form-control select_page" disabled="disabled">
-                                @Model.service_type == "PM" ?
+                            <select asp-for="service_plan" class="form-control select_page" disabled="disabled">
+                                @Model.service_plan == "PM" ?
                                 <option value="PM">PM : Preventive Maintenance</option>
                                 <option value="MA">MA : Maintenance Agreement</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="service_year_period" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Service Period <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <select asp-for="service_year_period" class="form-control select_page" required="required" id="service_period" disabled="disabled">
+                                <option value="@null">---- Select ----</option>
+                                <option value="1">1 Year</option>
+                                <option value="2">2 Years</option>
+                                <option value="3">3 Years</option>
+                                <option value="4">4 Years</option>
+                                <option value="5">5 Years</option>
                             </select>
                         </div>
                     </div>
@@ -62,24 +77,9 @@
                             Expire Date
                         </label>
                         <div class="col-md-6 col-sm-6" id="expire_date">
-                            <input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">
+                            <input asp-for="expire_date" asp-format="{0:dd MMMM yyyy}" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">
                         </div>
                     </div>
-                    @*                    <div class="item form-group">
-                        <label asp-for="onsite_date" class="col-form-label col-md-3 col-sm-3 label-align">
-                        On Site Date <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 ">
-                        <input asp-for="onsite_date" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
-                        <script>
-                        function timeFunctionLong(input) {
-                        setTimeout(function() {
-                        input.type = 'text';
-                        }, 60000);
-                        }
-                        </script>
-                        </div>
-                        </div>*@
                     <div class="item form-group">
                         <label asp-for="customer_po" class="col-form-label col-md-3 col-sm-3 label-align">
                             Customer PO No. <span class="required">*</span>
@@ -207,19 +207,23 @@
                     <div style="text-align: center" id="total_item">
                         <strong id=current_item><h2>Total quantity: @Model.JodDetails.Count items</h2></strong>
                     </div>
-                    <div class="ln_solid" id="ln_solid"></div>
                     <div class="item form-group" id="button_form">
                         <div class="col-md-6 col-sm-6 offset-md-3">
                             <button type="button" class="btn btn-dark btn-confirmSN" style="color: #ffff;">Confirm S/N</button>
-                            <button type="button" class="btn btn-dark btn-editSN" style="color: #ffff;" disabled="disabled">Edit S/N</button>
+                            <button type="button" class="btn btn-dark btn-editSN" style="color: #ffff;" hidden disabled="disabled">Edit S/N</button>
+                        </div>
+                    </div>
+                    <div class="ln_solid" id="ln_solid"></div>
+                    <div class="item form-group" id="button_form">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
                             <a asp-controller="Job" asp-action="Index" class="btn btn-danger" style="float: right;"> Cancel</a>
-                            <button type="submit" class="btn btn-primary btn-update" style="float: right;" disabled="disabled">Update</button>
+                            <button type="submit" class="btn btn-primary btn-update" style="float: right;" hidden disabled="disabled">Update</button>
                         </div>
                     </div>
 
 
-                        <div class="item form-group" id="edit_sn">
-                        </div>
+                    <div class="item form-group" id="edit_sn">
+                    </div>
 
 
                 </form>
@@ -256,7 +260,7 @@
                                 New S/N <span class="required">*</span>
                             </label>
                             <div class="col-md-9 col-sm-9">
-                                <input type="text" id="new_sn" required="required" class="form-control">
+                                <input type="text" id="new_sn" style="text-transform: uppercase" required="required" class="form-control">
                             </div>
                         </div>
 
@@ -342,7 +346,7 @@
 
     $(document).on("click", ".btn-close-modal", function () {
         $("#CalenderModal").attr("class", "modal fade");
-        $("#CalenderModal").attr("style", "");                
+        $("#CalenderModal").attr("style", "");
         $("#old_sn").val("");
         $("#new_sn").val("");
     });
@@ -385,7 +389,7 @@
                 }
             }
 
-            if (sn_is_duplicate === false) {
+            if (sn_is_duplicate === false && revise_sn === false) {
                 for (var i=0; i<sn_from_db.length; i++) {
                     if (new_sn === sn_from_db[i].serial_number) {
                         Swal.fire({
@@ -414,7 +418,7 @@
                 $("#new_sn").val("");
             }
 
-        }  
+        }
     });
 
 
@@ -423,21 +427,28 @@
             for (var i=0; i<new_sn_data.length; i++) {
                 var update_sn = `<input hidden name="JodDetails[${i}].old_serial_number" class="form-control" value="${new_sn_data[i].old_sn_from_db}">
                                  <input hidden name="JodDetails[${i}].new_serial_number" class="form-control" value="${new_sn_data[i].new_sn_to_db}">`
-                        
+
                $("#edit_sn").append(update_sn)
             }
 
             $(".btn-confirmSN").prop('disabled', true);
+            $(".btn-confirmSN").prop('hidden', true);
             $(".btn_addSN").prop('disabled', true);
             $(".btn-editSN").prop('disabled', false);
             $(".btn-update").prop('disabled', false);
+            $(".btn-editSN").prop('hidden', false);
+            $(".btn-update").prop('hidden', false);
         });
 
         $(document).on("click", ".btn-editSN", function() {
             $(".btn-confirmSN").prop('disabled', false);
+            $(".btn-confirmSN").prop('hidden', false);
             $(".btn_addSN").prop('disabled', false);
             $(".btn-editSN").prop('disabled', true);
             $(".btn-update").prop('disabled', true);
+            $(".btn-editSN").prop('hidden', true);
+            $(".btn-update").prop('hidden', true);
+            
         });
 
 

@@ -71,10 +71,9 @@
                             </label>
                             <div class="col-md-9 col-sm-9 ">
                                 <select asp-for="remind_before_day" class="form-control" id="event-reminder">
-                                    <option value="1">1 Day before</option>
-                                    <option value="3">3 Days before</option>
-                                    <option value="5">5 Days before</option>
                                     <option value="7">7 Days before</option>
+                                    <option value="10">10 Days before</option>
+                                    <option value="15">15 Days before</option>
                                 </select>
                             </div>
                         </div>
@@ -122,8 +121,6 @@
     }
 
 
-
-
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
@@ -151,7 +148,7 @@
                 $(".btn-delete-modal").attr("hidden", "hidden");
                 $("#event-created_by-form").attr("hidden", "hidden");
                 $("#event-date").val(date.format());
-                $("#event-reminder").val("1").change();
+                $("#event-reminder").val("7").change();
                 $("#CalenderModal").attr("class", "modal fade show");
                 $("#CalenderModal").attr("style", "display: block; padding-right: 16px;");
             }
@@ -202,7 +199,7 @@
         today = `${year}-${month}-${day}`;
         $("#event-date").attr('min', today);
         $("#event-date").val("");
-        $("#event-reminder").val("1").change();
+        $("#event-reminder").val("7").change();
         
         $("#CalenderModal").attr("class", "modal fade show");
         $("#CalenderModal").attr("style", "display: block; padding-right: 16px;");

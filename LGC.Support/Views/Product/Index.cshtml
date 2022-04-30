@@ -29,12 +29,9 @@
                                                         <tr role="row" style="text-align: center; background-color: #4B5F71; color: #E9EDEF">
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Name</th>
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Description</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Description 2</th>
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Category</th>
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Brand</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Created At</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Created By</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Update At</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Update By</th>
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1"></th>
                                                         </tr>
                                                     </thead>
@@ -44,19 +41,12 @@
                                                             <tr role="row" class="odd">
                                                                 <td class="text-center text-muted"><a asp-controller="Product" asp-action="Edit" asp-route-id="@product.id">@product.name</a></td>
                                                                 <td class="">@product.description</td>
+                                                                <td class="">@product.description2</td>
                                                                 <td class="text-center">@product.category</td>
                                                                 <td class="text-center">@product.brand</td>
-                                                                <td class="text-center">@product.created_at.ToString("dd MMMM yyyy")</td>
-                                                                <td class="text-center">
-                                                                    <div class="badge badge-primary">@product.created_by</div>
-                                                                </td>
-                                                                <td class="text-center">@product.updated_at.ToString("dd MMMM yyyy")</td>
-                                                                <td class="text-center">
-                                                                    <div class="badge badge-primary">@product.updated_by</div>
-                                                                </td>
                                                                 <td class="text-center">
                                                                     <a class="btn btn-sm btn-info" asp-controller="Product" asp-action="Edit" asp-route-id="@product.id"><i class="fa fa-edit"></i></a>
-                                                                    <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@product.id')" id="@product.id"><i class="fa fa-trash"></i></button>
+                                                                    <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@product.name', '@product.id')" id="@product.id"><i class="fa fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
                                                         }
@@ -99,9 +89,9 @@
             })
         });
 
-        function ConfirmDelete(id) {
+        function ConfirmDelete(product_name, id) {
             Swal.fire({
-                title: 'Are you sure?',
+                title: `Are you sure to delete\n"${product_name}" ?`,
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,

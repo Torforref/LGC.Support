@@ -34,6 +34,7 @@ namespace LGC.Support.Services
         {
             using var conn = await _db.CreateConnectionAsync();
             model.name = model.name.ToUpper();
+            model.address = model.address.ToUpper();
             var datas = conn.Query<CustomerData>(@"SELECT * FROM Customers WHERE (name = @name)", new { model.name }).FirstOrDefault();
             if (datas != null)
             {
@@ -69,7 +70,9 @@ namespace LGC.Support.Services
 
         public async Task<CustomerData> Update(CustomerData model)
         {
-            using var conn = await _db.CreateConnectionAsync();
+            using var conn = await _db.CreateConnectionAsync(); 
+            model.name = model.name.ToUpper();
+            model.address = model.address.ToUpper();
             var datas = conn.Query<CustomerData>(@"SELECT * FROM Customers WHERE (id = @id)", new { model.id }).FirstOrDefault();
             if (datas == null)
             {

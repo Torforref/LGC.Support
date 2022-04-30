@@ -8,6 +8,7 @@ namespace LGC.Suport.Models
         public int id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+        public string description2 { get; set; }
         public string category { get; set; }
         public string brand { get; set; }
         public string created_by { get; set; }

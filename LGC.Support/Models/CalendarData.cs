@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LGC.Suport.Models;
+using System;
 
 namespace LGC.Support.Models
 {

@@ -44,6 +44,7 @@ namespace LGC.Support.Services
                 var sqlStatement = $@"INSERT INTO Products (
                     name, 
                     description, 
+                    description2, 
                     category, 
                     brand, 
                     created_by, 
@@ -53,6 +54,7 @@ namespace LGC.Support.Services
                 ) VALUES (
                     @name, 
                     @description, 
+                    @description2, 
                     @category, 
                     @brand, 
                     @created_by, 
@@ -60,7 +62,7 @@ namespace LGC.Support.Services
                     @updated_by, 
                     @updated_at
                     )";
-                await conn.ExecuteAsync(sqlStatement, new { model.name, model.description, model.category, model.brand, created_by = "Titharat", created_at = DateTime.Now, updated_by = "Titharat", updated_at = DateTime.Now });
+                await conn.ExecuteAsync(sqlStatement, new { model.name, model.description, model.description2, model.category, model.brand, created_by = "Titharat", created_at = DateTime.Now, updated_by = "Titharat", updated_at = DateTime.Now });
                 return datas;
             }
         }
@@ -76,8 +78,8 @@ namespace LGC.Support.Services
             }
             else
             {
-                var sqlStatement = @"UPDATE Products SET name = @name, description = @description, category = @category, brand = @brand, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
-                await conn.ExecuteAsync(sqlStatement, new { model.name, model.description, model.category, model.brand, updated_by = "Tithart", updated_at = DateTime.Now, model.id });
+                var sqlStatement = @"UPDATE Products SET name = @name, description = @description, description2 = @description2, category = @category, brand = @brand, updated_by = @updated_by, updated_at = @updated_at WHERE id = @id";
+                await conn.ExecuteAsync(sqlStatement, new { model.name, model.description, model.description2, model.category, model.brand, updated_by = "Tithart", updated_at = DateTime.Now, model.id });
                 return datas;
             }
         }

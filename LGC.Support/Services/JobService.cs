@@ -26,14 +26,14 @@ namespace LGC.Support.Services
         public async Task<List<JobData>> GetAll()
         {
             using var conn = await _db.CreateConnectionAsync();
-            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs").ToList();
+            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (is_deleted = @is_deleted)", new { is_deleted = false }).ToList();
             return datas;
         }
 
         public async Task<JobData> GetForEdit(int? id)
         {
             using var conn = await _db.CreateConnectionAsync();
-            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @id)", new { id }).FirstOrDefault();
+            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @id AND is_deleted = @is_deleted)", new { id, is_deleted = false }).FirstOrDefault();
 
             datas.JodDetails = conn.Query<JobProductDetailData>(@"SELECT j.[id]
               ,[job_id]
@@ -51,7 +51,7 @@ namespace LGC.Support.Services
         public async Task<JobData> Get(int? id)
         {
             using var conn = await _db.CreateConnectionAsync();
-            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @id)", new { id }).FirstOrDefault();
+            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @id AND is_deleted = @is_deleted)", new { id, is_deleted = false }).FirstOrDefault();
             return datas;
         }
 
@@ -88,12 +88,11 @@ namespace LGC.Support.Services
                 }
 
 
-                model.onsite_limited = model.service_type == "MA" ? 2 : 3;
-                model.expire_date = model.service_type == "MA" ? DateTime.Now.AddYears(1) : DateTime.Now.AddYears(3);
+                model.onsite_limited = model.service_plan == "MA" ? 2 : 3;
                 var job_detail_id = conn.Query<JobProductDetailData>(@"SELECT * FROM JobProductDetails WHERE (job_id = @job_id)", new { job_id }).FirstOrDefault();
                 var sqlStatement2 = $@"INSERT INTO Jobs (
                     job_number, 
-                    service_type, 
+                    service_plan, 
                     onsite_limited, 
                     customer_po, 
                     description, 
@@ -107,10 +106,12 @@ namespace LGC.Support.Services
                     expire_date,                
                     is_exp,
                     updated_by,
-                    updated_at
+                    updated_at,
+                    service_year_period,
+                    is_deleted
                 ) VALUES (
                     @job_number, 
-                    @service_type, 
+                    @service_plan, 
                     @onsite_limited, 
                     @customer_po, 
                     @description, 
@@ -124,12 +125,14 @@ namespace LGC.Support.Services
                     @expire_date,                
                     @is_exp,
                     @updated_by,
-                    @updated_at
+                    @updated_at,
+                    @service_year_period,
+                    @is_deleted
                 )";
                 await conn.ExecuteAsync(sqlStatement2, new
                 {
                     model.job_number,
-                    model.service_type,
+                    model.service_plan,
                     model.onsite_limited,
                     model.customer_po,
                     model.description,
@@ -143,8 +146,10 @@ namespace LGC.Support.Services
                     model.expire_date,
                     is_exp = false,
                     updated_by = "Titharat",
-                    updated_at = DateTime.Now
-                });
+                    updated_at = DateTime.Now,
+                    model.service_year_period,
+                    is_deleted = false
+                }) ;
                 return datas;
             }
         }
@@ -170,6 +175,22 @@ namespace LGC.Support.Services
                         await conn.ExecuteAsync(sqlStatement, new { item.new_serial_number, item.old_serial_number });
                     }
                 }
+                return datas;
+            }
+        }
+
+        public async Task<JobData> Delete(JobData model)
+        {
+            using var conn = await _db.CreateConnectionAsync();
+            var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @id)", new { model.id }).FirstOrDefault();
+            if (datas == null)
+            {
+                return datas;
+            }
+            else
+            {
+                var sqlStatement = @"UPDATE Jobs SET is_deleted = @is_deleted WHERE id = @id";
+                await conn.ExecuteAsync(sqlStatement, new { is_deleted = true, model.id });
                 return datas;
             }
         }

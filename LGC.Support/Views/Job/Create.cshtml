@@ -28,15 +28,15 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="job_number" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Job Service No. <span class="required">*</span>
+                            Job Service No.
                         </label>
                         <div class="col-md-6 col-sm-6">
-                            <input asp-for="job_number" type="text" class="form-control" readonly="readonly" placeholder="@ViewBag.job_number">
+                            <input asp-for="job_number" type="text" class="form-control" readonly="readonly" value="@ViewBag.job_number">
                         </div>
                     </div>
                     <div class="item form-group">
                         <label asp-for="customer_id" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Select Customer <span class="required">*</span>
+                            Customer <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6">
                             <select asp-for="customer_id" class="form-control select_page" required="required">
@@ -49,40 +49,40 @@
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label asp-for="service_type" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Select Service <span class="required">*</span>
+                        <label asp-for="service_plan" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Service Plan <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6">
-                            <select asp-for="service_type" class="form-control select_page" required="required" id="service_type">
-                                <option value=@null>---- Select ----</option>
+                            <select asp-for="service_plan" class="form-control select_page" required="required" id="service_type">
+                                <option value="@null">---- Select ----</option>
                                 <option value="PM">PM : Preventive Maintenance</option>
                                 <option value="MA">MA : Maintenance Agreement</option>
                             </select>
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label asp-for="expire_date" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Expire Date
+                        <label asp-for="service_year_period" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Service Period <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6" id="expire_date">
-                            <input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">
+                        <div class="col-md-6 col-sm-6">
+                            <select asp-for="service_year_period" class="form-control select_page" required="required" id="service_period">
+                                <option value="@null">---- Select ----</option>
+                                <option value="1">1 Year</option>
+                                <option value="2">2 Years</option>
+                                <option value="3">3 Years</option>
+                                <option value="4">4 Years</option>
+                                <option value="5">5 Years</option>
+                            </select>
                         </div>
                     </div>
-@*                    <div class="item form-group">
-                        <label asp-for="onsite_date" class="col-form-label col-md-3 col-sm-3 label-align">
-                            On Site Date <span class="required">*</span>
+                    <div class="item form-group">
+                        <label asp-for="expire_date" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Expire Date <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="onsite_date" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
-                            <script>
-                                function timeFunctionLong(input) {
-                                setTimeout(function() {
-                                input.type = 'text';
-                                }, 60000);
-                                }
-                            </script>
+                        <div class="col-md-6 col-sm-6" id="expire_date">
+                            <input asp-for="expire_date" class="date-picker form-control" id="exp_date" required="required" type="text" placeholder="Please select service" readonly="readonly">
                         </div>
-                    </div>*@
+                    </div>
                     <div class="item form-group">
                         <label asp-for="customer_po" class="col-form-label col-md-3 col-sm-3 label-align">
                             Customer PO No. <span class="required">*</span>
@@ -132,7 +132,7 @@
                                 Qty. <span class="required">*</span>
                             </label>
                             <div class="col-md-2 col-sm-2">
-                                    <input type="number" class="form-control item_qty" required="required" id="serial_qty_0" style="vertical-align: text-top">
+                                <input type="number" class="form-control item_qty" required="required" id="serial_qty_0" style="vertical-align: text-top">
                             </div>
 
                             <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px" id="0" data-toggle="modal" data-target="exampleModalScrollable_0"> S / N </button>
@@ -164,18 +164,22 @@
                         </div>
                     </div>
                     <br />
-
                     <div style="text-align: center" id="total_item">
                         <strong id=current_total_items><h2>Total quantity: 0 items</h2></strong>
                     </div>
-                    <div class="ln_solid" id="ln_solid"></div>
                     <div class="item form-group" id="button_form">
                         <div class="col-md-6 col-sm-6 offset-md-3">
                             <button type="button" class="btn btn-dark btn-addItem" style="color: #ffff;">Add Item</button>
                             <button type="button" class="btn btn-dark btn-confirmItem" style="color: #ffff;">Confirm Item</button>
-                            <button type="button" class="btn btn-dark btn-editItem" style="color: #ffff;" disabled="disabled">Edit Item</button>
+                            <button type="button" class="btn btn-dark btn-editItem" style="color: #ffff;" hidden disabled="disabled">Edit Item</button>
+                        </div>
+                    </div>
+
+                    <div class="ln_solid" id="ln_solid"></div>
+                    <div class="item form-group" id="button_form">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
                             <a asp-controller="Job" asp-action="Index" class="btn btn-danger" style="float: right;">Cancel</a>
-                            <button type="submit" class="btn btn-primary btn-submitForm" style="float: right;" disabled="disabled">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-submitForm" style="float: right;" hidden disabled="disabled">Submit</button>
                         </div>
                     </div>
 
@@ -193,38 +197,354 @@
 
 @section Scripts{
 <script>
-     var selectedData = [[]];
-     var sn_from_db = @Html.Raw(JsonConvert.SerializeObject(ViewBag.SN_form_DB));
-     var count_item = 1;
+         var selectedData = [[]];
+         var sn_from_db = @Html.Raw(JsonConvert.SerializeObject(ViewBag.SN_form_DB));
+         var count_item = 1;
 
-     $(document).ready(function() {
-         $(".select_page").select2({
-             width: '100%'
+         $(document).ready(function() {
+             $(".select_page").select2({
+                 width: '100%'
+             });
          });
-     });
 
 
-     $(document).on("click", ".btn_addSN", function() {
-         var item_id = $(this).attr("id");
-         var item_value = parseInt($(`#select_item_${item_id}`).val());
-         var item_qty = parseFloat($(`#serial_qty_${item_id}`).val());
-         
-         if (isNaN(item_value) || isNaN(item_qty)) {
-            Swal.fire({
-                icon: 'error',
-                title: "Please select Item and Qty.",
-                showConfirmButton: false,
-                timer: 2000
+         $(document).on("click", ".btn_addSN", function() {
+             var item_id = $(this).attr("id");
+             var item_value = parseInt($(`#select_item_${item_id}`).val());
+             var item_qty = parseFloat($(`#serial_qty_${item_id}`).val());
+
+             if (isNaN(item_value) || isNaN(item_qty)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Please select Item and Qty.",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+             }
+             else if (item_qty % 1 !== 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Please entry only integer.",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                $(`#serial_qty_${item_id}`).val(null);
+                var total_item = $('#current_total_items').remove();
+                var sum_qty = 0;
+                for (var i=0; i<count_item; i++) {
+                    var count_qty = parseInt($(`#serial_qty_${i}`).val());
+                    if (!isNaN(count_qty)) {
+                        sum_qty += count_qty;
+                    }
+                }
+                total_item = `<strong id=current_total_items><h2>Total quantity: ${sum_qty} items</h2></strong>`;
+                $('#total_item').append(total_item);
+             }
+             else
+             {
+                var serial_qty = $(`#serial_qty_${item_id}`).val();
+                var count_serial_field = $(`.serial_field_${item_id}`).length;
+
+                 if (selectedData[item_id].length === 0) {
+                     $(`#modal-body_${item_id}`).remove();
+                     $(`.modal-body_${item_id}`).append(`<div id="modal-body_${item_id}"></div>`);
+                     for (var i=0; i<serial_qty; i++) {
+                     var SN_field = `<div id="serial_field_${item_id}_${i}" class="item form-group serial_field_${item_id}">
+                                         <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                             Serial No.${(i+1)} <span class="required">*</span>
+                                         </label>
+                                         <div class="col-md-9 col-sm-9 ">
+                                             <input id="serial_value_${item_id}_${i}" type="text" class="form-control modal_serial" required="required">
+                                         </div>
+                                     </div>`
+                     $(`#modal-body_${item_id}`).append(SN_field);
+
+                     }
+
+                 }
+                 else if (selectedData[item_id].length > serial_qty) {
+                    if (count_serial_field > serial_qty) {
+                        for (i=count_serial_field; i>serial_qty; i--) {
+                            $(`#serial_field_${item_id}_${(i-1)}`).remove();
+                            selectedData[item_id].pop();
+                        }
+                    }
+
+                 }
+                 else
+                 {
+                     for (var i=0; i<selectedData[item_id].length; i++) {
+                         var show_SN = selectedData[item_id][i];
+                         $(`.modal-body_${item_id} #serial_value_${item_id}_${i}`).val(show_SN.serial_number);
+                     }
+
+                    if (count_serial_field > selectedData[item_id].length) {
+                        for (i=count_serial_field; i>=selectedData[item_id].length; i--) {
+                            $(`#serial_field_${item_id}_${i}`).find("input").val('');
+                        }
+                     }
+
+                     if (count_serial_field > serial_qty) {
+                         for (i=count_serial_field; i>=serial_qty; i--) {
+                             $(`#serial_field_${item_id}_${i}`).remove();
+                         }
+                     }
+                     else
+                     {
+                         for (i=selectedData[item_id].length; i<serial_qty; i++) {
+                             if (!$(`#serial_field_${item_id}_${i}`).length) {
+                                var SN_field = `<div id="serial_field_${item_id}_${i}" class="item form-group serial_field_${item_id}">
+                                                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                                        Serial No.${(i+1)} <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 ">
+                                                        <input id="serial_value_${item_id}_${i}" type="text" class="form-control modal_serial" required="required">
+                                                    </div>
+                                                </div>`
+                                 $(`#modal-body_${item_id}`).append(SN_field);
+                             }
+                         }
+                     }
+
+                 }
+             $(`#exampleModalScrollable_${item_id}`).modal('show');
+             }
+             $(".select_page").select2({
+                width: '100%'
+             });
+         });
+
+
+         $(document).on("click", ".btn_saveModal", function() {
+             var modal_id = $(this).attr("id");
+             var serial_qty = $(`#serial_qty_${modal_id}`).val();
+             var sn_is_null = false;
+
+
+            for (var i=0; i<serial_qty; i++) {
+                 var serial_value = $(`#serial_value_${modal_id}_${i}`).val();
+                 if (serial_value === "") {
+                     sn_is_null = true;
+                     break;
+                 }
+            }
+
+            var select_item_id = $(`#select_item_${modal_id}`).val();
+            if (sn_is_null === false) {
+                var sn_field_is_duplicate = false;
+                var sn_item_is_duplicate = false;
+                var sn_DB_is_duplicate = false;
+
+                for (var i=0; i<serial_qty; i++) {
+                    for (let j=i+1; j<serial_qty; j++) {
+
+                        var SN1 = $(`#serial_value_${modal_id}_${i}`).val();
+                        var SN2 = $(`#serial_value_${modal_id}_${j}`).val();
+
+                        if (SN1 === SN2) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: `Serial No. "${(SN1)}" is duplicate.`,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            sn_field_is_duplicate = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (sn_field_is_duplicate === false) {
+                    for (var i=0; i<serial_qty; i++) {
+                        for (let j=0; j<selectedData.length; j++) {
+                            if (!parseInt(modal_id) === j) {
+                                for (let k=0; k<selectedData[j].length; k++) {
+                                    var new_SN = $(`#serial_value_${modal_id}_${i}`).val();
+                                    var old_SN = $(`#serial_value_${j}_${k}`).val();
+
+                                    if (new_SN === old_SN) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: `Serial No. "${(new_SN)}" is duplicate.`,
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        });
+                                        sn_item_is_duplicate = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+               if (sn_field_is_duplicate === false) {
+                    for (var i=0; i<serial_qty; i++) {
+                        for (let j=0; j<sn_from_db.length; j++) {
+                            var new_SN = $(`#serial_value_${modal_id}_${i}`).val();
+                            var old_SN = sn_from_db[j].serial_number;
+                            if (new_SN === old_SN) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: `Serial No. "${(new_SN)}" is duplicate.`,
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                sn_DB_is_duplicate = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (sn_item_is_duplicate === false && sn_field_is_duplicate === false && sn_DB_is_duplicate === false) {
+                    for (var i=0; i<serial_qty; i++) {
+                        var SN = $(`#serial_value_${modal_id}_${i}`).val();
+                        selectedData[modal_id][i] = {
+                            product_id : select_item_id,
+                            serial_number : SN
+                        }
+                    }
+                    $(`#exampleModalScrollable_${modal_id}`).modal('hide');
+                }
+            }
+         });
+
+
+         $(document).on("click", ".btn-addItem", function() {
+            var new_item_field = `<div class="item form-group" id="item_${count_item}">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">
+                    Item <span class="required">*</span>
+                </label>
+                <div class="col-md-2 col-sm-2">
+                    <select class="form-control select_page select_item" required="required" id="select_item_${count_item}"
+                        style="vertical-align: text-top">
+                        <option value=@null>---- Select ----</option>
+                        @foreach (ProductData product in @ViewBag.product)
+                        {
+                        <option value="@product.id">@product.name</option>
+                        }
+                    </select>
+                </div>
+                <label class="col-form-label col-md-1 label-align">
+                    Qty. <span class="required">*</span>
+                </label>
+                <div class="col-md-2 col-sm-2">
+    <input type="number" required="required" class="form-control item_qty" required="required" id="serial_qty_${count_item}" style="vertical-align: text-top">
+                </div>
+                <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px"
+                    id=${count_item} data-toggle="modal" data-target="exampleModalScrollable_${count_item}"> S / N </button>
+                <button type="button" class="btn btn-danger btn-sm btn_delete_item" id=${count_item} style="height: 35px; margin-left: 15px"><i
+                        class="fa fa-trash" style="text-size: 10px"></i></button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalScrollable_${count_item}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalScrollable_${count_item}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalScrollable_${count_item}">Add Serial Number</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body modal-body_${count_item}">
+
+                            <!-- Serial Number Field -->
+                            <div id="modal-body_${count_item}">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn_saveModal" id=${count_item}>Save Changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+
+            $('#item_detail').append(new_item_field);
+            selectedData[count_item] = [];
+            count_item++;
+            $(".select_page").select2({
+                width: '100%'
             });
-         }
-         else if (item_qty % 1 !== 0) {
-            Swal.fire({
-                icon: 'error',
-                title: "Please entry only integer.",
-                showConfirmButton: false,
-                timer: 2000
+         });
+
+         $(document).on("click", ".btn-confirmItem", function() {
+             var item_input_compeleted = true;
+             for (var i=0; i<count_item; i++) {
+                 if ($(`#item_${i}`).length) {
+                     if (selectedData[i].length === 0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: "Please select Item or Qty and entry serial number.",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                         item_input_compeleted = false;
+                         break;
+                     }
+                 }
+             }
+             if (item_input_compeleted) {
+                 $("#product_container").remove();
+                 $("#container").append('<div class="item form-group" id="product_container"></div>');
+                 $(".select_item").prop('disabled', true);
+                 $(".item_qty").prop('disabled', true);
+                 $(".btn-addItem").prop('disabled', true);
+                 $(".btn-addItem").prop('hidden', true);
+                 $(".btn_addSN").prop('disabled', true);
+                 $(".btn_delete_item").prop('disabled', true);
+                 $(".btn-confirmItem").prop('disabled', true);
+                 $(".btn-confirmItem").prop('hidden', true);
+                 $(".btn-submitForm").prop('disabled', false);
+                 $(".btn-submitForm").prop('hidden', false);
+                 $(".btn-editItem").prop('disabled', false);
+                 $(".btn-editItem").prop('hidden', false);
+
+                 var count = 0;
+                for (var i=0; i<selectedData.length; i++) {
+                    if (selectedData[i].length > 0) {
+                        for (var j=0; j<selectedData[i].length; j++) {
+                            var item_to_model = `<input hidden name="JodDetails[${count}].product_id" class="form-control" value="${selectedData[i][j].product_id}">
+                                                 <input hidden name="JodDetails[${count}].serial_number" class="form-control" value="${selectedData[i][j].serial_number}">`
+                            $("#product_container").append(item_to_model)
+                            count++;
+                        }
+                    }
+                }
+             }
+            $(".select_page").select2({
+                width: '100%'
             });
-            $(`#serial_qty_${item_id}`).val(null);
+         });
+
+        $(document).on("click", ".btn-editItem", function() {
+            $(".select_item").prop('disabled', false);
+            $(".item_qty").prop('disabled', false);
+            $(".btn-addItem").prop('disabled', false);
+            $(".btn-addItem").prop('hidden', false);
+            $(".btn_addSN").prop('disabled', false);
+            $(".btn_delete_item").prop('disabled', false);
+            $(".btn-confirmItem").prop('disabled', false);
+            $(".btn-confirmItem").prop('hidden', false);
+            $(".btn-submitForm").prop('disabled', true);
+            $(".btn-submitForm").prop('hidden', true);
+            $(".btn-editItem").prop('disabled', true);
+            $(".btn-editItem").prop('hidden', true);
+            $(".select_page").select2({
+                width: '100%'
+            });
+         });
+
+
+         $(document).on("click", ".btn_delete_item", function() {
+             var current_item_field = $(this).attr("id");
+             $(`#item_${current_item_field}`).remove();
+             $(`#exampleModalScrollable_${current_item_field}`).remove();
+
             var total_item = $('#current_total_items').remove();
             var sum_qty = 0;
             for (var i=0; i<count_item; i++) {
@@ -235,364 +555,68 @@
             }
             total_item = `<strong id=current_total_items><h2>Total quantity: ${sum_qty} items</h2></strong>`;
             $('#total_item').append(total_item);
-         }
-         else
-         {
-            var serial_qty = $(`#serial_qty_${item_id}`).val();
-            var count_serial_field = $(`.serial_field_${item_id}`).length;
 
-             if (selectedData[item_id].length === 0) {
-                 $(`#modal-body_${item_id}`).remove();
-                 $(`.modal-body_${item_id}`).append(`<div id="modal-body_${item_id}"></div>`);
-                 for (var i=0; i<serial_qty; i++) {
-                 var SN_field = `<div id="serial_field_${item_id}_${i}" class="item form-group serial_field_${item_id}">
-                                     <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                         Serial No.${(i+1)} <span class="required">*</span>
-                                     </label>
-                                     <div class="col-md-9 col-sm-9 ">
-                                         <input id="serial_value_${item_id}_${i}" type="text" class="form-control modal_serial" required="required">
-                                     </div>
-                                 </div>`
-                 $(`#modal-body_${item_id}`).append(SN_field);
-
-                 }
-
-             }
-             else if (selectedData[item_id].length > serial_qty) {
-                if (count_serial_field > serial_qty) {
-                    for (i=count_serial_field; i>serial_qty; i--) {
-                        $(`#serial_field_${item_id}_${(i-1)}`).remove();
-                        selectedData[item_id].pop();
-                    }
-                }
-
-             }
-             else
-             {
-                 for (var i=0; i<selectedData[item_id].length; i++) {
-                     var show_SN = selectedData[item_id][i];
-                     $(`.modal-body_${item_id} #serial_value_${item_id}_${i}`).val(show_SN.serial_number);
-                 }
-
-                if (count_serial_field > selectedData[item_id].length) {
-                    for (i=count_serial_field; i>=selectedData[item_id].length; i--) {
-                        $(`#serial_field_${item_id}_${i}`).find("input").val('');
-                    }
-                 }
-
-                 if (count_serial_field > serial_qty) {
-                     for (i=count_serial_field; i>=serial_qty; i--) {
-                         $(`#serial_field_${item_id}_${i}`).remove();
-                     }
-                 }
-                 else
-                 {
-                     for (i=selectedData[item_id].length; i<serial_qty; i++) {
-                         if (!$(`#serial_field_${item_id}_${i}`).length) {
-                            var SN_field = `<div id="serial_field_${item_id}_${i}" class="item form-group serial_field_${item_id}">
-                                                <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                                    Serial No.${(i+1)} <span class="required">*</span>
-                                                </label>
-                                                <div class="col-md-9 col-sm-9 ">
-                                                    <input id="serial_value_${item_id}_${i}" type="text" class="form-control modal_serial" required="required">
-                                                </div>
-                                            </div>`
-                             $(`#modal-body_${item_id}`).append(SN_field);
-                         }
-                     }
-                 }
-
-             }
-         $(`#exampleModalScrollable_${item_id}`).modal('show');
-         }
-         $(".select_page").select2({
-            width: '100%'
+             selectedData[current_item_field] = [];
+            $(".select_page").select2({
+                width: '100%'
+            });
          });
-     });
 
 
-     $(document).on("click", ".btn_saveModal", function() {
-         var modal_id = $(this).attr("id");
-         var serial_qty = $(`#serial_qty_${modal_id}`).val();
-         var sn_is_null = false;
-
-
-        for (var i=0; i<serial_qty; i++) {
-             var serial_value = $(`#serial_value_${modal_id}_${i}`).val();
-             if (serial_value === "") {
-                 sn_is_null = true;
-                 break;
-             }
-        }
-
-        var select_item_id = $(`#select_item_${modal_id}`).val();
-        if (sn_is_null === false) {
-            var sn_field_is_duplicate = false;
-            var sn_item_is_duplicate = false;
-            var sn_DB_is_duplicate = false;
-
-            for (var i=0; i<serial_qty; i++) {
-                for (let j=i+1; j<serial_qty; j++) {
-
-                    var SN1 = $(`#serial_value_${modal_id}_${i}`).val();
-                    var SN2 = $(`#serial_value_${modal_id}_${j}`).val();
-
-                    if (SN1 === SN2) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: `Serial No. "${(SN1)}" is duplicate.`,
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                        sn_field_is_duplicate = true;
-                        break;
-                    }
+        $(document).on("change", ".item_qty", function() {
+            var total_item = $('#current_total_items').remove();
+            var sum_qty = 0;
+            for (var i=0; i<count_item; i++) {
+                var count_qty = parseInt($(`#serial_qty_${i}`).val());
+                if (!isNaN(count_qty)) {
+                    sum_qty += count_qty;
                 }
             }
-
-            if (sn_field_is_duplicate === false) {
-                for (var i=0; i<serial_qty; i++) {
-                    for (let j=0; j<selectedData.length; j++) {
-                        if (!parseInt(modal_id) === j) {
-                            for (let k=0; k<selectedData[j].length; k++) {
-                                var new_SN = $(`#serial_value_${modal_id}_${i}`).val();
-                                var old_SN = $(`#serial_value_${j}_${k}`).val();
-
-                                if (new_SN === old_SN) {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: `Serial No. "${(new_SN)}" is duplicate.`,
-                                        showConfirmButton: false,
-                                        timer: 2000
-                                    });
-                                    sn_item_is_duplicate = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-           if (sn_field_is_duplicate === false) {
-                for (var i=0; i<serial_qty; i++) {
-                    for (let j=0; j<sn_from_db.length; j++) {
-                        var new_SN = $(`#serial_value_${modal_id}_${i}`).val();
-                        var old_SN = sn_from_db[j].serial_number;
-                        if (new_SN === old_SN) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: `Serial No. "${(new_SN)}" is duplicate.`,
-                                showConfirmButton: false,
-                                timer: 2000
-                            });
-                            sn_DB_is_duplicate = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (sn_item_is_duplicate === false && sn_field_is_duplicate === false && sn_DB_is_duplicate === false) {
-                for (var i=0; i<serial_qty; i++) {
-                    var SN = $(`#serial_value_${modal_id}_${i}`).val();
-                    selectedData[modal_id][i] = {
-                        product_id : select_item_id,
-                        serial_number : SN
-                    }
-                }
-                $(`#exampleModalScrollable_${modal_id}`).modal('hide');
-            }
-        }
-     });
-
-
-     $(document).on("click", ".btn-addItem", function() {
-        var new_item_field = `<div class="item form-group" id="item_${count_item}">
-            <label class="col-form-label col-md-3 col-sm-3 label-align">
-                Item <span class="required">*</span>
-            </label>
-            <div class="col-md-2 col-sm-2">
-                <select class="form-control select_page select_item" required="required" id="select_item_${count_item}"
-                    style="vertical-align: text-top">
-                    <option value=@null>---- Select ----</option>
-                    @foreach (ProductData product in @ViewBag.product)
-                    {
-                    <option value="@product.id">@product.name</option>
-                    }
-                </select>
-            </div>
-            <label class="col-form-label col-md-1 label-align">
-                Qty. <span class="required">*</span>
-            </label>
-            <div class="col-md-2 col-sm-2">
-<input type="number" required="required" class="form-control item_qty" required="required" id="serial_qty_${count_item}" style="vertical-align: text-top">
-            </div>
-            <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px"
-                id=${count_item} data-toggle="modal" data-target="exampleModalScrollable_${count_item}"> S / N </button>
-            <button type="button" class="btn btn-danger btn-sm btn_delete_item" id=${count_item} style="height: 35px; margin-left: 15px"><i
-                    class="fa fa-trash" style="text-size: 10px"></i></button>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalScrollable_${count_item}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalScrollable_${count_item}" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalScrollable_${count_item}">Add Serial Number</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body modal-body_${count_item}">
-
-                        <!-- Serial Number Field -->
-                        <div id="modal-body_${count_item}">
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn_saveModal" id=${count_item}>Save Changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>`
-
-        $('#item_detail').append(new_item_field);
-        selectedData[count_item] = [];
-        count_item++;
-        $(".select_page").select2({
-            width: '100%'
+            total_item = `<strong id=current_total_items><h2>Total quantity: ${sum_qty} items</h2></strong>`;
+            $('#total_item').append(total_item);
         });
-     });
 
-     $(document).on("click", ".btn-confirmItem", function() {
-         var item_input_compeleted = true;
-         for (var i=0; i<count_item; i++) {
-             if ($(`#item_${i}`).length) {
-                 if (selectedData[i].length === 0) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: "Please select Item or Qty and entry serial number.",
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                     item_input_compeleted = false;
-                     break;
-                 }
-             }
-         }
-         if (item_input_compeleted) {
-             $("#product_container").remove();
-             $("#container").append('<div class="item form-group" id="product_container"></div>');
-             $(".select_item").prop('disabled', true);
-             $(".item_qty").prop('disabled', true);
-             $(".btn-addItem").prop('disabled', true);
-             $(".btn_addSN").prop('disabled', true);
-             $(".btn_delete_item").prop('disabled', true);
-             $(".btn-confirmItem").prop('disabled', true);
-             $(".btn-submitForm").prop('disabled', false);
-             $(".btn-editItem").prop('disabled', false);
 
-             var count = 0;
-            for (var i=0; i<selectedData.length; i++) {
-                if (selectedData[i].length > 0) {
-                    for (var j=0; j<selectedData[i].length; j++) {
-                        var item_to_model = `<input hidden name="JodDetails[${count}].product_id" class="form-control" value="${selectedData[i][j].product_id}">
-                                             <input hidden name="JodDetails[${count}].serial_number" class="form-control" value="${selectedData[i][j].serial_number}">`
-                        $("#product_container").append(item_to_model)
-                        count++;
-                    }
+        $(document).on("change", ".select_item", function() {
+            var current_item_field = $(this).attr("id");
+            current_item_field = current_item_field.split("_");
+            current_item_field = current_item_field[current_item_field.length-1];
+            var select_item_id = $(`#select_item_${current_item_field}`).val();
+
+            selectedData[current_item_field].forEach(item => (item.product_id = select_item_id));
+        });
+
+
+        $(document).on("change", "#service_period", function() {
+            var service_period = parseInt($("#service_period").val());
+            if (service_period) {
+                if (service_period === 1) {
+                    $("#exp_date").val("@DateTime.Now.AddYears(1).ToString("dd MMMM yyyy")");
+                }
+                else if (service_period === 2) {
+                    $("#exp_date").val("@DateTime.Now.AddYears(2).ToString("dd MMMM yyyy")");
+                }
+                else if (service_period === 3) {
+                    $("#exp_date").val("@DateTime.Now.AddYears(3).ToString("dd MMMM yyyy")");
+                }
+                else if (service_period === 4) {
+                    $("#exp_date").val("@DateTime.Now.AddYears(4).ToString("dd MMMM yyyy")");
+                }
+                else if (service_period === 5) {
+                    $("#exp_date").val("@DateTime.Now.AddYears(5).ToString("dd MMMM yyyy")");
                 }
             }
-         }
-        $(".select_page").select2({
-            width: '100%'
-        });
-     });
-
-    $(document).on("click", ".btn-editItem", function() {
-        $(".select_item").prop('disabled', false);
-        $(".item_qty").prop('disabled', false);
-        $(".btn-addItem").prop('disabled', false);
-        $(".btn_addSN").prop('disabled', false);
-        $(".btn_delete_item").prop('disabled', false);
-        $(".btn-confirmItem").prop('disabled', false);
-        $(".btn-submitForm").prop('disabled', true);
-        $(".btn-editItem").prop('disabled', true);
-        $(".select_page").select2({
-            width: '100%'
-        });
-     });
-
-
-     $(document).on("click", ".btn_delete_item", function() {
-         var current_item_field = $(this).attr("id");
-         $(`#item_${current_item_field}`).remove();
-         $(`#exampleModalScrollable_${current_item_field}`).remove();
-
-         selectedData[current_item_field] = [];
-        $(".select_page").select2({
-            width: '100%'
-        });
-     });
-
-
-    $(document).on("change", ".item_qty", function() {
-        var total_item = $('#current_total_items').remove();
-        var sum_qty = 0;
-        for (var i=0; i<count_item; i++) {
-            var count_qty = parseInt($(`#serial_qty_${i}`).val());
-            if (!isNaN(count_qty)) {
-                sum_qty += count_qty;
+            else {
+               $("#exp_date").val("");
             }
-        }
-        total_item = `<strong id=current_total_items><h2>Total quantity: ${sum_qty} items</h2></strong>`;
-        $('#total_item').append(total_item);
-    });
+        });
 
 
-    $(document).on("change", ".select_item", function() {
-        var current_item_field = $(this).attr("id");
-        current_item_field = current_item_field.split("_");
-        current_item_field = current_item_field[current_item_field.length-1];
-        var select_item_id = $(`#select_item_${current_item_field}`).val();
-
-        selectedData[current_item_field].forEach(item => (item.product_id = select_item_id));
-    });
-
-
-    $(document).on("change", "#service_type", function() {
-        var service_type = $("#service_type").val();
-        var exp_date;
-
-        if (service_type == "MA") {
-            exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="@DateTime.Now.AddYears(1).ToString("dd MMMM yyyy")" readonly="readonly">';
-            $('#exp_date').remove();
-            $('#expire_date').append(exp_date);
-        }
-        else if (service_type == "PM")
-        {
-            exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="@DateTime.Now.AddYears(3).ToString("dd MMMM yyyy")" readonly="readonly">';
-            $('#exp_date').remove();
-            $('#expire_date').append(exp_date);
-        }
-        else
-        {
-            exp_date = '<input asp-for="expire_date" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">';
-            $('#exp_date').remove();
-            $('#expire_date').append(exp_date);
-        }
-    });
-
-
-    $('.modal_serial').keypress(function(e) {
-        if (e.which === 13) {
-            e.which = 9;
-        }
-    });
+        $('.modal_serial').keypress(function(e) {
+            if (e.which === 13) {
+                e.which = 9;
+            }
+        });
 
 </script>
 }

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using LGC.Suport.Models;
 using LGC.Support.Models;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,40 @@ namespace LGC.Support.Services
                     @updated_at
                     )";
             await conn.ExecuteAsync(sqlStatement, new { model.title, model.event_date, model.remind_before_day, model.description, created_by = "Titharat", created_at = DateTime.Now, updated_by = "Titharat", updated_at = DateTime.Now });
+        }
+
+        public async Task CreateForJob(JobData model)
+        {
+            using var conn = await _db.CreateConnectionAsync();
+            var customer = conn.Query<CustomerData>(@"SELECT * FROM Customers WHERE (id = @customer_id)", new { model.customer_id }).FirstOrDefault();
+            var add_month = 0;
+
+            for (var i=0; i<(model.service_year_period / 0.25); i++)
+            {
+                add_month += 3;
+                var event_date = model.created_at.AddMonths(add_month).ToString("yyyy-MM-dd");
+
+                var sqlStatement = $@"INSERT INTO Calendars (
+                        title,
+                        event_date,
+                        remind_before_day,
+                        description, 
+                        created_by, 
+                        created_at, 
+                        updated_by, 
+                        updated_at
+                    ) VALUES (
+                        @title, 
+                        @event_date, 
+                        @remind_before_day,
+                        @description, 
+                        @created_by, 
+                        @created_at, 
+                        @updated_by, 
+                        @updated_at
+                        )";
+                await conn.ExecuteAsync(sqlStatement, new { title = $"{model.job_number} - {customer.name} ({(i+1)} / {(model.service_year_period / 0.25)})", event_date, remind_before_day = 7, model.description, created_by = "Titharat", created_at = DateTime.Now, updated_by = "Titharat", updated_at = DateTime.Now });
+            }
         }
 
 

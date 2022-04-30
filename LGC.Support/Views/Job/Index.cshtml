@@ -28,13 +28,11 @@
                                                         <tr role="row" style="text-align: center; background-color: #4B5F71; color: #E9EDEF">
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Job Number</th>
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Customer</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Service Type</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Service Plan</th>
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Description</th>
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Start Date</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Exprie Date</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Created By</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Update At</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Update By</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Expire Date</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Status</th>
                                                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1"></th>
                                                         </tr>
                                                     </thead>
@@ -52,20 +50,35 @@
                                                                     }
                                                                 }
 
-                                                                <td class="text-center">@job.service_type</td>
+                                                                <td class="text-center">
+                                                                    @{
+                                                                    if (@job.service_plan == "PM") {
+                                                                        <div class="badge" style="font-size: 100%; background-color: #ECC62D;">@job.service_plan</div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="badge" style="font-size: 100%; background-color: #EC656B;">@job.service_plan</div>
+                                                                    }
+                                                                    }
+                                                                   
+                                                                </td>
                                                                 <td class="text-center">@job.description</td>
                                                                 <td class="text-center">@job.created_at.ToString("dd MMMM yyyy")</td>
                                                                 <td class="text-center">@job.expire_date.ToString("dd MMMM yyyy")</td>
                                                                 <td class="text-center">
-                                                                    <div class="badge badge-primary">@job.created_by</div>
-                                                                </td>
-                                                                <td class="text-center">@job.updated_at.ToString("dd MMMM yyyy")</td>
-                                                                <td class="text-center">
-                                                                    <div class="badge badge-warning">@job.updated_by</div>
+                                                                    @{
+                                                                        if (@job.expire_date < @DateTime.Today) {
+                                                                            <div class="badge badge-danger" style="font-size: 100%"> Expired</div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div class="badge badge-success" style="font-size: 100%"> Actived</div>
+                                                                        }
+                                                                    }
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <a class="btn btn-sm btn-info" asp-controller="Job" asp-action="Edit" asp-route-id="@job.id"><i class="fa fa-edit"></i></a>
-                                                                    @*<button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('N/Aid')" id="N/Aid"><i class="fa fa-trash"></i></button>*@
+                                                                    <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@job.job_number', '@job.id')" id="@job.id"><i class="fa fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
                                                         }
@@ -107,9 +120,9 @@
         })
     });
 
-    function ConfirmDelete(id) {
+    function ConfirmDelete(job_number, id) {
         Swal.fire({
-            title: 'Are you sure?',
+            title: `Are you sure to delete\n"${job_number}" ?`,
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
@@ -118,12 +131,12 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post('@Url.Action("Delete","Product")', { id: id }, function (data) {
+                $.post('@Url.Action("Delete","Job")', { id: id }, function (data) {
                     if (data.result == "ok") {
                         Swal.fire({
                             //position: 'top-end',
                             icon: 'success',
-                            title: 'Your product has been deleted.',
+                            title: 'Your job has been deleted.',
                             showConfirmButton: false,
                             timer: 2000
                         })

@@ -31,8 +31,6 @@
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Contact</th>
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Email</th>
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Phone Number</th>
-                                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Created At</th>
-                                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Created By</th>
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1"></th>
                                                             </tr>
                                                         </thead>
@@ -45,13 +43,9 @@
                                                                         <td class="text-center">@customer.contact</td>
                                                                         <td class="text-center">@customer.email</td>
                                                                         <td class="text-center">@customer.phone_number</td>
-                                                                        <td class="text-center">@customer.created_at.ToString("dd MMMM yyyy")</td>
-                                                                        <td class="text-center">
-                                                                            <div class="badge badge-primary">@customer.created_by</div>
-                                                                        </td>
                                                                         <td class="text-center">
                                                                             <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.id"><i class="fa fa-edit"></i></a>
-                                                                            <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@customer.id')" id="@customer.id"><i class="fa fa-trash"></i></button>
+                                                                            <button class="btn btn-sm btn-danger" type="button" onclick="ConfirmDelete('@customer.name', '@customer.id')" id="@customer.id"><i class="fa fa-trash"></i></button>
                                                                         </td>
                                                                     </tr>
                                                         }
@@ -94,9 +88,9 @@
     });
 
 
-    function ConfirmDelete(id) {
+    function ConfirmDelete(customer_name, id) {
         Swal.fire({
-            title: 'Are you sure?',
+            title: `Are you sure to delete\n"${customer_name}" ?`,
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,

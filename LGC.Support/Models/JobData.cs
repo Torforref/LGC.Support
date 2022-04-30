@@ -9,9 +9,9 @@ namespace LGC.Suport.Models
     {
         public int id { get; set; }
         public string job_number { get; set; }
-        public string service_type { get; set; }
+        public string service_plan { get; set; }
+        public int service_year_period { get; set; }
         public int onsite_limited { get; set; }
-        public DateTime onsite_date { get; set; }
         public string customer_po { get; set; }
         public string description { get; set; }
         public string status { get; set; }

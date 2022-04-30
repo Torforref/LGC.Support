@@ -17,12 +17,14 @@ namespace LGC.Support.Controllers
         private readonly JobService _job;
         private readonly ProductService _product;
         private readonly CustomerService _customer;
+        private readonly CalendarService _calendar;
 
-        public JobController(JobService job, ProductService product, CustomerService customer)
+        public JobController(JobService job, ProductService product, CustomerService customer, CalendarService calendar)
         {
             _job = job;
             _product = product;
             _customer = customer;
+            _calendar = calendar;
         }
 
         public IActionResult Index()
@@ -58,20 +60,21 @@ namespace LGC.Support.Controllers
             ViewBag.product = _product.GetAll().Result;
             ViewBag.customer = _customer.GetAll().Result;
 
-            var job_number = _job.GetJobNumber().Result;
+            /*    var job_number = _job.GetJobNumber().Result;
 
-            if (job_number != null)
-            {
-                model.job_number = $"LGCSV{(job_number.id + 1).ToString("D4")}";
-            }
-            else
-            {
-                model.job_number = "LGCSV0001";
-            }
+                if (job_number != null)
+                {
+                    model.job_number = $"LGCSV{(job_number.id + 1).ToString("D4")}";
+                }
+                else
+                {
+                    model.job_number = "LGCSV0001";
+                }*/
 
             try
             {
-                var result = _job.Create(model).Result;
+                var job_result = _job.Create(model).Result;
+                var calendar_result = _calendar.CreateForJob(model);
                 TempData["Message"] = "Job Created!";
                 return RedirectToAction("Index");
             }
@@ -182,6 +185,20 @@ namespace LGC.Support.Controllers
             {
                 TempData["ErrorMessage"] = ex.Message;
                 return View(model);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Delete(JobData model)
+        {
+            try
+            {
+                var result = _job.Delete(model).Result;
+                return Json(new { result = "ok" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = ex.Message });
             }
         }
     }
