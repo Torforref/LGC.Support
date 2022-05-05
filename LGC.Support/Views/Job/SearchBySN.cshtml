@@ -23,7 +23,7 @@
                                 Serial Number <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="JodDetails[0].serial_number" type="text" id="first-name" required="required" class="form-control ">
+                                <input asp-for="JodDetails[0].serial_number" type="text" style="text-transform:uppercase" required="required" class="form-control ">
                             </div>
                         </div>
                         <div class="ln_solid"></div>
@@ -81,6 +81,7 @@
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Serial Number</th>
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Start Date</th>
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Exprie Date</th>
+                                                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Status</th>
                                                                 <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1"></th>
                                                             </tr>
                                                         </thead>
@@ -89,11 +90,32 @@
                                                                 <td class="text-center text-muted"><a asp-controller="Job" asp-action="Edit" asp-route-id="@Model.id">@Model.job_number</a></td>
 
                                                                 <td class="text-center">@Model.CustomerDetails.name</td>
-                                                                <td class="text-center">@Model.service_plan</td>
+                                                                <td class="text-center">
+                                                                    @{
+                                                                        if (@Model.service_plan == "PM") {
+                                                                            <div class="badge" style="font-size: 100%; background-color: #ECC62D;">@Model.service_plan</div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div class="badge" style="font-size: 100%; background-color: #EC656B;">@Model.service_plan</div>
+                                                                        }
+                                                                    }
+                                                                </td>
                                                                 <td class="text-center">@Model.JodDetails[0].product_name</td>
                                                                 <td class="text-center">@Model.JodDetails[0].serial_number</td>
                                                                 <td class="text-center">@Model.created_at.ToString("dd MMMM yyyy")</td>
                                                                 <td class="text-center">@Model.expire_date.ToString("dd MMMM yyyy")</td>
+                                                                                                                                <td class="text-center">
+                                                                @{
+                                                                    if (@Model.expire_date < @DateTime.Today) {
+                                                                        <div class="badge badge-danger" style="font-size: 100%"> Expired</div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="badge badge-success" style="font-size: 100%"> Actived</div>
+                                                                    }
+                                                                }
+                                                                </td>
                                                                 <td class="text-center">
                                                                     <a class="btn btn-sm btn-info" asp-controller="Job" asp-action="Edit" asp-route-id="@Model.id"><i class="fa fa-edit"></i></a>
                                                                 </td>

@@ -16,7 +16,6 @@ namespace LGC.Suport.Models
         public string description { get; set; }
         public string status { get; set; }
         public int customer_id { get; set; }
-        public int job_detail_id { get; set; }
         public int quantity { get; set; }
         public float price { get; set; }
         public string created_by { get; set; }

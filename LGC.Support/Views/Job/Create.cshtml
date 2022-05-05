@@ -107,6 +107,11 @@
                             <textarea asp-for="description" class="form-control" rows="3" maxlength="255"></textarea>
                         </div>
                     </div>
+                    <div class="item form-group" hidden>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="quantity" id="total_qty" type="number" required="required" class="form-control">
+                        </div>
+                    </div>
                     <br />
                     <br />
                     <div class="ln_solid" id="ln_solid"></div>
@@ -156,7 +161,7 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary btn_saveModal" id="0">Save Changes</button>
+                                        <button type="submit" class="btn btn-primary btn_saveModal" id="0">Save Changes</button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
@@ -254,7 +259,7 @@
                                              Serial No.${(i+1)} <span class="required">*</span>
                                          </label>
                                          <div class="col-md-9 col-sm-9 ">
-                                             <input id="serial_value_${item_id}_${i}" type="text" class="form-control modal_serial" required="required">
+                                             <input id="serial_value_${item_id}_${i}" type="text" style="text-transform:uppercase" class="form-control modal_serial" required="required">
                                          </div>
                                      </div>`
                      $(`#modal-body_${item_id}`).append(SN_field);
@@ -400,6 +405,7 @@
                 if (sn_item_is_duplicate === false && sn_field_is_duplicate === false && sn_DB_is_duplicate === false) {
                     for (var i=0; i<serial_qty; i++) {
                         var SN = $(`#serial_value_${modal_id}_${i}`).val();
+                        SN = SN.toUpperCase();
                         selectedData[modal_id][i] = {
                             product_id : select_item_id,
                             serial_number : SN
@@ -457,7 +463,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary btn_saveModal" id=${count_item}>Save Changes</button>
+                            <button type="submit" class="btn btn-primary btn_saveModal" id=${count_item}>Save Changes</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -516,6 +522,7 @@
                     }
                 }
              }
+            $("#total_qty").val(count);
             $(".select_page").select2({
                 width: '100%'
             });

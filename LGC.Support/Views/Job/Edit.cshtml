@@ -237,7 +237,7 @@
 
 
 
-<div id="CalenderModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="Edit_SN_Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     <div class="modal-dialog">
         <div class="modal-content" style="margin-top: 15%">
@@ -260,7 +260,7 @@
                                 New S/N <span class="required">*</span>
                             </label>
                             <div class="col-md-9 col-sm-9">
-                                <input type="text" id="new_sn" style="text-transform: uppercase" required="required" class="form-control">
+                                <input type="text" id="new_sn" style="text-transform:uppercase" required="required" class="form-control">
                             </div>
                         </div>
 
@@ -278,15 +278,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 
 
 @section Scripts{
@@ -338,15 +329,15 @@
     $(document).on("click", ".edit-sn", function() {
         var old_sn = $(this).attr("id");
         $("#old_sn").val(old_sn);
-        $("#CalenderModal").attr("class", "modal fade show");
-        $("#CalenderModal").attr("style", "display: block; padding-right: 16px;");
+        $("#Edit_SN_Modal").attr("class", "modal fade show");
+        $("#Edit_SN_Modal").attr("style", "display: block; padding-right: 16px;");
         $(document).off('focusin.modal');
     });
 
 
     $(document).on("click", ".btn-close-modal", function () {
-        $("#CalenderModal").attr("class", "modal fade");
-        $("#CalenderModal").attr("style", "");
+        $("#Edit_SN_Modal").attr("class", "modal fade");
+        $("#Edit_SN_Modal").attr("style", "");
         $("#old_sn").val("");
         $("#new_sn").val("");
     });
@@ -355,6 +346,7 @@
     $(document).on("click", ".btn-save-modal", function () {
         var old_sn = $("#old_sn").val();
         var new_sn = $("#new_sn").val();
+        new_sn = new_sn.toUpperCase();
         var sn_is_duplicate = false;
         var revise_sn = false;
 
@@ -379,8 +371,8 @@
                         })
                         $(`#${old_sn}`).html(new_sn);
                         $(`#${old_sn}`).attr("style", "color: red");
-                        $("#CalenderModal").attr("class", "modal fade");
-                        $("#CalenderModal").attr("style", "");
+                        $("#Edit_SN_Modal").attr("class", "modal fade");
+                        $("#Edit_SN_Modal").attr("style", "");
                         $("#old_sn").val("");
                         $("#new_sn").val("");
                         revise_sn = true;
@@ -412,8 +404,8 @@
 
                 $(`#${old_sn}`).html(new_sn);
                 $(`#${old_sn}`).attr("style", "color: red");
-                $("#CalenderModal").attr("class", "modal fade");
-                $("#CalenderModal").attr("style", "");
+                $("#Edit_SN_Modal").attr("class", "modal fade");
+                $("#Edit_SN_Modal").attr("style", "");
                 $("#old_sn").val("");
                 $("#new_sn").val("");
             }

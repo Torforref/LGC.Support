@@ -52,15 +52,14 @@
 
                                                                 <td class="text-center">
                                                                     @{
-                                                                    if (@job.service_plan == "PM") {
-                                                                        <div class="badge" style="font-size: 100%; background-color: #ECC62D;">@job.service_plan</div>
+                                                                        if (@job.service_plan == "PM") {
+                                                                            <div class="badge" style="font-size: 100%; background-color: #ECC62D;">@job.service_plan</div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div class="badge" style="font-size: 100%; background-color: #EC656B;">@job.service_plan</div>
+                                                                        }
                                                                     }
-                                                                    else
-                                                                    {
-                                                                        <div class="badge" style="font-size: 100%; background-color: #EC656B;">@job.service_plan</div>
-                                                                    }
-                                                                    }
-                                                                   
                                                                 </td>
                                                                 <td class="text-center">@job.description</td>
                                                                 <td class="text-center">@job.created_at.ToString("dd MMMM yyyy")</td>

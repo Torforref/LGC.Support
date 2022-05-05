@@ -34,6 +34,8 @@ namespace LGC.Support.Services
         {
             using var conn = await _db.CreateConnectionAsync();
             model.name = model.name.ToUpper();
+            model.description = model.description.ToUpper();
+            model.description2 = model.description2.ToUpper();
             var datas = conn.Query<ProductData>(@"SELECT * FROM Products WHERE (name = @name)", new { model.name }).FirstOrDefault();
             if (datas != null)
             {
@@ -71,6 +73,8 @@ namespace LGC.Support.Services
         {
             using var conn = await _db.CreateConnectionAsync();
             model.name = model.name.ToUpper();
+            model.description = model.description.ToUpper();
+            model.description2 = model.description2.ToUpper();
             var datas = conn.Query<ProductData>(@"SELECT * FROM Products WHERE (id = @id)", new { model.id }).FirstOrDefault();
             if (datas == null)
             {

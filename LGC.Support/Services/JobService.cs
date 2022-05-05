@@ -87,9 +87,7 @@ namespace LGC.Support.Services
                     });
                 }
 
-
-                model.onsite_limited = model.service_plan == "MA" ? 2 : 3;
-                var job_detail_id = conn.Query<JobProductDetailData>(@"SELECT * FROM JobProductDetails WHERE (job_id = @job_id)", new { job_id }).FirstOrDefault();
+                model.onsite_limited = (int)(model.service_year_period / 0.25);
                 var sqlStatement2 = $@"INSERT INTO Jobs (
                     job_number, 
                     service_plan, 
@@ -98,7 +96,6 @@ namespace LGC.Support.Services
                     description, 
                     status, 
                     customer_id,
-                    job_product_detail_id,
                     quantity,
                     price,
                     created_by,
@@ -117,7 +114,6 @@ namespace LGC.Support.Services
                     @description, 
                     @status, 
                     @customer_id,
-                    @job_detail_id,
                     @quantity,
                     @price,
                     @created_by,
@@ -137,7 +133,6 @@ namespace LGC.Support.Services
                     model.customer_po,
                     model.description,
                     model.customer_id,
-                    job_detail_id = job_detail_id.id,
                     model.quantity,
                     status = "Activate",
                     model.price,
@@ -183,14 +178,18 @@ namespace LGC.Support.Services
         {
             using var conn = await _db.CreateConnectionAsync();
             var datas = conn.Query<JobData>(@"SELECT * FROM Jobs WHERE (id = @id)", new { model.id }).FirstOrDefault();
-            if (datas == null)
+            if (datas != null)
             {
+                var sqlStatement = @"DELETE FROM JobProductDetails WHERE job_id = @id";
+                await conn.ExecuteAsync(sqlStatement, new { model.id });
+
+                sqlStatement = @"UPDATE Jobs SET is_deleted = @is_deleted WHERE id = @id";
+                await conn.ExecuteAsync(sqlStatement, new { is_deleted = true, model.id });
+                
                 return datas;
             }
             else
             {
-                var sqlStatement = @"UPDATE Jobs SET is_deleted = @is_deleted WHERE id = @id";
-                await conn.ExecuteAsync(sqlStatement, new { is_deleted = true, model.id });
                 return datas;
             }
         }
@@ -198,6 +197,7 @@ namespace LGC.Support.Services
         public async Task<JobData> GetJobBySN(JobData model)
         {
             using var conn = await _db.CreateConnectionAsync();
+            model.JodDetails[0].serial_number = model.JodDetails[0].serial_number.ToUpper();
             var Product_detail = conn.Query<JobProductDetailData>(@"SELECT * FROM JobProductDetails WHERE (serial_number = @serial_number)", new { model.JodDetails[0].serial_number }).FirstOrDefault();
 
             var job_id = -1;
