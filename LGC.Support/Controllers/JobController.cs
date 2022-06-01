@@ -3,6 +3,7 @@ using LGC.Support.Models;
 using LGC.Support.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rotativa.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -32,7 +33,6 @@ namespace LGC.Support.Controllers
             ViewBag.product = _product.GetAll().Result;
             ViewBag.customer = _customer.GetAll().Result;
             var data = _job.GetAll().Result;
-
             return View(data);
         }
 
@@ -60,17 +60,6 @@ namespace LGC.Support.Controllers
             ViewBag.product = _product.GetAll().Result;
             ViewBag.customer = _customer.GetAll().Result;
 
-            /*    var job_number = _job.GetJobNumber().Result;
-
-                if (job_number != null)
-                {
-                    model.job_number = $"LGCSV{(job_number.id + 1).ToString("D4")}";
-                }
-                else
-                {
-                    model.job_number = "LGCSV0001";
-                }*/
-
             try
             {
                 var job_result = _job.Create(model).Result;
@@ -85,10 +74,9 @@ namespace LGC.Support.Controllers
             }
         }
 
-        public IActionResult Edit(int? id)
+        public IActionResult GeneratePDF(int? id)
         {
             var result = _job.Get(id).Result;
-            ViewBag.SN_form_DB = _job.GetAllJobDetails().Result;
 
             if (result == null)
             {
@@ -96,8 +84,8 @@ namespace LGC.Support.Controllers
             }
             else
             {
-                var re = new JobData();
-                re = _job.GetForEdit(id).Result;
+                JobData re = _job.GetForEdit(id).Result;
+                re.SN_form_DB = _job.GetAllJobDetails().Result;
 
                 List<JobProductDetailData> data = new List<JobProductDetailData>();
                 data.Add(new JobProductDetailData { product_id = re.JodDetails[0].product_id, product_name = re.JodDetails[0].product_name });
@@ -121,10 +109,54 @@ namespace LGC.Support.Controllers
                         data.Add(new JobProductDetailData { product_id = re.JodDetails[i].product_id, product_name = re.JodDetails[i].product_name });
                     }
                 }
+                re.Count_Product_Unique = data;
+                return new ViewAsPdf(re)
+                {
+                    PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                    CustomSwitches = "--print-media-type"
+                };
+            }
+        }
 
-                ViewBag.Count_Product_Unique = data;
+        public IActionResult Edit(int? id)
+        {
+            var result = _job.Get(id).Result;
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                JobData re = _job.GetForEdit(id).Result;
+                re.SN_form_DB = _job.GetAllJobDetails().Result;
+
+                List<JobProductDetailData> data = new List<JobProductDetailData>();
+                data.Add(new JobProductDetailData { product_id = re.JodDetails[0].product_id, product_name = re.JodDetails[0].product_name });
+
+                for (var i = 1; i<re.JodDetails.Count; i++)
+                {
+                    var duplicate = false;
+                    var new_id = re.JodDetails[i].product_id;
+
+                    foreach (var old_id in data)
+                    {
+                        if (old_id.product_id == new_id)
+                        {
+                            duplicate = true;
+                            break;
+                        }
+                    }
+
+                    if (!duplicate)
+                    {
+                        data.Add(new JobProductDetailData { product_id = re.JodDetails[i].product_id, product_name = re.JodDetails[i].product_name });
+                    }
+                }
+                re.Count_Product_Unique = data;
 
                 return View(re);
+
             }
         }
 
@@ -150,6 +182,7 @@ namespace LGC.Support.Controllers
                 return View(model);
             }
         }
+
 
         public IActionResult SearchBySN()
         {

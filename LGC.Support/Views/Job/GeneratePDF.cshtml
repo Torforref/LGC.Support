@@ -1,0 +1,443 @@
+﻿@using LGC.Support.Models
+@using Newtonsoft.Json
+@model JobData
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 style="font-weight: bold">
+                    @Model.job_number - @Model.CustomerDetails.name
+                    <a class="btn-sm btn-dark noprint" tabindex="0" aria-controls="datatable-buttons" asp-controller="Job" asp-action="GeneratePDF" asp-route-id="@Model.id">PDF</a>
+                </h2>
+                <ul class="nav navbar-right panel_toolbox noprint">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br>
+
+
+                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Job" asp-action="Edit">
+                    <div class="item form-group">
+                        <label asp-for="created_at" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Start Date
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="created_at" asp-format="{0:dd MMMM yyyy}" class="date-picker form-control" type="text" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="job_number" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Job Service No. <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="job_number" type="text" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="CustomerDetails.name" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Customer Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="CustomerDetails.name" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="service_plan" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Service <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            @{
+                                if (@Model.service_plan == "PM")
+                                {
+                                    <input asp-for="service_plan" class="form-control" readonly="readonly" value="PM : Preventive Maintenance">
+                                }
+                                else
+                                {
+                                    <input asp-for="service_plan" class="form-control" readonly="readonly" value="MA : Maintenance Agreement">
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="service_year_period" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Service Period <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="service_year_period" type="text" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="expire_date" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Expire Date
+                        </label>
+                        <div class="col-md-6 col-sm-6" id="expire_date">
+                            <input asp-for="expire_date" asp-format="{0:dd MMMM yyyy}" class="date-picker form-control" id="exp_date" type="text" placeholder="Please select service" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="customer_po" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Customer PO No. <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="customer_po" type="text" required="required" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label asp-for="price" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Price <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="price" class="form-control" readonly="readonly" value="@Model.price.ToString("N2")">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="description" class="col-form-label col-md-3 col-sm-3 label-align">
+                            Description
+                        </label>
+                        <div class="col-md-6 col-sm-9 ">
+                            <textarea asp-for="description" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="ln_solid" id="ln_solid"></div>
+
+
+                    <input type="hidden" value="0" id="total_chq">
+                    <div id="item_detail">
+
+                        @for (var i = 0; i < @Model.Count_Product_Unique.Count; i++)
+                        {
+                            <div class="item form-group" id="item_@i">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                    Item <span class="required">*</span>
+                                </label>
+                                <div class="col-md-2 col-sm-2">
+                                    @*<select asp-for="JodDetails[i].product_id" class="form-control select_page select_item" required="required" id="select_item_@i" style="vertical-align: text-top" disabled="disabled">
+                                        <option value="@Model.Count_Product_Unique[i].product_id">@Model.Count_Product_Unique[i].product_name</option>
+                                        </select>*@
+                                    <input asp-for="@Model.Count_Product_Unique[i].product_name" class="form-control" readonly="readonly">
+
+                                </div>
+                                <label class="col-form-label col-md-1 label-align">
+                                    Qty. <span class="required">*</span>
+                                </label>
+                                <div class="col-md-2 col-sm-2">
+                                    @{
+                                        List<string> sn_data = new List<string>();
+                                        foreach (var item in @Model.JodDetails)
+                                        {
+                                            if (item.product_id == @Model.Count_Product_Unique[i].product_id)
+                                            {
+                                                sn_data.Add(item.serial_number);
+                                            }
+                                        }
+                                        <input class="form-control item_qty" id="serial_qty_@i" style="vertical-align: text-top" value="@sn_data.Count" readonly="readonly">
+                                    }
+
+                                </div>
+
+                                <button type="button" class="btn btn-warning btn-sm btn_addSN noprint" style="height: 35px; margin-left: 15px"
+                                    id=@i data-toggle="modal" data-target="exampleModalScrollable_@i">
+                                    S / N
+                                </button>
+                            </div>
+
+
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalScrollable_@i" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalScrollable_@i" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalScrollable_@i">@Model.Count_Product_Unique[i].product_name - Serial Number</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body modal-body_@i">
+
+                                            <!-- Serial Number Field -->
+                                        <div id="modal-body_@i">
+                                                <table id="myTable_@i" class="table table-striped table-bordered" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
+                                                    <thead>
+                                                        <tr role="row" style="text-align: center; background-color: #4B5F71; color: #E9EDEF">
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">No.</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Item</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1">Serial Number</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        @for (var j = 0; j<sn_data.Count; j++)
+                                                        {
+                                                            <tr role="row" class="odd">
+                                                                <td class="text-center">@(j+1)</td>
+                                                                <td class="text-center">@Model.Count_Product_Unique[i].product_name</td>
+                                                                <td class="text-center"><a href="#" id="@sn_data[j]" class="edit-sn">@sn_data[j]</a></td>
+                                                            </tr>
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+
+                    </div>
+                    <br />
+
+                    <div style="text-align: center" id="total_item">
+                        <strong id=current_item><h2>Total quantity: @Model.JodDetails.Count items</h2></strong>
+                    </div>
+                    <div class="item form-group" id="button_form">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                            <button type="button" class="btn btn-dark btn-confirmSN noprint" style="color: #ffff;">Confirm S/N</button>
+                            <button type="button" class="btn btn-dark btn-editSN" style="color: #ffff;" hidden disabled="disabled">Edit S/N</button>
+                        </div>
+                    </div>
+                    <div class="ln_solid" id="ln_solid"></div>
+                    <div class="item form-group" id="button_form">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                            <a asp-controller="Job" asp-action="Index" class="btn btn-danger noprint" value="PDF" style="float: right;"> Cancel</a>
+                            <button type="submit" class="btn btn-primary btn-update" style="float: right;" hidden disabled="disabled">Update</button>
+                        </div>
+                    </div>
+
+
+                    <div class="item form-group" id="edit_sn">
+                    </div>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div id="Edit_SN_Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 15%">
+            <div class="modal-header" style="background-color: #2C4E71; color: #ffff">
+                <h4 class="modal-title" id="myModalLabel">Edit Serial Number</h4>
+            </div>
+            <div class="modal-body">
+                <div id="testmodal" style="padding: 5px 20px;">
+                    <form id="event-modal-form" class="form-horizontal calender" role="form">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                Old S/N
+                            </label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="text" id="old_sn" readonly="readonly" class="form-control">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                New S/N <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="text" id="new_sn" style="text-transform:uppercase" required="required" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary antosubmit btn-save-modal">Save Changes</button>
+                            <button type="button" class="btn btn-danger antoclose btn-close-modal" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+<script>
+
+    var count_item = @Html.Raw(JsonConvert.SerializeObject(@Model.Count_Product_Unique.Count));
+    var sn_from_db = @Html.Raw(JsonConvert.SerializeObject(@Model.SN_form_DB));
+    var new_sn_data = []
+
+    $(function () {
+
+        for (var i=0; i<count_item; i++) {
+            $(`#myTable_${i}`).length && $(`#myTable_${i}`).DataTable({
+                dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                lengthChange: false,
+                buttons: [{
+                    extend: "copy",
+                    className: "btn-sm  btn-dark"
+                }, {
+                    extend: "csv",
+                    className: "btn-sm btn-dark"
+                }, {
+                    extend: 'excelHtml5',
+                    className: "btn-sm btn-dark"
+                }],
+                responsive: !0
+            });
+        }
+
+    });
+
+    $(document).on("click", ".btn_addSN", function() {
+        var item_id = $(this).attr("id");
+        $(`#exampleModalScrollable_${item_id}`).modal('show');
+
+    });
+
+
+    $(document).on("click", ".edit-sn", function() {
+        var old_sn = $(this).attr("id");
+        $("#old_sn").val(old_sn);
+        $("#Edit_SN_Modal").attr("class", "modal fade show");
+        $("#Edit_SN_Modal").attr("style", "display: block; padding-right: 16px;");
+        $(document).off('focusin.modal');
+    });
+
+
+    $(document).on("click", ".btn-close-modal", function () {
+        $("#Edit_SN_Modal").attr("class", "modal fade");
+        $("#Edit_SN_Modal").attr("style", "");
+        $("#old_sn").val("");
+        $("#new_sn").val("");
+    });
+
+
+    $(document).on("click", ".btn-save-modal", function () {
+        var old_sn = $("#old_sn").val();
+        var new_sn = $("#new_sn").val();
+        new_sn = new_sn.toUpperCase();
+        var sn_is_duplicate = false;
+        var revise_sn = false;
+
+       if (new_sn !== "") {
+            if (new_sn_data.length > 0) {
+                for (var i=0; i<new_sn_data.length; i++) {
+                    if (new_sn === new_sn_data[i].new_sn_to_db) {
+                       Swal.fire({
+                            icon: 'error',
+                            title: `Serial No. "${(new_sn)}" is duplicate.`,
+                            showConfirmButton: false,
+                            timer: 2000
+                       });
+                        sn_is_duplicate = true;
+                        break;
+                    }
+
+                    if (old_sn === new_sn_data[i].old_sn_from_db) {
+                        new_sn_data[i] = ({
+                            old_sn_from_db: old_sn,
+                            new_sn_to_db: new_sn
+                        })
+                        $(`#${old_sn}`).html(new_sn);
+                        $(`#${old_sn}`).attr("style", "color: red");
+                        $("#Edit_SN_Modal").attr("class", "modal fade");
+                        $("#Edit_SN_Modal").attr("style", "");
+                        $("#old_sn").val("");
+                        $("#new_sn").val("");
+                        revise_sn = true;
+                        break;
+                    }
+                }
+            }
+
+            if (sn_is_duplicate === false && revise_sn === false) {
+                for (var i=0; i<sn_from_db.length; i++) {
+                    if (new_sn === sn_from_db[i].serial_number) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: `Serial No. "${(new_sn)}" is duplicate.`,
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        sn_is_duplicate = true;
+                        break;
+                    }
+                }
+            }
+
+            if (sn_is_duplicate === false && revise_sn === false) {
+                new_sn_data.push({
+                    old_sn_from_db: old_sn,
+                    new_sn_to_db: new_sn
+                })
+
+                $(`#${old_sn}`).html(new_sn);
+                $(`#${old_sn}`).attr("style", "color: red");
+                $("#Edit_SN_Modal").attr("class", "modal fade");
+                $("#Edit_SN_Modal").attr("style", "");
+                $("#old_sn").val("");
+                $("#new_sn").val("");
+            }
+
+        }
+    });
+
+
+        $(document).on("click", ".btn-confirmSN", function() {
+
+            for (var i=0; i<new_sn_data.length; i++) {
+                var update_sn = `<input hidden name="JodDetails[${i}].old_serial_number" class="form-control" value="${new_sn_data[i].old_sn_from_db}">
+                                 <input hidden name="JodDetails[${i}].new_serial_number" class="form-control" value="${new_sn_data[i].new_sn_to_db}">`
+
+               $("#edit_sn").append(update_sn)
+            }
+
+            $(".btn-confirmSN").prop('disabled', true);
+            $(".btn-confirmSN").prop('hidden', true);
+            $(".btn_addSN").prop('disabled', true);
+            $(".btn-editSN").prop('disabled', false);
+            $(".btn-update").prop('disabled', false);
+            $(".btn-editSN").prop('hidden', false);
+            $(".btn-update").prop('hidden', false);
+        });
+
+        $(document).on("click", ".btn-editSN", function() {
+            $(".btn-confirmSN").prop('disabled', false);
+            $(".btn-confirmSN").prop('hidden', false);
+            $(".btn_addSN").prop('disabled', false);
+            $(".btn-editSN").prop('disabled', true);
+            $(".btn-update").prop('disabled', true);
+            $(".btn-editSN").prop('hidden', true);
+            $(".btn-update").prop('hidden', true);
+
+        });
+
+
+
+</script>
+}
+

@@ -220,28 +220,7 @@
 
 
     $(document).on("click", ".btn-save-modal", function () {
-        var event_title = $("#event-title").val();
-        var event_date = $("#event-date").val();
-        var event_id = $("#event-id").val();
-        var event_duplicate = false;
-
-        for (var i = 0; i < events_from_db.length; i++) {
-
-            if (events_from_db[i].title === event_title && events_from_db[i].event_date === event_date && event_id === "") {
-                Swal.fire({
-                    icon: 'error',
-                    title: `Event title on ${event_date} is duplicate.`,
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-                event_duplicate = true;
-                break;
-            }
-        }
-
-        if (event_duplicate === false && event_title !== "" && event_date !== "") {
-            $("#event-modal-form").submit();
-        }
+        $("#event-modal-form").submit();
     });
 
 

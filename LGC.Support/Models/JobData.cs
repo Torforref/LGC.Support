@@ -14,7 +14,6 @@ namespace LGC.Suport.Models
         public int onsite_limited { get; set; }
         public string customer_po { get; set; }
         public string description { get; set; }
-        public string status { get; set; }
         public int customer_id { get; set; }
         public int quantity { get; set; }
         public float price { get; set; }
@@ -26,6 +25,8 @@ namespace LGC.Suport.Models
         public DateTime updated_at { get; set; } = DateTime.Now;
 
         public List<JobProductDetailData> JodDetails { get; set; }
+        public List<JobProductDetailData> Count_Product_Unique { get; set; }
+        public List<JobProductDetailData> SN_form_DB { get; set; }
         public CustomerData CustomerDetails { get; set; }
 
     }

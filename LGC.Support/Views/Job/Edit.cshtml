@@ -6,8 +6,11 @@
     <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
             <div class="x_title">
-                <h2 style="font-weight: bold">@Model.job_number - @Model.CustomerDetails.name</h2>
-                <ul class="nav navbar-right panel_toolbox">
+                <h2 style="font-weight: bold">
+                    @Model.job_number - @Model.CustomerDetails.name
+                    <a class="btn-sm btn-dark" tabindex="0" aria-controls="datatable-buttons" asp-controller="Job" asp-action="GeneratePDF" asp-route-id="@Model.id">PDF</a>
+                </h2>
+                <ul class="nav navbar-right panel_toolbox noprint">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -93,7 +96,7 @@
                             Price <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6">
-                            <input asp-for="price" type="number" class="form-control" readonly="readonly">
+                            <input asp-for="price" class="form-control" readonly="readonly" value="@Model.price.ToString("N2")">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -112,7 +115,7 @@
                     <input type="hidden" value="0" id="total_chq">
                     <div id="item_detail">
 
-                        @for (var i = 0; i < ViewBag.Count_Product_Unique.Count; i++)
+                        @for (var i = 0; i < @Model.Count_Product_Unique.Count; i++)
                         {
                             <div class="item form-group" id="item_@i">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align">
@@ -120,7 +123,7 @@
                                 </label>
                                 <div class="col-md-2 col-sm-2">
                                     <select asp-for="JodDetails[i].product_id" class="form-control select_page select_item" required="required" id="select_item_@i" style="vertical-align: text-top" disabled="disabled">
-                                        <option value="@ViewBag.Count_Product_Unique[i].product_id">@ViewBag.Count_Product_Unique[i].product_name</option>
+                                        <option value="@Model.Count_Product_Unique[i].product_id">@Model.Count_Product_Unique[i].product_name</option>
                                     </select>
                                 </div>
                                 <label class="col-form-label col-md-1 label-align">
@@ -131,17 +134,17 @@
                                         List<string> sn_data = new List<string>();
                                         foreach (var item in @Model.JodDetails)
                                         {
-                                            if (item.product_id == @ViewBag.Count_Product_Unique[i].product_id)
+                                            if (item.product_id == @Model.Count_Product_Unique[i].product_id)
                                             {
                                                 sn_data.Add(item.serial_number);
                                             }
                                         }
-                                        <input type="number" class="form-control item_qty" id="serial_qty_@i" style="vertical-align: text-top" placeholder="@sn_data.Count" readonly="readonly">
+                                        <input type="number" class="form-control item_qty" id="serial_qty_@i" style="vertical-align: text-top" value="@sn_data.Count" readonly="readonly">
                                     }
 
                                 </div>
 
-                                <button type="button" class="btn btn-warning btn-sm btn_addSN" style="height: 35px; margin-left: 15px"
+                                <button type="button" class="btn btn-warning btn-sm btn_addSN noprint" style="height: 35px; margin-left: 15px"
                                     id=@i data-toggle="modal" data-target="exampleModalScrollable_@i">
                                     S / N
                                 </button>
@@ -155,7 +158,7 @@
                                 <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalScrollable_@i">@ViewBag.Count_Product_Unique[i].product_name - Serial Number</h5>
+                                            <h5 class="modal-title" id="exampleModalScrollable_@i">@Model.Count_Product_Unique[i].product_name - Serial Number</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -178,7 +181,7 @@
                                                         {
                                                             <tr role="row" class="odd">
                                                                 <td class="text-center">@(j+1)</td>
-                                                                <td class="text-center">@ViewBag.Count_Product_Unique[i].product_name</td>
+                                                                <td class="text-center">@Model.Count_Product_Unique[i].product_name</td>
                                                                 <td class="text-center"><a href="#" id="@sn_data[j]" class="edit-sn">@sn_data[j]</a></td>
                                                             </tr>
                                                         }
@@ -209,14 +212,14 @@
                     </div>
                     <div class="item form-group" id="button_form">
                         <div class="col-md-6 col-sm-6 offset-md-3">
-                            <button type="button" class="btn btn-dark btn-confirmSN" style="color: #ffff;">Confirm S/N</button>
+                            <button type="button" class="btn btn-dark btn-confirmSN noprint" style="color: #ffff;">Confirm S/N</button>
                             <button type="button" class="btn btn-dark btn-editSN" style="color: #ffff;" hidden disabled="disabled">Edit S/N</button>
                         </div>
                     </div>
                     <div class="ln_solid" id="ln_solid"></div>
                     <div class="item form-group" id="button_form">
                         <div class="col-md-6 col-sm-6 offset-md-3">
-                            <a asp-controller="Job" asp-action="Index" class="btn btn-danger" style="float: right;"> Cancel</a>
+                            <a asp-controller="Job" asp-action="Index" class="btn btn-danger noprint" value="PDF" style="float: right;"> Cancel</a>
                             <button type="submit" class="btn btn-primary btn-update" style="float: right;" hidden disabled="disabled">Update</button>
                         </div>
                     </div>
@@ -283,9 +286,15 @@
 @section Scripts{
 <script>
 
-    var count_item = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Count_Product_Unique.Count));
-    var sn_from_db = @Html.Raw(JsonConvert.SerializeObject(ViewBag.SN_form_DB));
+    var count_item = @Html.Raw(JsonConvert.SerializeObject(@Model.Count_Product_Unique.Count));
+    var sn_from_db = @Html.Raw(JsonConvert.SerializeObject(@Model.SN_form_DB));
     var new_sn_data = []
+
+    $(document).ready(function() {
+        $(".select_page").select2({
+            width: '100%'
+        });
+    });
 
     $(function () {
 
@@ -310,14 +319,6 @@
         }
 
     });
-
-    $(document).ready(function()
-    {
-        $(".select_page").select2({
-            width: '100%'
-        });
-    });
-
 
     $(document).on("click", ".btn_addSN", function() {
         var item_id = $(this).attr("id");
@@ -440,7 +441,7 @@
             $(".btn-update").prop('disabled', true);
             $(".btn-editSN").prop('hidden', true);
             $(".btn-update").prop('hidden', true);
-            
+
         });
 
 
