@@ -36,7 +36,7 @@
                     <form asp-controller="Calendar" asp-action="Index" id="event-modal-form" class="form-horizontal calender" role="form">
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                Title <span class="required">*</span>
+                                Title 
                             </label>
                             <div class="col-md-9 col-sm-9">
                                 <input asp-for="title" type="text" id="event-title" required="required" class="form-control">
@@ -52,7 +52,7 @@
                         </div>
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                Date <span class="required">*</span>
+                                Date 
                             </label>
                             <div class="col-md-6 col-sm-6">
                                 <input asp-for="event_date" id="event-date" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">

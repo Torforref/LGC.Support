@@ -55,10 +55,10 @@ namespace LGC.Support.Services
             var customer = conn.Query<CustomerData>(@"SELECT * FROM Customers WHERE (id = @customer_id)", new { model.customer_id }).FirstOrDefault();
             var add_month = 0;
 
-            for (var i=0; i<(model.service_year_period / 0.25); i++)
+            for (var i=0; i<model.service_year_period * model.onsite_per_year; i++)
             {
-                add_month += 3;
-                var event_date = model.created_at.AddMonths(add_month).ToString("yyyy-MM-dd");
+                add_month += 12 / model.onsite_per_year;
+                var event_date = model.start_date.AddMonths(add_month).ToString("yyyy-MM-dd");
 
                 var sqlStatement = $@"INSERT INTO Calendars (
                         title,
@@ -79,7 +79,7 @@ namespace LGC.Support.Services
                         @updated_by, 
                         @updated_at
                         )";
-                await conn.ExecuteAsync(sqlStatement, new { title = $"{model.job_number} - {customer.name} ({(i+1)} / {(model.service_year_period / 0.25)})", event_date, remind_before_day = 7, model.description, created_by = "Titharat", created_at = DateTime.Now, updated_by = "Titharat", updated_at = DateTime.Now });
+                await conn.ExecuteAsync(sqlStatement, new { title = $"{model.job_number} - {customer.name} ({(i+1)} / {(model.service_year_period * model.onsite_per_year)})", event_date, remind_before_day = 7, model.description, created_by = "Titharat", created_at = DateTime.Now, updated_by = "Titharat", updated_at = DateTime.Now });
             }
         }
 

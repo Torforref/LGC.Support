@@ -16,16 +16,8 @@
                 <br>
                 <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Product" asp-action="Edit">
                     <div class="item form-group">
-                        <label asp-for="created_at" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Date <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="created_at" class="date-picker form-control" type="text" required="required" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")" readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="item form-group">
                         <label asp-for="name" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Product Name <span class="required">*</span>
+                            Product Name 
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                             <input asp-for="name" type="text" required="required" class="form-control" readonly="readonly">
@@ -49,7 +41,7 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="category" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Select Category <span class="required">*</span>
+                            Select Category 
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                             <select asp-for="category" class="form-control" required="required">
@@ -60,7 +52,7 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="brand" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Select Brand <span class="required">*</span>
+                            Select Brand 
                         </label>
                         <div class="col-md-6 col-sm-6">
                             <select asp-for="brand" class="form-control" required="required">

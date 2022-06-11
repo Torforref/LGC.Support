@@ -19,15 +19,18 @@ namespace LGC.Suport.Models
         public float price { get; set; }
         public string created_by { get; set; }
         public DateTime created_at { get; set; } = DateTime.Now;
+        public DateTime start_date { get; set; }
         public DateTime expire_date { get; set; }
         public bool is_exp { get; set; }
         public string updated_by { get; set; }
         public DateTime updated_at { get; set; } = DateTime.Now;
 
+        public int onsite_per_year { get; set; }
         public List<JobProductDetailData> JodDetails { get; set; }
         public List<JobProductDetailData> Count_Product_Unique { get; set; }
         public List<JobProductDetailData> SN_form_DB { get; set; }
         public CustomerData CustomerDetails { get; set; }
+
 
     }
 }

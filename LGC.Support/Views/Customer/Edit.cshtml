@@ -16,16 +16,8 @@
                 <br>
                 <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" asp-controller="Customer" asp-action="Edit">
                     <div class="item form-group">
-                        <label asp-for="created_at" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Date <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 ">
-                            <input asp-for="created_at" class="date-picker form-control" type="text" required="required" placeholder="@DateTime.Now.ToString("dd MMMM yyyy")" readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="item form-group">
                         <label asp-for="name" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Customer Name <span class="required">*</span>
+                            Customer Name 
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                             <input asp-for="name" type="text" id="first-name" required="required" class="form-control" readonly="readonly">
@@ -33,7 +25,7 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="address" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Address <span class="required">*</span>
+                            Address 
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                             <input asp-for="address" type="text" style="text-transform:uppercase" id="last-name" required="required" class="form-control">

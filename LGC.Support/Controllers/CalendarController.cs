@@ -19,37 +19,12 @@ namespace LGC.Support.Controllers
         public IActionResult Index()
         {
             ViewBag.events = _calendar.GetAll().Result;
-
-/*            if (ViewBag.events != null)
-            {
-                foreach (var item in ViewBag.events)
-                {
-                    var today = DateTime.Now;
-                    var alert_day = today.AddDays(item.remind_before_day);
-                    alert_day = alert_day.ToString("yyyy-MM-dd");
-
-                    if (alert_day == item.event_date)
-                    {
-                        try
-                        {
-                           // _email.Send("testingforautomail@gmail.com", "aksanddd@gmail.com", $"{item.title}", $"{item.description}");
-                        }
-                        catch (Exception ex)
-                        {
-                            return Json(new { result = ex.Message });
-                        }
-                    }
-                }
-            }*/
-
             return View();
         }
 
         [HttpPost]
         public IActionResult Index(CalendarData model)
         {
-
-            // _email.Send("purchase@logicode.co.th", "k.titharat@gmail.com", "Test!", "Long time no see.");
 
             try
             {

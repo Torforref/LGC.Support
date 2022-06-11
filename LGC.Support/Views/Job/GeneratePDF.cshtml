@@ -32,7 +32,7 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="job_number" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Job Service No. <span class="required">*</span>
+                            Job Service No. 
                         </label>
                         <div class="col-md-6 col-sm-6">
                             <input asp-for="job_number" type="text" class="form-control" readonly="readonly">
@@ -40,7 +40,7 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="CustomerDetails.name" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Customer Name <span class="required">*</span>
+                            Customer Name 
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                             <input asp-for="CustomerDetails.name" class="form-control" readonly="readonly">
@@ -48,7 +48,7 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="service_plan" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Service <span class="required">*</span>
+                            Service 
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                             @{
@@ -65,7 +65,7 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="service_year_period" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Service Period <span class="required">*</span>
+                            Service Period 
                         </label>
                         <div class="col-md-6 col-sm-6">
                             <input asp-for="service_year_period" type="text" class="form-control" readonly="readonly">
@@ -81,7 +81,7 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="customer_po" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Customer PO No. <span class="required">*</span>
+                            Customer PO No. 
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                             <input asp-for="customer_po" type="text" required="required" class="form-control" readonly="readonly">
@@ -89,7 +89,7 @@
                     </div>
                     <div class="item form-group">
                         <label asp-for="price" class="col-form-label col-md-3 col-sm-3 label-align">
-                            Price <span class="required">*</span>
+                            Price 
                         </label>
                         <div class="col-md-6 col-sm-6">
                             <input asp-for="price" class="form-control" readonly="readonly" value="@Model.price.ToString("N2")">
@@ -115,7 +115,7 @@
                         {
                             <div class="item form-group" id="item_@i">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                    Item <span class="required">*</span>
+                                    Item 
                                 </label>
                                 <div class="col-md-2 col-sm-2">
                                     @*<select asp-for="JodDetails[i].product_id" class="form-control select_page select_item" required="required" id="select_item_@i" style="vertical-align: text-top" disabled="disabled">
@@ -125,7 +125,7 @@
 
                                 </div>
                                 <label class="col-form-label col-md-1 label-align">
-                                    Qty. <span class="required">*</span>
+                                    Qty. 
                                 </label>
                                 <div class="col-md-2 col-sm-2">
                                     @{
@@ -258,7 +258,7 @@
                         </div>
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                New S/N <span class="required">*</span>
+                                New S/N 
                             </label>
                             <div class="col-md-9 col-sm-9">
                                 <input type="text" id="new_sn" style="text-transform:uppercase" required="required" class="form-control">
